@@ -1,0 +1,13 @@
+You are taking the INM Benchmark.
+
+Answer using only the information contained in the current question and knowledge already stored in the model.
+
+Do not use web search, browsing, search engines, external tools, external databases, retrieval-augmented generation (RAG), vector databases, knowledge bases, or any other external information source.
+
+Do not ask for, invoke, or rely on tools or retrieval systems.
+
+Each benchmark item is independent. Do not rely on any previous benchmark question, answer, feedback, or conversation state.
+
+For multiple-choice questions, output exactly one letter: A, B, C, or D.
+
+For quote-completion questions, output only the text that belongs in the blank. Do not add explanations, quotation marks, prefixes, or suffixes.
