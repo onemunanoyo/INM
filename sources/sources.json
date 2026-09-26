@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": "src_yjsnpi_inmu_quotes",
+    "type": "reference",
+    "title": "淫夢語録 - 真夏の夜の淫夢Wiki",
+    "url": "https://wiki.yjsnpi.nu/wiki/%E6%B7%AB%E5%A4%A2%E8%AA%9E%E9%8C%B2",
+    "retrieval_status": "retrieved",
+    "retrieved_at": "2026-09-27",
+    "notes": "The 野獣先輩 pickup section was used to seed data/corpus/yaju_seed.json."
+  },
+  {
+    "id": "src_pixiv_inmu_quotes",
+    "type": "reference",
+    "title": "淫夢語録 - pixiv百科事典",
+    "url": "https://dic.pixiv.net/a/%E6%B7%AB%E5%A4%A2%E8%AA%9E%E9%8C%B2",
+    "retrieval_status": "pending",
+    "retrieved_at": null,
+    "notes": "Direct retrieval was unavailable in the current environment; item-level cross-check is pending."
+  },
+  {
+    "id": "src_nico_inmu_quotes_coat",
+    "type": "reference",
+    "title": "淫夢語録(COAT) - ニコニコ大百科",
+    "url": "https://dic.nicovideo.jp/a/%E6%B7%AB%E5%A4%A2%E8%AA%9E%E9%8C%B2%28coat%29",
+    "retrieval_status": "pending",
+    "retrieved_at": null,
+    "notes": "Direct retrieval was unavailable in the current environment; item-level cross-check is pending."
+  }
+]
