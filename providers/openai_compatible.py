@@ -7,6 +7,12 @@ from openai import OpenAI
 
 from .base import ProviderResponse
 
+FORBIDDEN_REQUEST_KEYS = {
+    "tools",
+    "tool_choice",
+    "web_search_options",
+}
+
 
 class OpenAICompatibleProvider:
     """Stateless adapter for OpenAI Chat Completions compatible endpoints.
@@ -51,8 +57,19 @@ class OpenAICompatibleProvider:
                 raise ValueError(f"Unsupported token_limit_param: {param}")
             kwargs[param] = max_tokens
 
+        request_params = dict(self.config.get("request_params") or {})
+        forbidden = FORBIDDEN_REQUEST_KEYS.intersection(request_params)
+        if forbidden:
+            names = ", ".join(sorted(forbidden))
+            raise ValueError(
+                f"Official INM runner forbids external-tool request keys: {names}"
+            )
+        kwargs.update(request_params)
+
         extra_body = self.config.get("extra_body")
         if extra_body:
+            if any(key in extra_body for key in FORBIDDEN_REQUEST_KEYS):
+                raise ValueError("extra_body must not enable tools or web search")
             kwargs["extra_body"] = extra_body
 
         response = self.client.chat.completions.create(**kwargs)
