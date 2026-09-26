@@ -4,12 +4,14 @@
 
 INM is a benchmark for evaluating how well Local / Cloud LLMs retain, distinguish, and reproduce long-tail Japanese internet-culture knowledge.
 
-INM v0.1 focuses on four capabilities:
+The current v0.1 draft explores four broad capabilities:
 
-1. **Character** — knowledge of characters, appearances, and chapter membership
+1. **Character / Work Knowledge** — knowledge of the work, characters, appearances, chapters, and identifiers
 2. **Structure** — knowledge of relationships and work/chapter structure
 3. **Fake Quote Detection** — distinguishing real quotes from synthetic fake quotes
 4. **Quote Completion** — recalling and completing known quotes
+
+The taxonomy is still a draft until v0.1 is frozen.
 
 The benchmark is intended to measure not only whether a model has encountered a meme term, but also whether it can distinguish source facts, derived meme usage, and fabricated but plausible-looking content.
 
@@ -19,17 +21,20 @@ The benchmark is intended to measure not only whether a model has encountered a 
 
 **Version:** v0.1 draft
 
-INM v0.1 is currently designed as a 100-item benchmark:
+INM does **not** define a fixed target number of benchmark items.
 
-| Section | Category | Items |
-|---|---|---:|
-| 1 | Character | 25 |
-| 2 | Structure | 25 |
-| 3 | Fake Quote Detection | 25 |
-| 4 | Quote Completion | 25 |
-|  | **Total** | **100** |
+Each release freezes a reviewed item set. Later versions may expand that set in order to:
 
-The exact item set may change until the v0.1 dataset is frozen.
+- improve statistical reliability;
+- cover additional characters, chapters, quotes, and meme phenomena;
+- reduce dependence on a small number of highly correlated facts;
+- improve difficulty and subtask coverage.
+
+The goal is therefore **not** to reach an arbitrary round number such as 100 questions. A smaller set of well-sourced, unambiguous questions is preferred over padding the benchmark with low-quality or near-duplicate items.
+
+Once a version is released, its item set should be treated as immutable. New items belong in a later benchmark version.
+
+See [`docs/STATS.md`](docs/STATS.md) for statistical uncertainty and sample-size guidance.
 
 ---
 
@@ -38,17 +43,10 @@ The exact item set may change until the v0.1 dataset is frozen.
 INM uses a human-readable exam-style numbering scheme:
 
 ```text
-1: Character
-  A: Person -> Chapter
-    (1)
-    (2)
-    ...
-  B: Chapter -> Person
-    (1)
-    (2)
-    ...
-  C: Other character-identification tasks
-    ...
+1: Character / Work Knowledge
+  A: Work metadata / source knowledge
+  B: Chapter / cast knowledge
+  C: Entity / alias identification
 
 2: Structure
   A: Relationship
@@ -56,14 +54,14 @@ INM uses a human-readable exam-style numbering scheme:
   C: Ordering / compound statements
 
 3: Fake Quote Detection
-  A: Easy fake
-  B: Medium fake
-  C: Hard / adversarial fake
+  A: Basic fake detection
+  B: Plausible fake detection
+  C: Adversarial / near-miss fake detection
 
 4: Quote Completion
   A: Short completion
   B: Phrase completion
-  C: Long completion
+  C: Longer completion
 ```
 
 A displayed item identifier may therefore look like:
@@ -79,12 +77,12 @@ The displayed identifier is **not** the permanent machine identifier.
 Each benchmark item also receives a stable ID such as:
 
 ```text
-inm_char_p2c_003
+inm_work_meta_003
 inm_fake_blend_005
 inm_comp_phrase_002
 ```
 
-This separation allows questions to be reordered or regrouped without changing their permanent identities.
+This separation allows questions to be reordered or regrouped before release without changing their permanent identities.
 
 ---
 
@@ -92,40 +90,35 @@ This separation allows questions to be reordered or regrouped without changing t
 
 Difficulty is metadata and is independent of the A/B/C subgroup.
 
-Each item is labeled as one of:
+Each item may be labeled as one of:
 
 - `easy`
 - `medium`
 - `hard`
 
-Recommended v0.1 distribution per category:
-
-| Difficulty | Items |
-|---|---:|
-| Easy | 10 |
-| Medium | 10 |
-| Hard | 5 |
-
-Difficulty labels may be revised after pilot evaluation.
+INM does not require a fixed number or fixed percentage of items at each difficulty level. Difficulty labels should be calibrated using pilot results when possible rather than assigned solely from author intuition.
 
 ---
 
-# 1. Character
+# 1. Character / Work Knowledge
 
-The Character section measures factual knowledge about characters and appearances.
+This section measures relatively atomic factual knowledge about the source work and its meme-culture entities.
 
-Example task types:
+Candidate task types include:
 
-- person -> chapter
-- chapter -> person
-- identify a character from a description
-- identify characters appearing in the same chapter
-- identify a correct person/role pairing
+- work title / series / production metadata;
+- person -> chapter;
+- chapter -> person;
+- character identification;
+- character/community identifier resolution;
+- common aliases and fandom-level names.
+
+INM treats character names and community identifiers as **work/meme-level entities**. It does not require real-world identity attribution of performers.
 
 Example:
 
 ```text
-1-A-(1)
+1-B-(1)
 
 MURが登場する章はどれか。
 
@@ -149,11 +142,11 @@ The Structure section measures relational and structural knowledge rather than i
 
 Example task types:
 
-- senior/junior relationships
-- relationships among multiple characters
-- chapter or scene composition
-- order of appearance
-- compound statements containing multiple facts
+- senior/junior relationships;
+- relationships among multiple characters;
+- chapter or scene composition;
+- order of appearance;
+- compound statements containing multiple facts.
 
 Example:
 
@@ -183,8 +176,8 @@ The Fake Quote Detection section evaluates hallucination resistance.
 
 Each item presents four quote candidates:
 
-- 3 real quotes
-- 1 synthetic fake
+- 3 real quotes;
+- 1 synthetic fake.
 
 The model must select the fake.
 
@@ -203,13 +196,13 @@ D. ...
 
 Fake items should be constructed carefully. Hard examples may use:
 
-- quote blending
-- word substitution
-- near-miss wording
-- speaker swaps
-- recombination of real quote fragments
-- cross-meme contamination
-- otherwise plausible but unattested phrases
+- quote blending;
+- word substitution;
+- near-miss wording;
+- speaker swaps where the question explicitly tests attribution;
+- recombination of real quote fragments;
+- cross-meme contamination;
+- otherwise plausible but unattested phrases.
 
 Every True quote should have a traceable source.
 
@@ -259,12 +252,12 @@ Scoring uses normalized exact match.
 
 Typical normalization may include:
 
-- trimming whitespace
-- Unicode width normalization
-- normalization of full-width / half-width numerals
-- stripping surrounding quotation marks
-- stripping terminal punctuation
-- explicit accepted variants
+- trimming whitespace;
+- Unicode width normalization;
+- normalization of full-width / half-width numerals;
+- stripping surrounding quotation marks;
+- stripping terminal punctuation;
+- explicit accepted variants.
 
 Semantic paraphrases are generally not accepted because this section is intended to measure reproduction accuracy.
 
@@ -272,45 +265,100 @@ Semantic paraphrases are generally not accepted because this section is intended
 
 ## Scores
 
-Each category is scored independently on a 0–100 scale.
+Each category is scored independently:
 
 ```text
-Character Score  = correct_character / total_character * 100
-Structure Score  = correct_structure / total_structure * 100
-Fake Score       = correct_fake / total_fake * 100
-Completion Score = correct_completion / total_completion * 100
+Category Accuracy = correct_in_category / scored_items_in_category
 ```
 
-The default INM score is the unweighted mean:
+Because future INM versions may contain different numbers of items in each category, two aggregate values should be distinguished:
+
+### INM Macro
+
+Equal weight for each reported category:
 
 ```text
-INM Total =
-(Character + Structure + Fake + Completion) / 4
+INM Macro = mean(category accuracies)
 ```
 
-For the v0.1 25/25/25/25 design, this is equivalent to overall accuracy.
+This prevents a large category from dominating the headline score.
+
+### INM Overall
+
+Accuracy across every scored item:
+
+```text
+INM Overall = total_correct / total_scored_items
+```
+
+This is the micro-average and therefore weights categories in proportion to their item counts.
+
+Both should be reported when category sizes differ.
 
 Recommended reporting:
 
-| Model | Character | Structure | Fake | Completion | Total |
-|---|---:|---:|---:|---:|---:|
-| Model A | 84 | 72 | 88 | 60 | 76 |
-| Model B | 60 | 44 | 52 | 76 | 58 |
+| Model | Work/Character | Structure | Fake | Completion | Macro | Overall | n |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Model A | ... | ... | ... | ... | ... | ... | ... |
 
 Also report when available:
 
-- model name and exact version
-- parameter count
-- quantization
-- inference backend
-- Local / Cloud
-- temperature
-- top-p
-- seed
-- context length
-- system prompt
-- reasoning mode
-- evaluation date
+- model name and exact version;
+- parameter count;
+- quantization;
+- inference backend;
+- Local / Cloud;
+- temperature / sampling configuration;
+- seed where applicable;
+- context length;
+- system prompt hash;
+- inference/reasoning configuration where applicable;
+- evaluation date;
+- item-isolation method.
+
+---
+
+## Statistical uncertainty
+
+Finite benchmark size creates sampling uncertainty.
+
+For an observed accuracy `p` over `n` approximately independent binary-scored items, the binomial standard error is
+
+```text
+SE = sqrt(p * (1 - p) / n)
+```
+
+At `p = 0.5`, where variance is largest, rough worst-case values are:
+
+| n | Worst-case SE | Approx. worst-case 95% margin of error |
+|---:|---:|---:|
+| 25 | 10.00 pp | ±19.60 pp |
+| 50 | 7.07 pp | ±13.86 pp |
+| 100 | 5.00 pp | ±9.80 pp |
+| 200 | 3.54 pp | ±6.93 pp |
+| 400 | 2.50 pp | ±4.90 pp |
+
+INM includes a helper script that also reports Wilson 95% confidence intervals:
+
+```bash
+python scripts/stats.py --n 100 --correct 72
+```
+
+Reference uncertainty by item count:
+
+```bash
+python scripts/stats.py --reference 25 50 100 200 400
+```
+
+Analyze an INM runner result file:
+
+```bash
+python scripts/stats.py --results results/tmp/<run>.jsonl
+```
+
+These binomial calculations are approximations: INM questions are not guaranteed to be statistically independent. Multiple questions may share the same underlying fact or source. Increasing the raw number of near-duplicate questions does not create the same effective sample size as increasing genuinely distinct knowledge coverage.
+
+See [`docs/STATS.md`](docs/STATS.md) for details.
 
 ---
 
@@ -323,9 +371,9 @@ Multiple-choice example:
 ```json
 {
   "id": "inm_char_p2c_001",
-  "display_id": "1-A-(1)",
+  "display_id": "1-B-(1)",
   "section": 1,
-  "group": "A",
+  "group": "B",
   "item": 1,
   "category": "character",
   "subtask": "person_to_chapter",
@@ -384,73 +432,89 @@ Quote-completion example:
 
 ---
 
-## Schema validation
+## Evaluation protocol
 
-INM uses JSON Schema for structural validation of dataset rows.
+Official evaluation uses **item isolation**.
 
-Recommended schema version:
+Each benchmark item must be evaluated independently. Previous questions, answers, correctness feedback, or item-specific hidden state must not be available to later items.
+
+A shared item-independent prefix cache is allowed, but a cache containing item-specific tokens must not be reused for another question.
+
+The official prompt prohibits external retrieval. The runtime should also enforce this technically:
 
 ```text
-JSON Schema Draft 2020-12
+web_enabled = false
+rag_enabled = false
+tools_enabled = false
 ```
 
-The schema is intended to validate constraints such as:
+See [`docs/EVALUATION_PROTOCOL.md`](docs/EVALUATION_PROTOCOL.md).
 
-- valid category names
-- valid difficulty labels
-- valid display-ID syntax
-- required fields
-- four choices for multiple-choice items
-- valid zero-indexed answers
-- required `accepted_answers` for completion items
-- valid section/category combinations
+---
 
-The schema is a validator, not the dataset itself.
+## Schema validation
+
+INM uses JSON Schema Draft 2020-12 for structural validation of dataset rows.
+
+The schema validates constraints such as:
+
+- valid category names;
+- valid difficulty labels;
+- valid display-ID syntax;
+- required fields;
+- four choices for multiple-choice items;
+- valid zero-indexed answers;
+- required `accepted_answers` for completion items;
+- valid section/category combinations.
+
+Validate the dataset with:
+
+```bash
+python scripts/validate.py
+```
+
+---
+
+## Benchmark runner
+
+The repository includes a lightweight official runner supporting:
+
+- OpenAI-compatible APIs;
+- llama.cpp server;
+- DeepSeek;
+- Gemini's OpenAI-compatible endpoint;
+- Anthropic Claude.
+
+Copy the example configuration:
+
+```bash
+cp .env.example .env
+cp configs/models.example.yaml configs/models.yaml
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run:
+
+```bash
+python -m runner.run \
+  --model llama-local \
+  --dataset data/v0.1
+```
+
+See [`docs/RUNNER.md`](docs/RUNNER.md).
 
 ---
 
 ## lm-evaluation-harness integration
 
-INM is designed so the canonical dataset remains evaluation-framework independent.
+INM's canonical dataset is intended to remain evaluation-framework independent.
 
-The intended task mapping is:
-
-```text
-inm_character
-inm_structure
-inm_fake_quote
-inm_quote_completion
-```
-
-The first three tasks use:
-
-```yaml
-output_type: multiple_choice
-```
-
-Quote Completion uses:
-
-```yaml
-output_type: generate_until
-```
-
-The four tasks may be grouped under a common INM v0.1 tag or task group.
-
-Official evaluation should use deterministic or near-deterministic settings where possible.
-
-Recommended default:
-
-```text
-temperature = 0
-top_p = 1
-```
-
-If both direct and reasoning-enabled evaluations are reported, they should be separated, e.g.:
-
-```text
-INM Direct
-INM Reasoning
-```
+An `lm_eval/` compatibility layer may expose the same frozen data to `lm-evaluation-harness`, but the source JSONL remains authoritative.
 
 ---
 
@@ -459,35 +523,41 @@ INM Reasoning
 ```text
 INM/
 ├── README.md
-├── LICENSE
-├── CITATION.cff
+├── .env.example
+├── requirements.txt
+│
+├── configs/
+│   └── models.example.yaml
 │
 ├── data/
+│   ├── corpus/
 │   └── v0.1/
 │       ├── character.jsonl
 │       ├── structure.jsonl
 │       ├── fake_quote.jsonl
 │       └── quote_completion.jsonl
 │
+├── prompts/
+│   └── system_v0.1.txt
+│
+├── providers/
+├── runner/
+│
 ├── schema/
 │   └── item.schema.json
-│
-├── lm_eval/
-│   ├── inm_character.yaml
-│   ├── inm_structure.yaml
-│   ├── inm_fake_quote.yaml
-│   └── inm_quote_completion.yaml
 │
 ├── sources/
 │   └── sources.json
 │
 ├── docs/
-│   └── AUTHORING_TEMPLATE.md
+│   ├── AUTHORING_TEMPLATE.md
+│   ├── EVALUATION_PROTOCOL.md
+│   ├── RUNNER.md
+│   └── STATS.md
 │
 └── scripts/
     ├── validate.py
-    ├── render_exam.py
-    └── score.py
+    └── stats.py
 ```
 
 ---
@@ -512,6 +582,8 @@ Example:
 
 For ambiguous or disputed items, do not include the question until the expected answer can be justified consistently.
 
+Candidate corpora under `data/corpus/` are authoring aids and are not automatically gold labels.
+
 ---
 
 ## Contamination
@@ -520,20 +592,20 @@ INM measures long-tail cultural knowledge, so benchmark contamination is a serio
 
 Once the benchmark is public, future models may train directly on:
 
-- the repository
-- benchmark questions
-- answer keys
-- evaluation reports reproducing items
+- the repository;
+- benchmark questions;
+- answer keys;
+- evaluation reports reproducing items.
 
 Therefore:
 
-- benchmark versions should be immutable after release
-- release dates should be recorded
-- evaluation date should be reported
-- future hidden or newly authored item sets may be useful
-- a contamination canary may be added in later versions
+- benchmark releases should be immutable;
+- release dates should be recorded;
+- evaluation dates should be reported;
+- future hidden or newly authored item sets may be useful;
+- a contamination canary may be added in later versions.
 
-Scores across benchmark versions should not be directly compared without noting the dataset version.
+Scores across benchmark versions should not be directly compared without noting the exact dataset version.
 
 ---
 
@@ -543,13 +615,14 @@ INM aims to distinguish several different failure modes.
 
 A model may:
 
-- recognize famous names but fail on relationships
-- memorize quote strings but fail to identify their provenance
-- recognize real quotes but hallucinate plausible fake ones
-- reject real quotes as fake
-- know meme usage without knowing the underlying source structure
+- know basic work metadata but not character-level details;
+- recognize famous names but fail on relationships;
+- memorize quote strings but fail to identify their provenance;
+- recognize real quotes but hallucinate plausible fake ones;
+- reject real quotes as fake;
+- know meme usage without knowing the underlying source structure.
 
-For this reason, category-level scores are considered as important as the total score.
+For this reason, category- and subtask-level scores are considered as important as aggregate scores.
 
 ---
 
@@ -559,9 +632,9 @@ TBD.
 
 The benchmark repository should clearly distinguish:
 
-- original benchmark metadata and code
-- short quoted material used for evaluation
-- third-party source material
+- original benchmark metadata and code;
+- short quoted material used for evaluation;
+- third-party source material.
 
 A suitable repository license should be chosen before public release.
 
@@ -573,23 +646,23 @@ Contributions are welcome after the v0.1 authoring rules are finalized.
 
 Candidate questions should include:
 
-- stable ID proposal
-- section/group placement
-- difficulty
-- expected answer
-- source evidence
-- ambiguity check
-- rationale for distractors or fake construction
+- stable ID proposal;
+- section/group placement;
+- difficulty;
+- expected answer;
+- source evidence;
+- ambiguity check;
+- rationale for distractors or fake construction.
 
-See `docs/AUTHORING_TEMPLATE.md`.
+See [`docs/AUTHORING_TEMPLATE.md`](docs/AUTHORING_TEMPLATE.md).
 
 ---
 
 ## Citation
 
-Citation information will be added when v0.1 is released.
+Citation information will be added when the first benchmark version is released.
 
 ```text
-INM v0.1
+INM
 Japanese Internet-Meme Knowledge Benchmark
 ```
