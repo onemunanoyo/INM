@@ -1,0 +1,203 @@
+{
+  "corpus_id": "inm_yaju_seed_v0_1",
+  "status": "candidate_not_gold",
+  "scope": {
+    "entity": "野獣先輩",
+    "content": "quote_candidates"
+  },
+  "created_at": "2026-09-27",
+  "purpose": "Internal authoring corpus for INM benchmark construction. Not intended as a verbatim mirror of source pages.",
+  "source_policy": {
+    "directly_retrieved": [
+      "src_yjsnpi_inmu_quotes"
+    ],
+    "pending_verification": [
+      "src_pixiv_inmu_quotes",
+      "src_nico_inmu_quotes_coat"
+    ],
+    "note": "Entries are benchmark-authoring candidates, not gold labels. Primary-source verification is required before release use."
+  },
+  "items": [
+    {
+      "id": "yaju_quote_001",
+      "surface": "ｱｰｲｷｿ",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_002",
+      "surface": "頭にきますよ",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_003",
+      "surface": "ありますあります",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_004",
+      "surface": "いいねぇー",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_005",
+      "surface": "イキスギィ！",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_006",
+      "surface": "行きませんか？行きましょうよ",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_007",
+      "surface": "オイル塗ろっか？",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_008",
+      "surface": "王道を征く",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_009",
+      "surface": "オッスお願いしまーす！",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_010",
+      "surface": "おっ大丈夫か大丈夫か？",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_011",
+      "surface": "お前どう？",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_012",
+      "surface": "お前のことが好きだったんだよ！",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_013",
+      "surface": "おまたせ！アイスティーしかなかったけどいいかな？",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_014",
+      "surface": "これもうわかんねぇな",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_015",
+      "surface": "大会近いからね、しょうがないね",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_016",
+      "surface": "多少はね？",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_017",
+      "surface": "24歳、学生です",
+      "entity": "野獣先輩",
+      "kind": "canonicalized_quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true,
+      "author_note": "Treat as a canonicalized meme form until primary transcript verification establishes exact utterance segmentation."
+    },
+    {
+      "id": "yaju_quote_018",
+      "surface": "入って、どうぞ！",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_019",
+      "surface": "やりますねぇ！",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    },
+    {
+      "id": "yaju_quote_020",
+      "surface": "んにゃぴ",
+      "entity": "野獣先輩",
+      "kind": "quote_candidate",
+      "source_ids": ["src_yjsnpi_inmu_quotes"],
+      "source_presence": {"yjsnpi": true, "pixiv": null, "nicovideo": null},
+      "needs_primary_verification": true
+    }
+  ]
+}
