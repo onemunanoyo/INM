@@ -7,5 +7,8 @@ __pycache__/
 .mypy_cache/
 .DS_Store
 
+# Local model/provider configuration. Copy from the committed example.
+configs/models.yaml
+
 # Scratch benchmark outputs. Curated/public result files may be committed elsewhere.
 results/tmp/
