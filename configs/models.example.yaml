@@ -1,0 +1,43 @@
+# Copy to configs/models.yaml and edit model IDs/endpoints as needed.
+# API keys are read from environment variables (or a local .env file).
+# Do not put secrets in this file.
+
+models:
+  llama-local:
+    provider: openai_compatible
+    model: YOUR_LLAMA_CPP_MODEL_ID
+    base_url: http://127.0.0.1:8080/v1
+    api_key_env: LLAMA_CPP_API_KEY
+    temperature: 0
+    max_tokens: 128
+
+  openai:
+    provider: openai_compatible
+    model: YOUR_OPENAI_MODEL_ID
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    temperature: 0
+    max_tokens: 128
+
+  deepseek:
+    provider: openai_compatible
+    model: deepseek-chat
+    base_url: https://api.deepseek.com
+    api_key_env: DEEPSEEK_API_KEY
+    temperature: 0
+    max_tokens: 128
+
+  gemini:
+    provider: openai_compatible
+    model: YOUR_GEMINI_MODEL_ID
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+    api_key_env: GEMINI_API_KEY
+    temperature: 0
+    max_tokens: 128
+
+  claude:
+    provider: anthropic
+    model: YOUR_CLAUDE_MODEL_ID
+    api_key_env: ANTHROPIC_API_KEY
+    temperature: 0
+    max_tokens: 128
