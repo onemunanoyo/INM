@@ -52,9 +52,28 @@ Observed mappings:
 
 ## Character roles
 
-- `cand_role_001–007` — **NEEDS_REVISION**
+Original items `cand_role_001–007` are superseded by revised candidates in:
 
-Reason: the original questions conflate community identifiers, role names, role types, and character relationships. At least `cand_role_003` also contained an incorrect role description (`フリーター・佐藤` instead of the retrieved description `大学生・佐藤`). Revised questions should ask exactly one attribute at a time.
+`data/candidates/batch01_roles_revised.jsonl`
+
+Authoring policy:
+
+- Basic role questions should primarily test **role type / narrative position**, such as `先輩`, `後輩`, `暴力団員`, `大学生`, or `スカウトマン`.
+- Formal or in-work role names such as `三浦`, `谷岡`, `佐藤`, `小林`, `桜井`, and `鴻野` are stored as separate metadata and may be used for `hard` / expert-style questions.
+- Do not combine a role type and a role name into one answer label unless the distinction itself is what the item tests.
+- Each question should test one attribute at a time.
+
+Revised candidates:
+
+- `cand_role_001_r1`: TDN → `先輩` — **REVISED_CANDIDATE**
+- `cand_role_002_r1`: TNOK → `暴力団員` — **REVISED_CANDIDATE**
+- `cand_role_003_r1`: NSOK → `大学生` — **REVISED_CANDIDATE**
+- `cand_role_004_r1`: DRVS → `スカウトマン` — **REVISED_CANDIDATE**
+- `cand_role_005_r1`: GO → role name `桜井` — **REVISED_CANDIDATE / HARD**
+- `cand_role_006_r1`: マジメ君 → role name `鴻野` — **REVISED_CANDIDATE / HARD**
+- `cand_role_007_r1`: 野獣先輩=`先輩`, 遠野=`後輩` — **REVISED_CANDIDATE**
+
+The earlier incorrect description `NSOK = フリーター・佐藤` is retired; the revised candidate uses `大学生` as the role type and `佐藤` as the role name.
 
 ## Source policy note
 
