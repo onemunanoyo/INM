@@ -7,6 +7,12 @@ from anthropic import Anthropic
 
 from .base import ProviderResponse
 
+FORBIDDEN_REQUEST_KEYS = {
+    "tools",
+    "tool_choice",
+    "mcp_servers",
+}
+
 
 class AnthropicProvider:
     """Stateless adapter for Anthropic Messages API.
@@ -37,6 +43,15 @@ class AnthropicProvider:
         temperature = self.config.get("temperature")
         if temperature is not None:
             kwargs["temperature"] = temperature
+
+        request_params = dict(self.config.get("request_params") or {})
+        forbidden = FORBIDDEN_REQUEST_KEYS.intersection(request_params)
+        if forbidden:
+            names = ", ".join(sorted(forbidden))
+            raise ValueError(
+                f"Official INM runner forbids external-tool request keys: {names}"
+            )
+        kwargs.update(request_params)
 
         response = self.client.messages.create(**kwargs)
         text_parts = [
