@@ -12,7 +12,7 @@ English | [日本語](score.ja.md)
 
 ![INM category scores](docs/assets/scoreboard_categories.svg)
 
-The dashed line on the Overall card corresponds to the **displayed 171-item pre-Batch04 run set**: 143 four-choice items at 25% chance plus 28 free-text completion items, giving about **20.9% overall**. The current canonical working set is now 195 items, including 24 Fake Quote items, so this line is not the current 195-item-set baseline.
+The dashed line on the Overall card is the approximate random-answer baseline for the **current 195-item working set**: 167 four-choice items at 25% chance plus 28 free-text Quote Completion items, giving about **21.4% overall**. This is a development reference rather than a universal baseline for future INM versions.
 
 The cards are generated from [`data/leaderboard.json`](data/leaderboard.json):
 
@@ -26,20 +26,28 @@ This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
 These rows are useful while developing INM, but **do not count as official leaderboard entries**. Reasons include an unfrozen dataset, legacy runner settings, missing raw-result publication, or another protocol mismatch.
 
-| Model | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Track | Date |
+| Model | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Dataset | Date |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | Development / Exploratory | 2026-09-27 |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` legacy forced config, no output cap | Exploratory / invalidated settings | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | working v0.1, 195 items | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | pre-Batch04, 171 items | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` legacy forced config | pre-Batch04, 171 items | 2026-09-27 |
 
-\* `INM Macro` is the unweighted mean of category accuracies that contain scored items in that run. Both listed runs predate the Batch04 Fake Quote promotion, so their 171-item run set contains no Fake Quote items and the macro averages the three non-empty categories.
+\* `INM Macro` is the unweighted mean of category accuracies that contain scored items in that run. The 195-item run includes all four current categories; the older 171-item runs contain no Fake Quote items and therefore average only their three non-empty categories.
 
 ### Current displayed development run
 
-The visual cards currently show the newer `temperature: 0.6` run. It used the **171-item pre-Batch04 working set**, with no output-token cap and no recorded item errors. Its overall score is **37/171 = 21.6%**. The four-choice subset is **37/143 = 25.9%**, extremely close to the 25% random-choice expectation, and Quote Completion is **0/28**.
+The visual cards now show the **195-item** `temperature: 0.6` run (`20260927T061853Z_ollama-local_fe076f9f`). It completed all 195 isolated items with no recorded item errors or format failures, with web, RAG, and tools disabled. There was no output-token cap.
 
-Because Batch04 has now promoted 24 Fake Quote items, the current canonical working set is **195 items**. The displayed run should therefore be treated as historical development data until the model is rerun on the 195-item set.
+Its overall score is **52/195 = 26.7%**. By category:
 
-The older `temperature: 0` run is retained in the table only as development history. INM no longer forces temperature by default; backend/model defaults are preferred unless the evaluator explicitly records an override.
+- Character / Work: **24.1% (19/79)**
+- Structure: **37.5% (24/64)**
+- Fake Quote: **33.3% (8/24)**
+- Quote Completion: **3.6% (1/28)**
+
+Across the 167 four-choice items, the model scored **30.5% (51/167)** against a 25% random-choice expectation. This is above chance descriptively, but still close enough that this single development run should not be treated as strong evidence of stable INM knowledge. The exact one-sided binomial tail for at least 51/167 under p=0.25 is approximately **0.061**.
+
+The older 171-item runs are retained only as development history and are not directly comparable to the current 195-item working set.
 
 ## Official / Isolated Leaderboard
 
