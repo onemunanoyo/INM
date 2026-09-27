@@ -22,17 +22,20 @@ python scripts/render_scoreboard.py
 
 This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
-## Current development run
+## Current development runs
 
 Only results on the current working dataset are shown in the main comparison table. Older dataset revisions and invalidated runner configurations are kept below as historical records rather than mixed into the current comparison.
 
-| Model | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Dataset | Date |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | working v0.1, 195 items | 2026-09-27 |
+| Model | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Format | Date |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---:|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | 195/195 | 2026-09-27 |
+| gemma-4-E4B-it-GGUF | **22.6%** | 19.4% | 26.6% (21/79) | 26.6% (17/64) | 20.8% (5/24) | 3.6% (1/28) | 25.7% (43/167) | 44/195 | Ollama | Q4_K_M | `temperature: 0.6`, no output cap | 193/195 | 2026-09-27 |
 
-The visual cards show this 195-item run (`20260927T061853Z_ollama-local_fe076f9f`). It completed all 195 isolated items with no recorded item errors or format failures, with web, RAG, and tools disabled.
+Both runs use the current 195-item working set with per-item isolation and web / RAG / tools disabled.
 
-Across the 167 four-choice items, the model scored **30.5% (51/167)** against a 25% random-choice expectation. The exact one-sided binomial tail for at least 51/167 under p=0.25 is approximately **0.061**, so this development result should not by itself be interpreted as strong evidence of stable INM knowledge.
+For the four-choice subset, the E2B Aggressive run scored **30.5% (51/167)**; the exact one-sided binomial tail under random p=0.25 is approximately **0.061**. The E4B-it run scored **25.7% (43/167)**, with a corresponding tail probability of approximately **0.441**. These are development results, not evidence of a stable model ranking.
+
+The E4B-it run had two format failures: one empty response and one refusal-style response. Both were scored incorrect under the normal evaluator.
 
 <details>
 <summary><strong>Historical development runs</strong></summary>
