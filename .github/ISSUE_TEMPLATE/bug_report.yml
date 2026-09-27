@@ -1,0 +1,74 @@
+name: "Runner / ツールの不具合 / Bug report"
+description: "Runner、provider、validation、統計スクリプト等の不具合報告"
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        不具合報告ありがとうございます。再現に必要な情報を可能な範囲で記載してください。
+        APIキー、トークン、個人情報などの秘密情報は貼らないでください。
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "対象 / Area"
+      options:
+        - Runner
+        - Provider adapter
+        - Schema / validation
+        - Statistics
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "環境 / Environment"
+      description: "OS、Python、バックエンド、モデル、INM commit/versionなど。"
+      placeholder: |
+        OS: Ubuntu 24.04
+        Python: 3.12
+        Backend: llama.cpp
+        Model: ...
+        INM commit: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: command
+    attributes:
+      label: "実行内容 / Command or steps"
+      description: "再現手順または実行コマンドを記載してください。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "期待した挙動 / Expected behavior"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "実際の挙動 / Actual behavior"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "ログ / Logs"
+      description: "秘密情報を削除した上で、関連するエラーやログを貼ってください。"
+      render: shell
+
+  - type: checkboxes
+    id: secrets
+    attributes:
+      label: "確認 / Checklist"
+      options:
+        - label: "APIキー、トークン、Cookie、個人情報などの秘密情報を含めていません。"
+          required: true
