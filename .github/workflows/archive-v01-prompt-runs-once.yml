@@ -1,0 +1,116 @@
+name: Archive v0.1 prompt runs once
+
+on:
+  push:
+    paths:
+      - .github/workflows/archive-v01-prompt-runs-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Archive pre-v0.2 prompt results
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import re
+
+          p = Path('data/leaderboard.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          data['current_prompt'] = 'prompts/system_v0.2.txt'
+          data['benchmark_status'] = 'working v0.1; current canonical n=195; standard prompt=system_v0.2; awaiting current-prompt runs'
+          for e in data['entries']:
+              e['prompt_version'] = 'system_v0.1'
+              if e.get('current'):
+                  e['current'] = False
+                  e['archived'] = True
+                  e['show_in_chart'] = False
+                  suffix = ' Archived when system_v0.2 became the standard reasoning-aware prompt.'
+                  if suffix.strip() not in e.get('notes', ''):
+                      e['notes'] = (e.get('notes', '') + suffix).strip()
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          en = Path('score.md')
+          s = en.read_text(encoding='utf-8')
+          block = '\n'.join([
+              '## Current development runs',
+              '',
+              'The current standard system prompt is [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt), which explicitly tells models to use available reasoning/thinking when useful while emitting only the final answer.',
+              '',
+              '**No current-prompt (`system_v0.2`) development runs have been added yet.** New runs will appear here as models are rerun on the 195-item working set.',
+              '',
+              'The visual cards are therefore intentionally empty for the current prompt revision. Previous results are retained below for audit/history.',
+              '',
+              '<details>',
+              '<summary><strong>Historical development runs</strong></summary>',
+              '',
+              'These runs used `system_v0.1` and are retained for audit/history. They must not be mixed directly with `system_v0.2` results.',
+              '',
+              '| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Sampling | Dataset | Prompt | Run ID |',
+              '|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|',
+              '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |',
+              '| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |',
+              '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | pre-Batch04, 171 items | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |',
+              '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |',
+              '',
+              'The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The first two rows used the current 195-item dataset, but their system prompt predates the reasoning-aware v0.2 prompt.',
+              '',
+              '</details>',
+              '',
+          ])
+          s, n = re.subn(r'## Current development runs\n.*?(?=## Official / Isolated Leaderboard)', block + '\n', s, count=1, flags=re.S)
+          if n != 1:
+              raise SystemExit('failed replacing English current/history section')
+          en.write_text(s, encoding='utf-8', newline='\n')
+
+          ja = Path('score.ja.md')
+          s = ja.read_text(encoding='utf-8')
+          block = '\n'.join([
+              '## 現行Development run',
+              '',
+              '現在の標準System promptは [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt) です。必要に応じて利用可能なreasoning / thinkingを使い、visible outputには最終回答だけを出すよう明示しています。',
+              '',
+              '**現時点では `system_v0.2` で取得したDevelopment runはまだありません。** 195問working setで各modelを再実行した結果から、ここへ追加します。',
+              '',
+              'そのため、ビジュアルカードも現行prompt revisionについてはいったん空表示です。旧結果は下の履歴欄に保持しています。',
+              '',
+              '<details>',
+              '<summary><strong>過去のDevelopment run</strong></summary>',
+              '',
+              '以下はすべて `system_v0.1` を使ったrunです。監査・開発履歴として残しますが、`system_v0.2` の結果と直接混ぜて比較しません。',
+              '',
+              '| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Sampling | Dataset | Prompt | Run ID |',
+              '|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|',
+              '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |',
+              '| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |',
+              '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | Batch04前、171問 | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |',
+              '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |',
+              '',
+              '最後のrunは旧runnerが `temperature: 0` を強制していたため、モデルの代表性能としても無効化した結果です。最初の2runは現行195問datasetですが、reasoning-awareなv0.2より前のpromptを使っています。',
+              '',
+              '</details>',
+              '',
+          ])
+          s, n = re.subn(r'## 現行Development run\n.*?(?=## Official / Isolated Leaderboard)', block + '\n', s, count=1, flags=re.S)
+          if n != 1:
+              raise SystemExit('failed replacing Japanese current/history section')
+          ja.write_text(s, encoding='utf-8', newline='\n')
+          PY
+      - name: Render empty current-prompt scoreboard
+        run: python scripts/render_scoreboard.py
+      - name: Commit archive transition
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/leaderboard.json score.md score.ja.md docs/assets/scoreboard_*.svg
+          git diff --cached --check
+          git commit -m 'Archive pre-v0.2 prompt benchmark runs'
+          git push
