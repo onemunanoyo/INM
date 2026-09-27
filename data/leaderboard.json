@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "updated": "2026-09-27",
-  "benchmark_status": "working v0.1; current canonical n=195; standard prompt=system_v0.2; awaiting current-prompt runs",
+  "benchmark_status": "working v0.1; current canonical n=195; standard prompt=system_v0.2; current development includes protocol-equivalent Reasoning-on runs",
   "current_working_set": {
     "n": 195,
     "four_choice_n": 167,
@@ -222,7 +222,7 @@
     {
       "id": "gemma4-12b-it-unsloth-q4km-temp06-reasoning-on-195-20260927",
       "model": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q4_K_M",
-      "chart_label": "Gemma-4 12B it (legacy Reasoning on)",
+      "chart_label": "Gemma-4 12B it",
       "family_creator": "Gemma / Unsloth",
       "overall": 27.2,
       "macro": 25.3,
@@ -259,22 +259,24 @@
       "backend": "Ollama",
       "quantization": "Q4_K_M",
       "sampling": "temperature=0.6; max_tokens unset",
-      "track": "Development / Historical",
+      "track": "Development / Exploratory",
       "official": false,
-      "current": false,
-      "archived": true,
-      "show_in_chart": false,
+      "current": true,
+      "archived": false,
+      "show_in_chart": true,
       "date": "2026-09-27",
       "run_id": "20260927T095811Z_ollama-local_68cc9586",
-      "notes": "195-item working v0.1 run; 0 item errors, 0 format failures, isolated evaluation, web/RAG/tools disabled. Uses a local/custom pre-v0.2 prompt labelled thinking-on, so it is retained as historical and not mixed with current system_v0.2 results.",
-      "prompt_version": "system_v0.1-thinking-on (local/custom)",
+      "notes": "Current 195-item working v0.1 development run; 0 item errors, 0 format failures, isolated evaluation, web/RAG/tools disabled. Gemma 4 12B uses binary thinking on/off; this run used Reasoning=on. The local prompt filename/hash predates the canonical system_v0.2 file, but the effective Reasoning-on evaluation behavior is treated as protocol-equivalent for development comparison. Not an Official frozen-release result.",
+      "prompt_version": "system_v0.2-equivalent (legacy local filename)",
       "system_prompt_sha256": "67085701f8b4904a12194d53fdb8b7280aef7724669d7e8d121bae2c50283717",
       "reasoning": "on",
-      "reasoning_detail": "legacy run label/prompt path indicates thinking on; exact provider-specific level/budget was not serialized",
+      "reasoning_detail": null,
       "format_compliance": {
         "compliant": 195,
         "n": 195
-      }
+      },
+      "prompt_equivalent_to": "system_v0.2",
+      "prompt_canonical": false
     }
   ],
   "current_prompt": "prompts/system_v0.2.txt",

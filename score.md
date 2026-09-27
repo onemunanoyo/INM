@@ -26,9 +26,13 @@ This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
 The current standard system prompt is [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt), which explicitly tells models to use available Reasoning when useful while emitting only the final answer.
 
-**No current-prompt (`system_v0.2`) development runs have been added yet.** New runs will appear here as models are rerun on the 195-item working set.
+For development comparison, a run may also be shown when its effective evaluation protocol is equivalent to canonical `system_v0.2`, provided that a legacy/noncanonical prompt filename or hash is disclosed. Official frozen-release results must use the canonical prompt/hash required by that release.
 
-The visual cards are therefore intentionally empty for the current prompt revision. Previous results are retained below for audit/history.
+| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Reasoning | Sampling | Prompt status | Run ID |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|
+| gemma-4-12b-it-GGUF | 27.2% | 25.3% | 30.4% | 29.7% | 37.5% | 3.6% | 53/195 | `on` | `temperature: 0.6` | `system_v0.2` protocol-equivalent / legacy filename | `20260927T095811Z_ollama-local_68cc9586` |
+
+Gemma 4 12B exposes binary Thinking on/off, so no additional Reasoning detail is required. This legacy raw result predates the standardized `reasoning` field, but the evaluation setting itself was Reasoning `on`.
 
 <details>
 <summary><strong>Historical development runs</strong></summary>
@@ -37,15 +41,12 @@ These runs predate the current `system_v0.2` prompt and are retained for audit/h
 
 | Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Reasoning | Sampling | Dataset | Prompt | Run ID |
 |---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| gemma-4-12b-it-GGUF | 27.2% | 25.3% | 30.4% | 29.7% | 37.5% | 3.6% | 53/195 | `on` (legacy label) | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1-thinking-on` (custom) | `20260927T095811Z_ollama-local_68cc9586` |
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `not recorded` | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |
 | gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `not recorded` | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `not recorded` | `temperature: 0.6` | pre-Batch04, 171 items | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `not recorded` | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
 
-The 12B Reasoning `on` row records that state from the run/prompt label; the exact provider-specific level or budget was not serialized in the legacy raw metadata.
-
-The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The 12B, E2B, and E4B 195-item rows use the current working dataset, but all predate the standard `system_v0.2` prompt.
+The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The E2B and E4B 195-item rows use the current working dataset, but their historical raw metadata does not establish the Reasoning state, so they remain archived.
 
 </details>
 

@@ -16,6 +16,20 @@
 <text x="50.0" y="157.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">30</text>
 <line x1="58" y1="104.0" x2="736" y2="104.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
 <text x="50.0" y="108.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">40</text>
-<text x="380.0" y="205.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="18" font-weight="400" fill="#6B7280" text-anchor="middle">No results yet</text>
+<rect x="83.8" y="151.0" width="46.0" height="149.0" rx="4" fill="#7C3AED"/>
+<text x="106.8" y="169.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">30.4</text>
+<text x="142.8" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Character / Work</text>
+<rect x="253.2" y="154.5" width="46.0" height="145.5" rx="4" fill="#7C3AED"/>
+<text x="276.2" y="172.5" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">29.7</text>
+<text x="312.2" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Structure</text>
+<rect x="422.8" y="116.2" width="46.0" height="183.8" rx="4" fill="#7C3AED"/>
+<text x="445.8" y="134.2" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">37.5</text>
+<text x="481.8" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Fake Quote</text>
+<rect x="592.2" y="282.4" width="46.0" height="17.6" rx="4" fill="#7C3AED"/>
+<text x="615.2" y="276.4" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#111827" text-anchor="middle">3.6</text>
+<text x="651.2" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Quote Completion</text>
+<rect x="250.0" y="362.0" width="11" height="11" rx="2" fill="#7C3AED"/>
+<text x="267.0" y="372.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="600" fill="#111827" text-anchor="start">Gemma-4 12B it</text>
+<text x="267.0" y="388.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="9" font-weight="400" fill="#6B7280" text-anchor="start">Q4_K_M</text>
 <text x="24.0" y="433.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="start">Colors identify models; compare the same color across categories.</text>
 </svg>
