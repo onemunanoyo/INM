@@ -45,7 +45,7 @@ These runs predate the current `system_v0.2` prompt and are retained for audit/h
 
 The 12B Reasoning `on` row records that state from the run/prompt label; the exact provider-specific level or budget was not serialized in the legacy raw metadata.
 
-The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The first two rows used the current 195-item dataset, but their system prompt predates the Reasoning-instruction v0.2 prompt.
+The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The 12B, E2B, and E4B 195-item rows use the current working dataset, but all predate the standard `system_v0.2` prompt.
 
 </details>
 

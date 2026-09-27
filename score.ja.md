@@ -45,7 +45,7 @@ python scripts/render_scoreboard.py
 
 Reasoning `on` の12B runはrun名・prompt pathから状態を記録していますが、provider固有の強度・budgetはraw metadataに保存されていません。
 
-最後のrunは旧runnerが `temperature: 0` を強制していたため、モデルの代表性能としても無効化した結果です。最初の2runは現行195問datasetですが、Reasoning-instructionなv0.2より前のpromptを使っています。
+最後のrunは旧runnerが `temperature: 0` を強制していたため、モデルの代表性能としても無効化した結果です。12B・E2B・E4Bの195問runは現行working datasetを使っていますが、いずれも標準 `system_v0.2` より前のpromptです。
 
 </details>
 
