@@ -70,6 +70,18 @@ If Ollama is exposed on another host or port, change only `OLLAMA_BASE_URL`, for
 OLLAMA_BASE_URL=http://127.0.0.1:15000/v1
 ```
 
+### Output-token limits
+
+INM does **not** set `max_tokens` for `ollama-local` by default. This is intentional. Thinking/reasoning models may spend part of the output budget on reasoning before emitting the final short benchmark answer, so a low cap such as `128` can truncate the response before the answer appears.
+
+If you created `configs/models.yaml` from an older INM revision, remove this line from the `ollama-local` entry:
+
+```yaml
+max_tokens: 128
+```
+
+Only add an explicit `max_tokens` value when you deliberately want to cap generation. Any such cap should be reported with benchmark results because it can materially affect reasoning-model scores.
+
 ## 4. Smoke test
 
 First render a few benchmark items without calling Ollama:
@@ -98,5 +110,6 @@ The default dataset is `data/v0.1`. Results are written under `results/tmp/` unl
 
 - INM does not start, stop, pull, or update Ollama models automatically.
 - INM does not auto-detect a model tag. Explicit model selection is intentional for reproducibility.
+- INM does not impose an output-token cap on OpenAI-compatible local models by default.
 - Each benchmark item is still sent as an isolated request with no cross-item conversation history.
 - Official INM runs must not enable tools, web search, RAG, or other external retrieval.
