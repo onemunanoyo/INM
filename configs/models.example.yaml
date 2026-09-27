@@ -22,6 +22,18 @@ models:
     # request_params:
     #   top_p: 1
 
+  ollama-local:
+    provider: openai_compatible
+    model: REPLACE_WITH_OLLAMA_MODEL_TAG
+    model_env: OLLAMA_MODEL_ID
+    base_url: http://127.0.0.1:11434/v1
+    base_url_env: OLLAMA_BASE_URL
+    temperature: 0
+    max_tokens: 128
+    # Ollama's local API does not require an API key. The OpenAI Python SDK
+    # still requires a non-empty client-side value, so the INM adapter supplies
+    # an internal placeholder automatically when api_key_env is absent.
+
   openai:
     provider: openai_compatible
     model: YOUR_OPENAI_MODEL_ID
