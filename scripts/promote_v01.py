@@ -38,10 +38,10 @@ BLOCKS = [
     PromotionBlock("roles/karate_club.jsonl", 6, "structure.jsonl", "structure", 2, "A", 1, "relation"),
     PromotionBlock("work/scene_character.jsonl", 20, "structure.jsonl", "structure", 2, "B", 1, "scene"),
     PromotionBlock("quotes/pairing.jsonl", 20, "structure.jsonl", "structure", 2, "C", 1, "pairing"),
-    PromotionBlock("quotes/completion.jsonl", 10, "quote_completion.jsonl", "quote_completion", 4, "A", 1, "completion"),
+    PromotionBlock("quotes/completion.jsonl", 28, "quote_completion.jsonl", "quote_completion", 4, "A", 1, "completion"),
 ]
 
-EXPECTED_TOTAL = 128
+EXPECTED_TOTAL = 146
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
