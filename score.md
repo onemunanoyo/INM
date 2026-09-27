@@ -22,14 +22,6 @@ python scripts/render_scoreboard.py
 
 This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
-## Official / Isolated leaderboard
-
-Rows are ranked primarily by **INM Overall**. When the same model is evaluated with materially different reasoning, sampling, quantization, or backend settings, each configuration should be shown as a separate row.
-
-| Rank | Model | Family / Creator | **INM Overall ↑** | INM Macro ↑ | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Backend | Quantization | Sampling | Date | Result |
-|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| — | _No accepted official results yet_ | | | | | | | | | | | | | |
-
 ## Development / exploratory runs
 
 These rows are useful while developing INM, but **do not count as official leaderboard entries**. Reasons include an unfrozen dataset, legacy runner settings, missing raw-result publication, or another protocol mismatch.
@@ -47,6 +39,25 @@ The visual cards currently show the newer `temperature: 0.6` run. It used 171 is
 
 The older `temperature: 0` run is retained in the table only as development history. INM no longer forces temperature by default; backend/model defaults are preferred unless the evaluator explicitly records an override.
 
+## Official / Isolated Leaderboard
+
+The official leaderboard will begin after the first **frozen INM release**. Until then, this page intentionally does not show an empty ranking table.
+
+A contributed result can qualify for the official leaderboard when it uses:
+
+- a frozen INM release or immutable benchmark commit;
+- one isolated request per item;
+- no web search, RAG, tools, MCP, or external retrieval;
+- an exact model/version and backend record;
+- quantization metadata when applicable;
+- disclosed reasoning and sampling overrides when applicable;
+- auditable item-level raw results or equivalent evidence;
+- no undisclosed manual answer correction or item exclusion.
+
+Once at least one qualifying result exists, official rows will be ranked primarily by **INM Overall**. Materially different reasoning, sampling, quantization, or backend configurations should be listed as separate rows.
+
+Contributors can submit results using the process in [`results/README.md`](results/README.md). The scoreboard is only the presentation layer; that document remains the normative submission and verification policy.
+
 ## Score columns
 
 - **INM Overall** — accuracy over all scored items. This is the primary leaderboard value.
@@ -56,21 +67,6 @@ The older `temperature: 0` run is retained in the table only as development hist
 - **Fake Quote** — distinguishing legitimate target quotes from synthetic or attested fake-meme expressions.
 - **Quote Completion** — normalized exact-match completion of established quote forms.
 - **Correct / n** — raw correct count and total scored items.
-
-## Ranking policy
-
-A row belongs in the official table only when all of the following are available:
-
-1. a frozen INM version or immutable commit;
-2. per-item isolated evaluation;
-3. web, RAG, tools, MCP, and external retrieval disabled;
-4. exact model/version and backend recorded;
-5. quantization recorded when applicable;
-6. reasoning and sampling overrides recorded when applicable;
-7. raw item-level results or equivalent auditable evidence;
-8. no undisclosed manual answer correction or item exclusion.
-
-The scoreboard is a presentation layer. [`results/README.md`](results/README.md) remains the normative submission and verification policy.
 
 ## Scoreboard data workflow
 
