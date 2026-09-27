@@ -70,6 +70,10 @@ If Ollama is exposed on another host or port, change only `OLLAMA_BASE_URL`, for
 OLLAMA_BASE_URL=http://127.0.0.1:15000/v1
 ```
 
+### Sampling settings
+
+INM does **not** set `temperature` for `ollama-local` by default. Ollama/model defaults are used unless you explicitly add a `temperature` value to `configs/models.yaml`. This avoids silently replacing model-family-specific recommended sampling behavior with a benchmark-wide `temperature: 0`. Any explicit sampling override should be reported with the benchmark result.
+
 ### Output-token limits
 
 INM does **not** set `max_tokens` for `ollama-local` by default. This is intentional. Thinking/reasoning models may spend part of the output budget on reasoning before emitting the final short benchmark answer, so a low cap such as `128` can truncate the response before the answer appears.

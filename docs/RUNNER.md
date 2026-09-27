@@ -85,7 +85,6 @@ models:
     model: YOUR_EXACT_MODEL_ID
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
-    temperature: 0
 ```
 
 Run it with:
@@ -111,7 +110,6 @@ models:
     model: YOUR_EXACT_MODEL_ID
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
-    temperature: 0
 ```
 
 Some models use `max_completion_tokens` instead of `max_tokens`. For those models, add:
@@ -122,7 +120,7 @@ token_limit_param: max_completion_tokens
 
 Provider-specific inference controls belong under `request_params` when supported. Do not place web-search or tool configuration there; the official runner rejects tool/retrieval-related request keys.
 
-By default, INM does not send `max_tokens` for OpenAI-compatible providers. This avoids truncating thinking/reasoning models before they emit the final answer. If you deliberately set an output cap, report it with the result because it can affect scores.
+By default, INM does not send `temperature` or `max_tokens` for OpenAI-compatible providers. The backend/model therefore keeps its own default sampling behavior, and thinking/reasoning models are not cut off by a low output cap. If you deliberately override sampling or output limits, report those settings with the result because they can affect scores.
 
 ### Anthropic Claude
 
@@ -140,7 +138,6 @@ models:
     provider: anthropic
     model: YOUR_EXACT_CLAUDE_MODEL_ID
     api_key_env: ANTHROPIC_API_KEY
-    temperature: 0
     max_tokens: 8192
 ```
 
@@ -228,7 +225,6 @@ models:
     model_env: LLAMA_CPP_MODEL_ID
     base_url: http://127.0.0.1:8080/v1
     base_url_env: LLAMA_CPP_BASE_URL
-    temperature: 0
 ```
 
 Most local llama.cpp servers do not require a real API key. The INM adapter uses a placeholder automatically when the referenced environment variable is empty. `LLAMA_CPP_MODEL_ID` should match the server API model id; using `--alias inm-local` is the easiest way to make that stable. If you do not use `--alias`, inspect `GET /v1/models` and put the returned id in `.env`.

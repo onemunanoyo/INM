@@ -129,7 +129,6 @@ models:
     model: YOUR_EXACT_MODEL_ID
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
-    temperature: 0
 ```
 
 Set the corresponding secret in `.env`:
@@ -186,7 +185,6 @@ models:
     model: YOUR_LLAMA_CPP_MODEL_ID
     base_url: http://127.0.0.1:8080/v1
     api_key_env: LLAMA_CPP_API_KEY
-    temperature: 0
 ```
 
 A normal local llama.cpp server often does not require a real API key, so `LLAMA_CPP_API_KEY` may remain empty.

@@ -129,7 +129,6 @@ models:
     model: YOUR_EXACT_MODEL_ID
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
-    temperature: 0
 ```
 
 `.env` には対応するキーを設定します。
