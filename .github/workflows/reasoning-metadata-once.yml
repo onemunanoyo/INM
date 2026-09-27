@@ -43,6 +43,10 @@ jobs:
           edit('docs/RUNNER.md', [
               ('thinking/reasoning models are not cut off by a low output cap', 'Reasoning-capable models are not cut off by a low output cap'),
           ])
+          edit('configs/models.example.yaml', [
+              ('reasoning/thinking\n# models may also spend output budget on internal reasoning', 'Reasoning-capable\n# models may also spend output budget on internal reasoning'),
+              ('thinking/reasoning models whose reasoning tokens may consume output', 'Reasoning-capable models whose reasoning tokens may consume output'),
+          ])
           edit('README.md', [
               ('Recommended result reports should also include the exact model/version, quantization where relevant, inference backend, Local/Cloud classification, sampling settings, system-prompt hash, evaluation date, and item-isolation method.',
                'Recommended result reports should also include the exact model/version, quantization where relevant, inference backend, Local/Cloud classification, Reasoning (`on` / `off`), optional Reasoning detail, sampling settings, system-prompt hash, evaluation date, and item-isolation method.'),
@@ -59,13 +63,15 @@ jobs:
       - name: Check terminology leftovers
         run: |
           set -e
-          ! grep -R -n -E 'reasoning / thinking|reasoning/thinking|thinking/reasoning|reasoning / sampling|temperature / reasoning|LLAMA_CPP_API_KEY' README.md README.ja.md docs results score.md score.ja.md configs .github/PULL_REQUEST_TEMPLATE runner || false
+          if grep -R -n -E 'reasoning / thinking|reasoning/thinking|thinking/reasoning|reasoning / sampling|temperature / reasoning|LLAMA_CPP_API_KEY' README.md README.ja.md docs results score.md score.ja.md configs .github/PULL_REQUEST_TEMPLATE runner; then
+            exit 1
+          fi
       - name: Check diff
         run: git diff --check
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md README.ja.md docs/RUNNER.md docs/EVALUATION_PROTOCOL.md score.md score.ja.md
+          git add README.md README.ja.md docs/RUNNER.md docs/EVALUATION_PROTOCOL.md score.md score.ja.md configs/models.example.yaml
           git commit -m 'Clean up Reasoning terminology'
           git push
