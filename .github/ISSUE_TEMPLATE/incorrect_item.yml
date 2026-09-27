@@ -1,0 +1,72 @@
+name: "問題の誤り・曖昧さ / Incorrect benchmark item"
+description: "問題文・正解・選択肢・出典・曖昧さに関する報告"
+title: "[Item] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        報告ありがとうございます。問題の再検証に必要な情報を、分かる範囲で記入してください。
+        実在人物の特定・詮索ではなく、作品／ミーム上の情報と出典に基づいて議論してください。
+
+  - type: input
+    id: item_id
+    attributes:
+      label: "Item ID"
+      description: "分かる場合は candidate ID / stable ID / display ID を記入してください。"
+      placeholder: "例: inm_quote_001 / b03_ss_004"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: problem_type
+    attributes:
+      label: "問題の種類 / Problem type"
+      options:
+        - "正解が誤っている / Incorrect answer"
+        - "問題文が曖昧 / Ambiguous question"
+        - "複数の選択肢が成立する / Multiple valid choices"
+        - "出典が不十分・不適切 / Source issue"
+        - "表記揺れ・定着形の扱い / Variant or canonicalization issue"
+        - "難易度・分類の問題 / Difficulty or taxonomy issue"
+        - "その他 / Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_problem
+    attributes:
+      label: "現在の問題 / Current item"
+      description: "問題文・選択肢・現在の正解など、問題箇所が分かる範囲で記載してください。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_fix
+    attributes:
+      label: "提案する修正 / Proposed correction"
+      description: "正しいと考える内容、または修正案を記載してください。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "根拠・出典 / Evidence and sources"
+      description: "URL、作品・章、該当箇所、複数資料の一致などを記載してください。"
+      placeholder: "可能であれば複数の独立した資料を示してください。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: "補足 / Additional notes"
+      description: "表記揺れ、聞き取り差、定着形、反例などがあれば記載してください。"
+
+  - type: checkboxes
+    id: conduct
+    attributes:
+      label: "確認 / Checklist"
+      options:
+        - label: "作品・ミーム上の情報として扱い、実在人物の特定や個人攻撃を目的としていません。"
+          required: true
