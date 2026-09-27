@@ -26,13 +26,16 @@ python scripts/render_scoreboard.py
 
 メイン比較表には、**現在のworking datasetで実行した結果だけ**を表示します。古いdataset revisionや無効化したrunner設定の結果は、現在の結果と混ぜず、下の履歴欄に監査用として残します。
 
-| モデル | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Dataset | 日付 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | working v0.1、195問 | 2026-09-27 |
+| モデル | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Format | 日付 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---:|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | 195/195 | 2026-09-27 |
+| gemma-4-E4B-it-GGUF | **22.6%** | 19.4% | 26.6% (21/79) | 26.6% (17/64) | 20.8% (5/24) | 3.6% (1/28) | 25.7% (43/167) | 44/195 | Ollama | Q4_K_M | `temperature: 0.6`、output capなし | 193/195 | 2026-09-27 |
 
-ビジュアルカードは、この195問run (`20260927T061853Z_ollama-local_fe076f9f`) を表示しています。195問すべてをitem isolation条件で完走し、記録上のitem errorとformat errorはともに0件、Web / RAG / toolsは無効です。
+どちらも現行195問working setをitem isolation条件で実行し、Web / RAG / toolsは無効です。
 
-4択167問では **30.5% (51/167)** で、ランダム回答の期待値25%を上回っています。p=0.25を仮定した51/167以上の片側二項確率は約 **0.061** なので、この1runだけで安定したINM知識があると強く結論づける結果ではありません。
+4択部分では、E2B Aggressiveが **30.5% (51/167)** で、p=0.25を仮定した片側二項確率は約 **0.061** です。E4B-itは **25.7% (43/167)** で、同じ条件の片側二項確率は約 **0.441** です。どちらも開発結果であり、この時点で安定したモデル順位を確定するものではありません。
+
+E4B-it runではformat非準拠が2件あり、1件は空出力、もう1件は回答拒否形式でした。いずれも通常の評価ルールどおり不正解として集計しています。
 
 <details>
 <summary><strong>過去のDevelopment run</strong></summary>
