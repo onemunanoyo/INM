@@ -130,7 +130,6 @@ models:
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
     temperature: 0
-    max_tokens: 128
 ```
 
 `.env` には対応するキーを設定します。

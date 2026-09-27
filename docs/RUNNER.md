@@ -86,7 +86,6 @@ models:
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
     temperature: 0
-    max_tokens: 128
 ```
 
 Run it with:
@@ -113,7 +112,6 @@ models:
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
     temperature: 0
-    max_tokens: 128
 ```
 
 Some models use `max_completion_tokens` instead of `max_tokens`. For those models, add:
@@ -123,6 +121,8 @@ token_limit_param: max_completion_tokens
 ```
 
 Provider-specific inference controls belong under `request_params` when supported. Do not place web-search or tool configuration there; the official runner rejects tool/retrieval-related request keys.
+
+By default, INM does not send `max_tokens` for OpenAI-compatible providers. This avoids truncating thinking/reasoning models before they emit the final answer. If you deliberately set an output cap, report it with the result because it can affect scores.
 
 ### Anthropic Claude
 
@@ -141,7 +141,7 @@ models:
     model: YOUR_EXACT_CLAUDE_MODEL_ID
     api_key_env: ANTHROPIC_API_KEY
     temperature: 0
-    max_tokens: 128
+    max_tokens: 8192
 ```
 
 ### DeepSeek
@@ -189,6 +189,8 @@ python -m runner.run --model ollama-local --limit 5
 
 `OLLAMA_MODEL_ID` is intentionally explicit rather than auto-detected so benchmark results record the exact model tag used. See [`OLLAMA.md`](OLLAMA.md) for the complete Ollama setup.
 
+`ollama-local` intentionally has no `max_tokens` setting by default. If your local `configs/models.yaml` was copied from an older revision, remove the old 128-token cap before running a thinking model.
+
 ### Local llama.cpp
 
 The INM runner does not launch llama.cpp and does not scan for an available port. Start `llama-server` separately.
@@ -208,7 +210,6 @@ The example model config keeps `http://127.0.0.1:8080/v1` and `inm-local` as fal
 ```dotenv
 LLAMA_CPP_BASE_URL=http://127.0.0.1:8080/v1
 LLAMA_CPP_MODEL_ID=inm-local
-LLAMA_CPP_API_KEY=
 ```
 
 For example, when the server listens on port 5000:
@@ -227,9 +228,7 @@ models:
     model_env: LLAMA_CPP_MODEL_ID
     base_url: http://127.0.0.1:8080/v1
     base_url_env: LLAMA_CPP_BASE_URL
-    api_key_env: LLAMA_CPP_API_KEY
     temperature: 0
-    max_tokens: 128
 ```
 
 Most local llama.cpp servers do not require a real API key. The INM adapter uses a placeholder automatically when the referenced environment variable is empty. `LLAMA_CPP_MODEL_ID` should match the server API model id; using `--alias inm-local` is the easiest way to make that stable. If you do not use `--alias`, inspect `GET /v1/models` and put the returned id in `.env`.
