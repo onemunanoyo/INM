@@ -35,13 +35,15 @@ BLOCKS = [
     PromotionBlock("quotes/source.jsonl", 19, "character.jsonl", "character", 1, "A", 8, "quote_source"),
     PromotionBlock("entities/association.jsonl", 23, "character.jsonl", "character", 1, "C", 1, "entity"),
     PromotionBlock("quotes/speaker.jsonl", 23, "character.jsonl", "character", 1, "C", 24, "quote_speaker"),
+    PromotionBlock("entities/terminology.jsonl", 7, "character.jsonl", "character", 1, "C", 47, "terminology"),
     PromotionBlock("roles/karate_club.jsonl", 6, "structure.jsonl", "structure", 2, "A", 1, "relation"),
     PromotionBlock("work/scene_character.jsonl", 20, "structure.jsonl", "structure", 2, "B", 1, "scene"),
+    PromotionBlock("structure/context.jsonl", 18, "structure.jsonl", "structure", 2, "B", 21, "context"),
     PromotionBlock("quotes/pairing.jsonl", 20, "structure.jsonl", "structure", 2, "C", 1, "pairing"),
     PromotionBlock("quotes/completion.jsonl", 28, "quote_completion.jsonl", "quote_completion", 4, "A", 1, "completion"),
 ]
 
-EXPECTED_TOTAL = 146
+EXPECTED_TOTAL = 171
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
