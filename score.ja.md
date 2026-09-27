@@ -22,32 +22,31 @@ python scripts/render_scoreboard.py
 
 を実行すると、英語版・日本語版のSVGカードを `docs/assets/` に再生成できます。
 
-## Development / Exploratory Runs
+## 現行Development run
 
-以下は開発中の参考結果です。**正式Leaderboardの順位には含めません。** 未固定dataset、旧runner設定、raw result未公開、その他protocol mismatchがある結果をここに置きます。
+メイン比較表には、**現在のworking datasetで実行した結果だけ**を表示します。古いdataset revisionや無効化したrunner設定の結果は、現在の結果と混ぜず、下の履歴欄に監査用として残します。
 
-| モデル | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Dataset | 日付 |
+| モデル | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Dataset | 日付 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | working v0.1、195問 | 2026-09-27 |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | Batch04前、171問 | 2026-09-27 |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` 強制の旧設定 | Batch04前、171問 | 2026-09-27 |
 
-\* `INM Macro` は、そのrun内で得点対象itemが存在するカテゴリのaccuracyを単純平均した値です。195問runは現在の4カテゴリすべてを含みます。旧171問runはFake Quote未収録のため、3つの非空カテゴリだけを平均しています。
+ビジュアルカードは、この195問run (`20260927T061853Z_ollama-local_fe076f9f`) を表示しています。195問すべてをitem isolation条件で完走し、記録上のitem errorとformat errorはともに0件、Web / RAG / toolsは無効です。
 
-### 現在グラフに表示している開発run
+4択167問では **30.5% (51/167)** で、ランダム回答の期待値25%を上回っています。p=0.25を仮定した51/167以上の片側二項確率は約 **0.061** なので、この1runだけで安定したINM知識があると強く結論づける結果ではありません。
 
-グラフは **195問** の `temperature: 0.6` run (`20260927T061853Z_ollama-local_fe076f9f`) を表示しています。195問すべてをitem isolation条件で完走し、記録上のitem errorとformat errorはともに0件、Web / RAG / toolsは無効、output-token capはありません。
+<details>
+<summary><strong>過去のDevelopment run</strong></summary>
 
-総合は **52/195 = 26.7%** でした。カテゴリ別では、
+以下は監査・開発履歴として保持しています。いずれもBatch04昇格前の171問working setで実行したため、現在の195問setとは直接比較しません。
 
-- Character / Work: **24.1% (19/79)**
-- Structure: **37.5% (24/64)**
-- Fake Quote: **33.3% (8/24)**
-- Quote Completion: **3.6% (1/28)**
+| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Sampling | Dataset | Run ID |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | Batch04前、171問 | `20260927T053604Z_ollama-local_fae79399` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `20260927T051313Z_ollama-local_4ee79ea9` |
 
-4択167問だけでは **30.5% (51/167)** で、ランダム回答の期待値25%を上回っています。ただし、この1runだけで安定したINM知識があると結論づけるほど強い差ではありません。p=0.25のランダム回答を仮定したとき、51/167以上になる片側二項確率は約 **0.061** です。
+旧 `temperature: 0` runは、当時のrunnerが現在は廃止したsampling overrideを強制していたため、モデルの代表性能としては無効化した結果です。
 
-旧171問runは開発履歴として残していますが、現在の195問working setとは直接比較しない方が安全です。
+</details>
 
 ## Official / Isolated Leaderboard
 
@@ -97,4 +96,4 @@ docs/assets/scoreboard_categories.svg
 docs/assets/scoreboard_categories_ja.svg
 ```
 
-完全な再現情報とitem-level raw resultは `results/` 以下で管理し、`data/leaderboard.json` は表示用のコンパクトなデータソースとして扱います。
+完全な再現情報とitem-level raw resultは `results/` 以下で管理し、`data/leaderboard.json` は表示用のコンパクトなデータソースとして扱います。履歴entryは `archived: true`、`show_in_chart: false` として残します。
