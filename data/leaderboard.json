@@ -8,13 +8,40 @@
     "quote_completion_n": 28,
     "chance_baseline_overall": 21.4
   },
-  "chance_baseline_overall": 20.9,
-  "chance_baseline_scope": "displayed 171-item pre-Batch04 run set",
+  "chance_baseline_overall": 21.4,
+  "chance_baseline_scope": "current 195-item working v0.1 set",
   "entries": [
+    {
+      "id": "gemma4-e2b-hauhaucs-q6kp-temp06-195-20260927",
+      "model": "hf.co/HauhauCS/Gemma-4-E2B-Uncensored-HauhauCS-Aggressive:Q6_K_P",
+      "chart_label": "Gemma-4 E2B Aggressive",
+      "family_creator": "Gemma / HauhauCS",
+      "overall": 26.7,
+      "macro": 24.6,
+      "categories": {
+        "character_work": {"score": 24.1, "correct": 19, "n": 79},
+        "structure": {"score": 37.5, "correct": 24, "n": 64},
+        "fake_quote": {"score": 33.3, "correct": 8, "n": 24},
+        "quote_completion": {"score": 3.6, "correct": 1, "n": 28}
+      },
+      "four_choice": {"score": 30.5, "correct": 51, "n": 167},
+      "correct": 52,
+      "n": 195,
+      "dataset_revision": "working v0.1 current canonical set (195 items)",
+      "backend": "Ollama",
+      "quantization": "Q6_K_P",
+      "sampling": "temperature=0.6; max_tokens unset",
+      "track": "Development / Exploratory",
+      "official": false,
+      "show_in_chart": true,
+      "date": "2026-09-27",
+      "run_id": "20260927T061853Z_ollama-local_fe076f9f",
+      "notes": "Current 195-item working v0.1 set including 24 Fake Quote items; 0 item errors, 0 format failures, isolated evaluation, web/RAG/tools disabled."
+    },
     {
       "id": "gemma4-e2b-hauhaucs-q6kp-temp06-20260927",
       "model": "hf.co/HauhauCS/Gemma-4-E2B-Uncensored-HauhauCS-Aggressive:Q6_K_P",
-      "chart_label": "Gemma-4 E2B Aggressive",
+      "chart_label": "Gemma-4 E2B Aggressive (171-item run)",
       "family_creator": "Gemma / HauhauCS",
       "overall": 21.6,
       "macro": 17.4,
@@ -33,10 +60,10 @@
       "sampling": "temperature=0.6; max_tokens unset",
       "track": "Development / Exploratory",
       "official": false,
-      "show_in_chart": true,
+      "show_in_chart": false,
       "date": "2026-09-27",
       "run_id": "20260927T053604Z_ollama-local_fae79399",
-      "notes": "Pre-Batch04 working v0.1 run. Current canonical working set is 195 items and includes 24 Fake Quote items."
+      "notes": "Pre-Batch04 working v0.1 run; retained as development history."
     },
     {
       "id": "gemma4-e2b-hauhaucs-q6kp-temp0-legacy-20260927",
