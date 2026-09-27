@@ -22,14 +22,6 @@ python scripts/render_scoreboard.py
 
 を実行すると、英語版・日本語版のSVGカードを `docs/assets/` に再生成できます。
 
-## Official / Isolated Leaderboard
-
-原則として **INM Overall** の降順で順位付けします。同じモデルでも、reasoning、sampling、量子化、backendなどが実質的に異なる場合は別行として扱います。
-
-| 順位 | モデル | 系列 / 作成者 | **INM Overall ↑** | INM Macro ↑ | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Backend | 量子化 | Sampling | 日付 | Result |
-|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| — | _正式採用された結果はまだありません_ | | | | | | | | | | | | | |
-
 ## Development / Exploratory Runs
 
 以下は開発中の参考結果です。**正式Leaderboardの順位には含めません。** 未固定dataset、旧runner設定、raw result未公開、その他protocol mismatchがある結果をここに置きます。
@@ -49,6 +41,25 @@ python scripts/render_scoreboard.py
 
 旧 `temperature: 0` runは開発履歴として表に残しています。現在のINMはtemperatureをデフォルトでは強制せず、明示overrideしない限りbackend / model側の既定samplingを使います。
 
+## Official / Isolated Leaderboard
+
+正式Leaderboardは、最初の **固定INM release** を公開した後に運用を開始します。それまでは、空の順位表を表示しない方針です。
+
+Contributorから提出された結果は、少なくとも以下を満たす場合にOfficial掲載候補になります。
+
+- 固定されたINM releaseまたはimmutable benchmark commitを使用している
+- 1 itemごとに独立したrequestで評価している
+- Web search、RAG、tools、MCP、external retrievalを使っていない
+- 正確なmodel/versionとbackendが記録されている
+- 該当する場合は量子化情報が記録されている
+- reasoning / sampling overrideがある場合は明示されている
+- item-level raw resultまたは同等に監査可能な証拠がある
+- 非公開のmanual correctionやitem exclusionがない
+
+条件を満たす結果が1件以上入った段階で、Official表を表示し、原則として **INM Overall** の降順で順位付けします。同じモデルでもreasoning、sampling、量子化、backendが実質的に異なる場合は別行として扱います。
+
+結果提出は [`results/README.md`](results/README.md) の手順に従ってください。このスコアボードは表示用であり、提出・検証ルールはそちらを正式仕様とします。
+
 ## スコア指標
 
 - **INM Overall** — 全得点対象itemに対するaccuracy。Leaderboardの主指標です。
@@ -58,21 +69,6 @@ python scripts/render_scoreboard.py
 - **Fake Quote** — 正規語録とsynthetic / attested fake memeの識別です。
 - **Quote Completion** — 定着した語録の空欄をnormalized exact matchで評価します。
 - **正解 / n** — raw correct countと得点対象item総数です。
-
-## ランキング掲載条件
-
-Official表へ掲載するには、少なくとも以下を満たす必要があります。
-
-1. 固定されたINM versionまたはimmutable commitを使っていること
-2. 1 itemごとのisolated evaluationであること
-3. Web、RAG、tools、MCP、external retrievalが無効であること
-4. 正確なmodel/versionとbackendが記録されていること
-5. 該当する場合は量子化が記録されていること
-6. reasoning / sampling overrideがある場合は明示されていること
-7. item-level raw resultまたは同等に監査可能な証拠があること
-8. 非公開のmanual correctionやitem exclusionがないこと
-
-このスコアボードは表示用です。結果提出・検証の正式ルールは [`results/README.md`](results/README.md) を優先します。
 
 ## スコアボード更新方法
 
