@@ -4,7 +4,7 @@ A compact visual leaderboard for comparing model performance on INM.
 
 English | [日本語](score.ja.md)
 
-> **Status:** INM v0.1 is still under authoring and review. Official rankings should only use a frozen benchmark release and an auditable `Official / Isolated` run. Submission requirements live in [`results/README.md`](results/README.md).
+> **Status:** INM v0.1 is still under authoring and review. The current canonical working set contains **195 items**. Official rankings should only use a frozen benchmark release and an auditable `Official / Isolated` run. Submission requirements live in [`results/README.md`](results/README.md).
 
 ## Visual scoreboard
 
@@ -12,7 +12,7 @@ English | [日本語](score.ja.md)
 
 ![INM category scores](docs/assets/scoreboard_categories.svg)
 
-The dashed line on the Overall card is the approximate random-answer baseline for the current working set: 143 four-choice items at 25% chance plus 28 free-text completion items, giving about **20.9% overall**. It is a development reference, not a universal baseline for future INM versions.
+The dashed line on the Overall card corresponds to the **displayed 171-item pre-Batch04 run set**: 143 four-choice items at 25% chance plus 28 free-text completion items, giving about **20.9% overall**. The current canonical working set is now 195 items, including 24 Fake Quote items, so this line is not the current 195-item-set baseline.
 
 The cards are generated from [`data/leaderboard.json`](data/leaderboard.json):
 
@@ -31,11 +31,13 @@ These rows are useful while developing INM, but **do not count as official leade
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | Development / Exploratory | 2026-09-27 |
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` legacy forced config, no output cap | Exploratory / invalidated settings | 2026-09-27 |
 
-\* `INM Macro` is the unweighted mean of category accuracies that contain scored items in that run. The current working v0.1 dataset has no promoted Fake Quote items yet, so these runs average the three non-empty categories.
+\* `INM Macro` is the unweighted mean of category accuracies that contain scored items in that run. Both listed runs predate the Batch04 Fake Quote promotion, so their 171-item run set contains no Fake Quote items and the macro averages the three non-empty categories.
 
 ### Current displayed development run
 
-The visual cards currently show the newer `temperature: 0.6` run. It used 171 isolated items with no output-token cap and completed with no recorded item errors. Its overall score is **37/171 = 21.6%**. The four-choice subset is **37/143 = 25.9%**, extremely close to the 25% random-choice expectation, and Quote Completion is **0/28**.
+The visual cards currently show the newer `temperature: 0.6` run. It used the **171-item pre-Batch04 working set**, with no output-token cap and no recorded item errors. Its overall score is **37/171 = 21.6%**. The four-choice subset is **37/143 = 25.9%**, extremely close to the 25% random-choice expectation, and Quote Completion is **0/28**.
+
+Because Batch04 has now promoted 24 Fake Quote items, the current canonical working set is **195 items**. The displayed run should therefore be treated as historical development data until the model is rerun on the 195-item set.
 
 The older `temperature: 0` run is retained in the table only as development history. INM no longer forces temperature by default; backend/model defaults are preferred unless the evaluator explicitly records an override.
 
