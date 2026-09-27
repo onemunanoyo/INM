@@ -334,7 +334,7 @@ Other useful options:
 ```text
 --config PATH      model YAML; default: configs/models.yaml
 --dataset PATH     JSONL file or directory; default: data/v0.1
---prompt PATH      system prompt; default: prompts/system_v0.1.txt
+--prompt PATH      system prompt; default: prompts/system_v0.2.txt
 --limit N          run only the first N items
 --retries N        provider retries per item; default: 2
 --fail-fast        stop at the first provider error
@@ -413,7 +413,7 @@ The repository includes a dedicated benchmark-result pull-request template under
 
 Each model call contains only:
 
-1. `prompts/system_v0.1.txt`;
+1. `prompts/system_v0.2.txt`;
 2. the current benchmark item.
 
 The runner does not append previous questions or answers and does not use conversation IDs, previous-response IDs, or persistent chat history.
@@ -439,9 +439,11 @@ Do not add retrieval or tool configuration when producing official INM scores.
 
 ## Provider-specific inference settings
 
-Reasoning mode, reasoning effort, sampling parameters, and similar provider-specific inference settings are runtime configuration, not part of the INM system prompt.
+The standard `system_v0.2.txt` prompt explicitly tells the model to use its available reasoning/thinking capabilities when useful, while requiring only the final answer in the visible response. This instruction does not itself enable a provider-specific reasoning mode or choose a reasoning-effort level.
 
-When comparing results, report those settings alongside the exact model/version. They should not be silently changed between runs intended for direct comparison.
+Provider/model reasoning mode, reasoning effort, sampling parameters, and similar inference controls remain runtime configuration. When comparing results, report those settings alongside the exact model/version. They should not be silently changed between runs intended for direct comparison.
+
+`prompts/system_v0.1.txt` is retained so historical development runs can be reproduced. Results produced with v0.1 and v0.2 should not be treated as prompt-identical comparisons.
 
 ## Official-score requirements
 

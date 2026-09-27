@@ -168,50 +168,34 @@ For Quote Completion:
 
 Prompt wording used for an official result MUST be reported with the score.
 
+The current standard prompt is `prompts/system_v0.2.txt`. It explicitly allows/encourages internal reasoning when useful while requiring only the final answer to be emitted. `system_v0.1.txt` is retained for reproducing older development runs.
+
 ---
 
-## 7. Direct and Reasoning Modes
+## 7. Reasoning / Thinking Behavior
 
-INM may be evaluated in more than one inference mode, but results MUST NOT be mixed.
+The standard INM system prompt (`prompts/system_v0.2.txt`) tells the model to use its available reasoning or thinking capabilities when useful before answering. A short final-answer format MUST NOT be interpreted as an instruction to suppress internal reasoning.
 
-Recommended labels:
+The visible response still contains only the required final answer. Hidden reasoning is acceptable. If a backend exposes reasoning text separately, that reasoning remains item-specific state and MUST be discarded before the next item.
 
-```text
-INM Direct
-INM Reasoning
-```
+Provider/model controls such as reasoning mode, thinking budget, reasoning effort, or equivalent inference-time computation remain runtime settings. The system prompt does not force a backend feature that is disabled by the evaluator or unsupported by the model.
 
-### INM Direct
-
-The model is asked for the final answer only.
-
-### INM Reasoning
-
-The model may use a provider/model reasoning mode or additional inference-time computation.
-
-If reasoning is hidden by the provider, that is acceptable. If reasoning text is generated, it remains item-specific state and MUST be discarded before the next item.
+Runs with materially different reasoning settings MUST report those settings and SHOULD NOT be treated as configuration-identical comparisons.
 
 ---
 
 ## 8. Sampling Settings
 
-Official comparisons should prefer deterministic or near-deterministic inference where supported.
+INM does not require a benchmark-wide forced temperature or top-p value. By default, evaluators SHOULD preserve the model/backend sampling defaults unless the evaluation track explicitly defines an override.
 
-Recommended default:
+Any explicit sampling override can affect the result and MUST be reported. Runs intended for direct comparison should use the same effective sampling configuration where practical.
 
-```text
-temperature = 0
-top_p = 1
-```
+Report at minimum when available:
 
-If a runtime does not support these exact values, report the effective settings.
-
-For stochastic evaluation, report at minimum:
-
-- temperature;
-- top-p;
+- temperature, including whether it was unset/provider-default;
+- top-p, including whether it was unset/provider-default;
 - seed, if available;
-- number of runs.
+- number of runs for stochastic evaluation.
 
 ---
 
