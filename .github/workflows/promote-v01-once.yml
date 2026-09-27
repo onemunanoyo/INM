@@ -1,0 +1,41 @@
+name: Promote v0.1 canonical data once
+
+on:
+  push:
+    paths:
+      - scripts/promote_v01.py
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate canonical v0.1 working data
+        run: python scripts/promote_v01.py
+
+      - name: Validate canonical data
+        run: python scripts/validate.py
+
+      - name: Commit generated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/v0.1/character.jsonl data/v0.1/structure.jsonl data/v0.1/quote_completion.jsonl data/v0.1/fake_quote.jsonl data/v0.1/README.md
+          if git diff --cached --quiet; then
+            echo "No generated changes."
+            exit 0
+          fi
+          git commit -m "Generate canonical v0.1 working data"
+          git push
