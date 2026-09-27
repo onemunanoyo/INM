@@ -122,7 +122,7 @@ Provider-specific inference controls belong under `request_params` when supporte
 
 For reporting, INM normalizes only `reasoning: "on"` or `reasoning: "off"`. Optional `reasoning_detail` is a free-form string for the provider/model-specific setting, such as `xhigh`, `max`, `reasoning_effort=high`, or `thinking_budget=32768`. These two fields are metadata; actual provider controls remain in `request_params` / `extra_body`.
 
-By default, INM does not send `temperature` or `max_tokens` for OpenAI-compatible providers. The backend/model therefore keeps its own default sampling behavior, and thinking/reasoning models are not cut off by a low output cap. If you deliberately override sampling or output limits, report those settings with the result because they can affect scores.
+By default, INM does not send `temperature` or `max_tokens` for OpenAI-compatible providers. The backend/model therefore keeps its own default sampling behavior, and Reasoning-capable models are not cut off by a low output cap. If you deliberately override sampling or output limits, report those settings with the result because they can affect scores.
 
 ### Anthropic Claude
 

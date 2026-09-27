@@ -207,8 +207,6 @@ If a backend exposes reasoning text separately, that content remains item-specif
 
 ---
 
----
-
 ## 8. Sampling Settings
 
 INM does not require a benchmark-wide forced temperature or top-p value. By default, evaluators SHOULD preserve the model/backend sampling defaults unless the evaluation track explicitly defines an override.

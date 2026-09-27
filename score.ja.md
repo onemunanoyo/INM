@@ -24,7 +24,7 @@ python scripts/render_scoreboard.py
 
 ## 現行Development run
 
-現在の標準System promptは [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt) です。必要に応じて利用可能なreasoning / thinkingを使い、visible outputには最終回答だけを出すよう明示しています。
+現在の標準System promptは [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt) です。必要に応じて利用可能なReasoningを使い、visible outputには最終回答だけを出すよう明示しています。
 
 **現時点では `system_v0.2` で取得したDevelopment runはまだありません。** 195問working setで各modelを再実行した結果から、ここへ追加します。
 
@@ -57,7 +57,7 @@ Contributorから提出された結果は、少なくとも以下を満たす場
 - Web search、RAG、tools、MCP、external retrievalを使っていない
 - 正確なmodel/versionとbackendが記録されている
 - 該当する場合は量子化情報が記録されている
-- reasoning / sampling overrideがある場合は明示されている
+- Reasoning (`on` / `off`)、任意のReasoning detail、sampling overrideが明示されている
 - item-level raw resultまたは同等に監査可能な証拠がある
 - 非公開のmanual correctionやitem exclusionがない
 

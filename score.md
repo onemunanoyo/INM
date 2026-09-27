@@ -61,7 +61,7 @@ A contributed result can qualify for the official leaderboard when it uses:
 - auditable item-level raw results or equivalent evidence;
 - no undisclosed manual answer correction or item exclusion.
 
-Once at least one qualifying result exists, official rows will be ranked primarily by **INM Overall**. Materially different reasoning, sampling, quantization, or backend configurations should be listed as separate rows.
+Once at least one qualifying result exists, official rows will be ranked primarily by **INM Overall**. Materially different Reasoning, sampling, quantization, or backend configurations should be listed as separate rows.
 
 Contributors can submit results using the process in [`results/README.md`](results/README.md). The scoreboard is only the presentation layer; that document remains the normative submission and verification policy.
 

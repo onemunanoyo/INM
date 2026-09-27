@@ -17,7 +17,7 @@
 #
 # IMPORTANT: INM does not impose sampling temperature or max_tokens on
 # OpenAI-compatible providers by default. Different model families have
-# different recommended/default decoding settings, and reasoning/thinking
+# different recommended/default decoding settings, and Reasoning-capable
 # models may also spend output budget on internal reasoning before producing
 # the short benchmark answer. Add temperature/max_tokens only when you
 # deliberately want to override the backend/model defaults, and report those
@@ -52,7 +52,7 @@ models:
     # reasoning_detail: "provider/model default"
     # No temperature/max_tokens by default. This is especially important for
     # model families with their own recommended sampling settings and for
-    # thinking/reasoning models whose reasoning tokens may consume output
+    # Reasoning-capable models whose reasoning tokens may consume output
     # budget before the final answer.
     # temperature: 0.6
     # max_tokens: 4096

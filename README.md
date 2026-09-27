@@ -357,7 +357,7 @@ When category sizes differ, report both:
 - **INM Macro** — mean of category accuracies
 - **INM Overall** — accuracy over all scored items
 
-Recommended result reports should also include the exact model/version, quantization where relevant, inference backend, Local/Cloud classification, sampling settings, system-prompt hash, evaluation date, and item-isolation method.
+Recommended result reports should also include the exact model/version, quantization where relevant, inference backend, Local/Cloud classification, Reasoning (`on` / `off`), optional Reasoning detail, sampling settings, system-prompt hash, evaluation date, and item-isolation method.
 
 ## Statistical uncertainty
 

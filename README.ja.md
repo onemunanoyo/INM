@@ -370,7 +370,7 @@ Quote Completion は、必要な正規化と明示的な許容表記を適用し
 - **INM Macro** — 各カテゴリ正答率の単純平均
 - **INM Overall** — 全問題をまとめた正答率
 
-結果公開時には、可能な限りモデル名・正確なバージョン、量子化、推論backend、Local / Cloud、sampling設定、system prompt hash、評価日、item isolation方法も記録してください。
+結果公開時には、可能な限りモデル名・正確なバージョン、量子化、推論backend、Local / Cloud、Reasoning (`on` / `off`)、任意のReasoning detail、sampling設定、system prompt hash、評価日、item isolation方法も記録してください。
 
 ## 統計的な誤差
 
