@@ -1,10 +1,26 @@
 # INM スコアボード
 
-INMで評価したモデルを、総合スコアとカテゴリ別スコアで比較するための一覧です。
+INMで評価したモデルを、総合スコアとカテゴリ別スコアで視覚的に比較するためのページです。
 
 [English](score.md) | 日本語
 
 > **現在の状態:** INM v0.1 は作問・レビュー中です。正式ランキングには、固定されたbenchmark releaseを `Official / Isolated` 条件で評価し、raw resultまで監査可能な結果だけを掲載します。提出要件は [`results/README.md`](results/README.md) を参照してください。
+
+## ビジュアルスコアボード
+
+![INM 総合スコア](docs/assets/scoreboard_overall_ja.svg)
+
+![INM カテゴリ別スコア](docs/assets/scoreboard_categories_ja.svg)
+
+総合カードの破線は、現在のworking setに対する概算ランダム基準です。4択143問を25%でランダム回答し、free-textのQuote Completion 28問を偶然正解0%とみなすと、全体では約 **20.9%** になります。これは開発中v0.1用の参考線であり、今後のINM versionすべてに共通する基準ではありません。
+
+カードの元データは [`data/leaderboard.json`](data/leaderboard.json) です。
+
+```bash
+python scripts/render_scoreboard.py
+```
+
+を実行すると、英語版・日本語版のSVGカードを `docs/assets/` に再生成できます。
 
 ## Official / Isolated Leaderboard
 
@@ -14,44 +30,24 @@ INMで評価したモデルを、総合スコアとカテゴリ別スコアで�
 |---:|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
 | — | _正式採用された結果はまだありません_ | | | | | | | | | | | | | |
 
-## 縦比較マトリクス
-
-こちらは **指標を縦軸、モデルを横列** にした比較表です。モデルが増えたときに、同じ指標を横方向に見比べやすくするための表示です。
-
-| 指標 ↓ / モデル → | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive |
-|---|---:|
-| Track | Exploratory / 設定無効化済み |
-| **INM Overall** | **24.6%** |
-| INM Macro* | 19.9% |
-| Character / Work | 25.3% `███░░░░░░░` |
-| Structure | 34.4% `███░░░░░░░` |
-| Fake Quote | — |
-| Quote Completion | 0.0% `░░░░░░░░░░` |
-| 4択のみ | 29.4% (42/143) |
-| 正解 / n | 42/171 |
-| Backend | Ollama |
-| 量子化 | Q6_K_P |
-| Sampling | `temperature: 0`（旧設定） |
-| Output cap | なし |
-| 日付 | 2026-09-27 |
-
-> 簡易バーは10段階の目安表示です。正式な比較値は必ずパーセント値を使用してください。
-
 ## Development / Exploratory Runs
 
 以下は開発中の参考結果です。**正式Leaderboardの順位には含めません。** 未固定dataset、旧runner設定、raw result未公開、その他protocol mismatchがある結果をここに置きます。
 
-| モデル | 系列 / 作成者 | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Backend | 量子化 | Sampling | Track | 日付 |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | Gemma / HauhauCS | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 42/171 | Ollama | Q6_K_P | `temperature: 0`（旧設定）、output capなし | Exploratory / invalidated settings | 2026-09-27 |
+| モデル | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Track | 日付 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | Development / Exploratory | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` 強制の旧設定、output capなし | Exploratory / invalidated settings | 2026-09-27 |
 
 \* `INM Macro` は、そのrun内で実際に得点対象itemが存在するカテゴリのaccuracyを単純平均した値です。現在のworking v0.1にはpromote済みFake Quote itemがまだないため、上記runでは3カテゴリの平均です。
 
-### 現在のGemma runを正式順位に入れない理由
+### 現在グラフに表示している開発run
 
-このrunは、旧INM設定により `temperature: 0` が強制されていました。現在のINMはtemperatureをデフォルトでは送らず、backend / model側の既定samplingを使用します。また、このrunは固定releaseではなく、更新中のworking v0.1 datasetで実施されています。
+グラフは新しい `temperature: 0.6` runを表示しています。171問をitem isolation条件で実行し、output-token capはなく、記録上のitem errorは0件です。総合は **37/171 = 21.6%** でした。
 
-参考として、このrunには4択143問とQuote Completion 28問が含まれています。4択のみでは **29.4% (42/143)** で、4択ランダム回答の期待値 **25%** に近い結果です。Quote Completionは **0/28** でした。そのため、この結果は安定したモデル順位ではなく、開発中のdatapointとして扱います。
+4択部分だけでは **37/143 = 25.9%** で、ランダム回答の期待値25%に極めて近く、Quote Completionは **0/28** です。そのため、現時点では「このモデルがINM知識を明確に保持している」と読むより、chance level付近の開発結果として扱う方が妥当です。
+
+旧 `temperature: 0` runは開発履歴として表に残しています。現在のINMはtemperatureをデフォルトでは強制せず、明示overrideしない限りbackend / model側の既定samplingを使います。
 
 ## スコア指標
 
@@ -78,22 +74,23 @@ Official表へ掲載するには、少なくとも以下を満たす必要があ
 
 このスコアボードは表示用です。結果提出・検証の正式ルールは [`results/README.md`](results/README.md) を優先します。
 
-## 推奨result表記
+## スコアボード更新方法
 
-```text
-Model: 正確な公開モデル名 / tag
-INM version: vX.Y + commit SHA
-Overall: xx.x%
-Macro: xx.x%
-Character / Work: xx.x%
-Structure: xx.x%
-Fake Quote: xx.x%
-Quote Completion: xx.x%
-Backend: Ollama / llama.cpp / API provider
-Quantization: Q4_K_M / Q6_K / FP16 / n/a
-Sampling: provider default または明示override
-Reasoning: mode / effort / thinking setting
-Result: results/<backend>/<model>/<run>.jsonl
+[`data/leaderboard.json`](data/leaderboard.json) にentryを追加・更新してから、
+
+```bash
+python scripts/render_scoreboard.py
 ```
 
-今後モデル数が増えたら、通常Leaderboardで順位を確認し、縦比較マトリクスでカテゴリごとの得意不得意を比較する運用を想定しています。
+を実行します。
+
+生成されるファイル:
+
+```text
+docs/assets/scoreboard_overall.svg
+docs/assets/scoreboard_overall_ja.svg
+docs/assets/scoreboard_categories.svg
+docs/assets/scoreboard_categories_ja.svg
+```
+
+完全な再現情報とitem-level raw resultは `results/` 以下で管理し、`data/leaderboard.json` は表示用のコンパクトなデータソースとして扱います。
