@@ -1,0 +1,128 @@
+name: Update reasoning prompt docs once
+
+on:
+  push:
+    paths:
+      - .github/workflows/update-reasoning-prompt-docs-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Update prompt documentation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('docs/RUNNER.md')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              '--prompt PATH      system prompt; default: prompts/system_v0.1.txt':
+                  '--prompt PATH      system prompt; default: prompts/system_v0.2.txt',
+              '1. `prompts/system_v0.1.txt`;':
+                  '1. `prompts/system_v0.2.txt`;',
+              'Reasoning mode, reasoning effort, sampling parameters, and similar provider-specific inference settings are runtime configuration, not part of the INM system prompt.\n\nWhen comparing results, report those settings alongside the exact model/version. They should not be silently changed between runs intended for direct comparison.':
+                  'The standard `system_v0.2.txt` prompt explicitly tells the model to use its available reasoning/thinking capabilities when useful, while requiring only the final answer in the visible response. This instruction does not itself enable a provider-specific reasoning mode or choose a reasoning-effort level.\n\nProvider/model reasoning mode, reasoning effort, sampling parameters, and similar inference controls remain runtime configuration. When comparing results, report those settings alongside the exact model/version. They should not be silently changed between runs intended for direct comparison.\n\n`prompts/system_v0.1.txt` is retained so historical development runs can be reproduced. Results produced with v0.1 and v0.2 should not be treated as prompt-identical comparisons.'
+          }
+          for old, new in replacements.items():
+              if old not in s:
+                  raise SystemExit(f'missing RUNNER text: {old[:80]!r}')
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8', newline='\n')
+
+          p = Path('docs/EVALUATION_PROTOCOL.md')
+          s = p.read_text(encoding='utf-8')
+          old = '''## 7. Direct and Reasoning Modes
+
+INM may be evaluated in more than one inference mode, but results MUST NOT be mixed.
+
+Recommended labels:
+
+```text
+INM Direct
+INM Reasoning
+```
+
+### INM Direct
+
+The model is asked for the final answer only.
+
+### INM Reasoning
+
+The model may use a provider/model reasoning mode or additional inference-time computation.
+
+If reasoning is hidden by the provider, that is acceptable. If reasoning text is generated, it remains item-specific state and MUST be discarded before the next item.
+'''
+          new = '''## 7. Reasoning / Thinking Behavior
+
+The standard INM system prompt (`prompts/system_v0.2.txt`) tells the model to use its available reasoning or thinking capabilities when useful before answering. A short final-answer format MUST NOT be interpreted as an instruction to suppress internal reasoning.
+
+The visible response still contains only the required final answer. Hidden reasoning is acceptable. If a backend exposes reasoning text separately, that reasoning remains item-specific state and MUST be discarded before the next item.
+
+Provider/model controls such as reasoning mode, thinking budget, reasoning effort, or equivalent inference-time computation remain runtime settings. The system prompt does not force a backend feature that is disabled by the evaluator or unsupported by the model.
+
+Runs with materially different reasoning settings MUST report those settings and SHOULD NOT be treated as configuration-identical comparisons.
+'''
+          if old not in s:
+              raise SystemExit('missing reasoning section')
+          s = s.replace(old, new)
+
+          old = '''## 8. Sampling Settings
+
+Official comparisons should prefer deterministic or near-deterministic inference where supported.
+
+Recommended default:
+
+```text
+temperature = 0
+top_p = 1
+```
+
+If a runtime does not support these exact values, report the effective settings.
+
+For stochastic evaluation, report at minimum:
+
+- temperature;
+- top-p;
+- seed, if available;
+- number of runs.
+'''
+          new = '''## 8. Sampling Settings
+
+INM does not require a benchmark-wide forced temperature or top-p value. By default, evaluators SHOULD preserve the model/backend sampling defaults unless the evaluation track explicitly defines an override.
+
+Any explicit sampling override can affect the result and MUST be reported. Runs intended for direct comparison should use the same effective sampling configuration where practical.
+
+Report at minimum when available:
+
+- temperature, including whether it was unset/provider-default;
+- top-p, including whether it was unset/provider-default;
+- seed, if available;
+- number of runs for stochastic evaluation.
+'''
+          if old not in s:
+              raise SystemExit('missing sampling section')
+          s = s.replace(old, new)
+
+          marker = 'Prompt wording used for an official result MUST be reported with the score.\n'
+          addition = marker + '\nThe current standard prompt is `prompts/system_v0.2.txt`. It explicitly allows/encourages internal reasoning when useful while requiring only the final answer to be emitted. `system_v0.1.txt` is retained for reproducing older development runs.\n'
+          if marker not in s:
+              raise SystemExit('missing prompt consistency marker')
+          s = s.replace(marker, addition, 1)
+          p.write_text(s, encoding='utf-8', newline='\n')
+          PY
+      - name: Commit docs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/RUNNER.md docs/EVALUATION_PROTOCOL.md
+          git diff --cached --check
+          git commit -m 'Document reasoning-aware system prompt v0.2'
+          git push
