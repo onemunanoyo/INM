@@ -29,6 +29,11 @@ class AnthropicProvider:
             raise RuntimeError(
                 f"Missing API key in environment variable {api_key_env!r}"
             )
+        if config.get("max_tokens") is None:
+            raise ValueError(
+                "Anthropic model config requires an explicit max_tokens value. "
+                "Use a sufficiently high budget for reasoning/thinking models."
+            )
         self.client = Anthropic(api_key=api_key)
         self.model = config["model"]
 
@@ -37,7 +42,7 @@ class AnthropicProvider:
             "model": self.model,
             "system": system_prompt,
             "messages": [{"role": "user", "content": user_prompt}],
-            "max_tokens": int(self.config.get("max_tokens", 128)),
+            "max_tokens": int(self.config["max_tokens"]),
         }
 
         temperature = self.config.get("temperature")
