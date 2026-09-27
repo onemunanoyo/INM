@@ -1,8 +1,15 @@
 {
   "schema_version": 1,
   "updated": "2026-09-27",
-  "benchmark_status": "working v0.1",
+  "benchmark_status": "working v0.1; current canonical n=195",
+  "current_working_set": {
+    "n": 195,
+    "four_choice_n": 167,
+    "quote_completion_n": 28,
+    "chance_baseline_overall": 21.4
+  },
   "chance_baseline_overall": 20.9,
+  "chance_baseline_scope": "displayed 171-item pre-Batch04 run set",
   "entries": [
     {
       "id": "gemma4-e2b-hauhaucs-q6kp-temp06-20260927",
@@ -20,6 +27,7 @@
       "four_choice": {"score": 25.9, "correct": 37, "n": 143},
       "correct": 37,
       "n": 171,
+      "dataset_revision": "working v0.1 pre-Batch04 (171 items)",
       "backend": "Ollama",
       "quantization": "Q6_K_P",
       "sampling": "temperature=0.6; max_tokens unset",
@@ -28,7 +36,7 @@
       "show_in_chart": true,
       "date": "2026-09-27",
       "run_id": "20260927T053604Z_ollama-local_fae79399",
-      "notes": "Working v0.1 dataset; not a frozen release."
+      "notes": "Pre-Batch04 working v0.1 run. Current canonical working set is 195 items and includes 24 Fake Quote items."
     },
     {
       "id": "gemma4-e2b-hauhaucs-q6kp-temp0-legacy-20260927",
@@ -46,6 +54,7 @@
       "four_choice": {"score": 29.4, "correct": 42, "n": 143},
       "correct": 42,
       "n": 171,
+      "dataset_revision": "working v0.1 pre-Batch04 (171 items)",
       "backend": "Ollama",
       "quantization": "Q6_K_P",
       "sampling": "temperature=0 (legacy forced); max_tokens unset",
@@ -54,7 +63,7 @@
       "show_in_chart": false,
       "date": "2026-09-27",
       "run_id": "20260927T051313Z_ollama-local_4ee79ea9",
-      "notes": "Legacy runner forced temperature=0; retained only for development history."
+      "notes": "Legacy runner forced temperature=0; pre-Batch04 171-item working set; retained only for development history."
     }
   ]
 }
