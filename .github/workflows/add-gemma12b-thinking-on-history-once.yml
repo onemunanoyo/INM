@@ -1,0 +1,138 @@
+name: Add Gemma 12B historical run once
+
+on:
+  push:
+    paths:
+      - .github/workflows/add-gemma12b-thinking-on-history-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Add historical result
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          p = Path('data/leaderboard.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          run_id = '20260927T095811Z_ollama-local_68cc9586'
+          if not any(e.get('run_id') == run_id for e in data['entries']):
+              entry = {
+                  'id': 'gemma4-12b-it-unsloth-q4km-temp06-reasoning-on-195-20260927',
+                  'model': 'hf.co/unsloth/gemma-4-12b-it-GGUF:Q4_K_M',
+                  'chart_label': 'Gemma-4 12B it (legacy Reasoning on)',
+                  'family_creator': 'Gemma / Unsloth',
+                  'overall': 27.2,
+                  'macro': 25.3,
+                  'categories': {
+                      'character_work': {'score': 30.4, 'correct': 24, 'n': 79},
+                      'structure': {'score': 29.7, 'correct': 19, 'n': 64},
+                      'fake_quote': {'score': 37.5, 'correct': 9, 'n': 24},
+                      'quote_completion': {'score': 3.6, 'correct': 1, 'n': 28},
+                  },
+                  'four_choice': {'score': 31.1, 'correct': 52, 'n': 167},
+                  'correct': 53,
+                  'n': 195,
+                  'dataset_revision': 'working v0.1 current canonical set (195 items)',
+                  'backend': 'Ollama',
+                  'quantization': 'Q4_K_M',
+                  'sampling': 'temperature=0.6; max_tokens unset',
+                  'track': 'Development / Historical',
+                  'official': False,
+                  'current': False,
+                  'archived': True,
+                  'show_in_chart': False,
+                  'date': '2026-09-27',
+                  'run_id': run_id,
+                  'notes': '195-item working v0.1 run; 0 item errors, 0 format failures, isolated evaluation, web/RAG/tools disabled. Uses a local/custom pre-v0.2 prompt labelled thinking-on, so it is retained as historical and not mixed with current system_v0.2 results.',
+                  'prompt_version': 'system_v0.1-thinking-on (local/custom)',
+                  'system_prompt_sha256': '67085701f8b4904a12194d53fdb8b7280aef7724669d7e8d121bae2c50283717',
+                  'reasoning': 'on',
+                  'reasoning_detail': 'legacy run label/prompt path indicates thinking on; exact provider-specific level/budget was not serialized',
+                  'format_compliance': {'compliant': 195, 'n': 195},
+              }
+              data['entries'].append(entry)
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          def update_score(path, ja=False):
+              p = Path(path)
+              s = p.read_text(encoding='utf-8')
+              if run_id in s:
+                  return
+              if ja:
+                  s = s.replace(
+                      '以下はすべて `system_v0.1` を使ったrunです。監査・開発履歴として残しますが、`system_v0.2` の結果と直接混ぜて比較しません。',
+                      '以下は `system_v0.2` より前のpromptで取得したrunです。監査・開発履歴として残しますが、現行 `system_v0.2` の結果と直接混ぜて比較しません。Reasoning欄が `未記録` のrunでは、当時のraw metadataからReasoning状態を確定できません。'
+                  )
+                  old_header = '| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Sampling | Dataset | Prompt | Run ID |\n|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|'
+                  new_header = '| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Reasoning | Sampling | Dataset | Prompt | Run ID |\n|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|'
+                  s = s.replace(old_header, new_header)
+                  rows = [
+                      ('| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7%', '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `未記録` | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |'),
+                      ('| gemma-4-E4B-it-GGUF | 22.6%', '| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `未記録` | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |'),
+                      ('| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6%', '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `未記録` | `temperature: 0.6` | Batch04前、171問 | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |'),
+                      ('| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6%', '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `未記録` | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |'),
+                  ]
+                  for prefix, repl in rows:
+                      lines = s.splitlines()
+                      for i, line in enumerate(lines):
+                          if line.startswith(prefix):
+                              lines[i] = repl
+                              break
+                      s = '\n'.join(lines) + ('\n' if s.endswith('\n') else '')
+                  insert_after = new_header + '\n'
+                  new_row = '| gemma-4-12b-it-GGUF | 27.2% | 25.3% | 30.4% | 29.7% | 37.5% | 3.6% | 53/195 | `on` (legacy label) | `temperature: 0.6` | working v0.1、195問 | `system_v0.1-thinking-on` (custom) | `20260927T095811Z_ollama-local_68cc9586` |\n'
+                  s = s.replace(insert_after, insert_after + new_row, 1)
+                  s = s.replace('最後のrunは旧runnerが', 'Reasoning `on` の12B runはrun名・prompt pathから状態を記録していますが、provider固有の強度・budgetはraw metadataに保存されていません。\n\n最後のrunは旧runnerが')
+              else:
+                  s = s.replace(
+                      'These runs used `system_v0.1` and are retained for audit/history. They must not be mixed directly with `system_v0.2` results.',
+                      'These runs predate the current `system_v0.2` prompt and are retained for audit/history. They must not be mixed directly with current-prompt results. `not recorded` means the historical raw metadata does not establish the Reasoning state.'
+                  )
+                  old_header = '| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Sampling | Dataset | Prompt | Run ID |\n|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|'
+                  new_header = '| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Reasoning | Sampling | Dataset | Prompt | Run ID |\n|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|'
+                  s = s.replace(old_header, new_header)
+                  rows = [
+                      ('| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7%', '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `not recorded` | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |'),
+                      ('| gemma-4-E4B-it-GGUF | 22.6%', '| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `not recorded` | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |'),
+                      ('| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6%', '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `not recorded` | `temperature: 0.6` | pre-Batch04, 171 items | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |'),
+                      ('| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6%', '| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `not recorded` | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |'),
+                  ]
+                  for prefix, repl in rows:
+                      lines = s.splitlines()
+                      for i, line in enumerate(lines):
+                          if line.startswith(prefix):
+                              lines[i] = repl
+                              break
+                      s = '\n'.join(lines) + ('\n' if s.endswith('\n') else '')
+                  insert_after = new_header + '\n'
+                  new_row = '| gemma-4-12b-it-GGUF | 27.2% | 25.3% | 30.4% | 29.7% | 37.5% | 3.6% | 53/195 | `on` (legacy label) | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1-thinking-on` (custom) | `20260927T095811Z_ollama-local_68cc9586` |\n'
+                  s = s.replace(insert_after, insert_after + new_row, 1)
+                  s = s.replace('The last row is additionally invalidated', 'The 12B Reasoning `on` row records that state from the run/prompt label; the exact provider-specific level or budget was not serialized in the legacy raw metadata.\n\nThe last row is additionally invalidated')
+              p.write_text(s, encoding='utf-8', newline='\n')
+
+          update_score('score.md', ja=False)
+          update_score('score.ja.md', ja=True)
+          PY
+      - name: Validate changes
+        run: |
+          python -m json.tool data/leaderboard.json >/dev/null
+          git diff --check
+          grep -q '20260927T095811Z_ollama-local_68cc9586' score.md
+          grep -q '20260927T095811Z_ollama-local_68cc9586' score.ja.md
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/leaderboard.json score.md score.ja.md
+          git commit -m 'Archive Gemma 4 12B Reasoning-on development run'
+          git push
