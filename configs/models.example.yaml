@@ -1,6 +1,6 @@
 # Copy to configs/models.yaml and edit model IDs/endpoints as needed.
-# API keys are read from environment variables (or a local .env file).
-# Do not put secrets in this file.
+# API keys and optional local endpoint overrides are read from environment
+# variables (or a local .env file). Do not put secrets in this file.
 #
 # Optional provider-specific inference settings may be passed under
 # request_params. This is where reasoning/sampling controls belong when a
@@ -13,8 +13,10 @@
 models:
   llama-local:
     provider: openai_compatible
-    model: YOUR_LLAMA_CPP_MODEL_ID
+    model: inm-local
+    model_env: LLAMA_CPP_MODEL_ID
     base_url: http://127.0.0.1:8080/v1
+    base_url_env: LLAMA_CPP_BASE_URL
     api_key_env: LLAMA_CPP_API_KEY
     temperature: 0
     max_tokens: 128
