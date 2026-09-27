@@ -8,11 +8,11 @@ set may still change until a v0.1 release/tag is created.
 
 Current item counts:
 
-- `character.jsonl`: 72
-- `structure.jsonl`: 46
+- `character.jsonl`: 79
+- `structure.jsonl`: 64
 - `fake_quote.jsonl`: 0
 - `quote_completion.jsonl`: 28
-- **total: 146**
+- **total: 171**
 
 `fake_quote.jsonl` remains empty because fake-quote collision checking is not
 yet complete. Human approval alone is not sufficient for promotion of a fake
