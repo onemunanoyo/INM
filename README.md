@@ -71,28 +71,168 @@ A released version is intended to remain immutable. New questions belong in a la
 
 ## Quick start
 
-### 1. Install dependencies
+The following path takes you from a fresh clone to a small smoke test, a full run, and a saved result.
+
+> For local LLMs, the INM runner does not start or download the model server. Start your OpenAI-compatible endpoint separately before running the benchmark.
+
+### 0. Requirements
+
+- Python 3.10 or newer is recommended
+- Git
+- one of:
+  - a running OpenAI-compatible local inference server;
+  - an API key for a supported cloud provider
+
+### 1. Clone and create a virtual environment
 
 ```bash
+git clone https://github.com/onemunanoyo/INM.git
+cd INM
+
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Create a local model configuration
+Windows PowerShell activation:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+### 2. Create local configuration files
 
 ```bash
 cp .env.example .env
 cp configs/models.example.yaml configs/models.yaml
 ```
 
-Keep API keys in `.env`; do not commit them.
+Windows PowerShell:
 
-### 3. Validate dataset files
+```powershell
+Copy-Item .env.example .env
+Copy-Item configs/models.example.yaml configs/models.yaml
+```
+
+Keep API keys in `.env` and do not commit them.
+
+### 3. Configure the model you want to run
+
+The value passed to `--model` is the key under `models:` in `configs/models.yaml`, not necessarily the provider's public model name.
+
+For example, a cloud configuration named `my-openai-run` might look like:
+
+```yaml
+models:
+  my-openai-run:
+    provider: openai_compatible
+    model: YOUR_EXACT_MODEL_ID
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    temperature: 0
+    max_tokens: 128
+```
+
+Set the corresponding secret in `.env`:
+
+```dotenv
+OPENAI_API_KEY=YOUR_KEY_HERE
+```
+
+Then run:
+
+```bash
+python -m runner.run --model my-openai-run --limit 5
+```
+
+#### llama.cpp / local model
+
+Start your llama.cpp server separately. The example INM configuration expects an OpenAI-compatible endpoint at:
+
+```text
+http://127.0.0.1:8080/v1
+```
+
+Example `configs/models.yaml` entry:
+
+```yaml
+models:
+  llama-local:
+    provider: openai_compatible
+    model: YOUR_LLAMA_CPP_MODEL_ID
+    base_url: http://127.0.0.1:8080/v1
+    api_key_env: LLAMA_CPP_API_KEY
+    temperature: 0
+    max_tokens: 128
+```
+
+A normal local llama.cpp server often does not require a real API key, so `LLAMA_CPP_API_KEY` may remain empty.
+
+The important requirements are that the server is already running and that `model:` matches an ID accepted by that endpoint.
+
+### 4. Validate the dataset
 
 ```bash
 python scripts/validate.py
 ```
 
-### 4. Run an evaluation
+Resolve validation errors before publishing an official score.
+
+During active v0.1 authoring, candidate and `_review` files are not equivalent to a frozen public release.
+
+### 5. Render prompts without calling a model
+
+```bash
+python -m runner.run \
+  --model llama-local \
+  --dry-run \
+  --limit 3
+```
+
+`--dry-run` renders benchmark items but does not make provider requests.
+
+### 6. Run a five-item smoke test
+
+Cloud API:
+
+```bash
+python -m runner.run \
+  --model my-openai-run \
+  --limit 5
+```
+
+Local endpoint:
+
+```bash
+python -m runner.run \
+  --model llama-local \
+  --limit 5
+```
+
+The runner prints `OK`, `MISS`, or `ERROR` for each item, then a summary such as:
+
+```text
+run_id: ...
+items: 5
+scored: 5
+correct: 3
+accuracy: 60.00%
+format_compliance: 100.00%
+errors: 0
+output: results/tmp/<run_id>.jsonl
+```
+
+If you see `ERROR`, check the API key, `base_url`, and configured `model:` before starting a full run.
+
+### 7. Run the full dataset
+
+The default dataset path is `data/v0.1`:
+
+```bash
+python -m runner.run --model llama-local
+```
+
+Equivalent explicit form:
 
 ```bash
 python -m runner.run \
@@ -100,9 +240,57 @@ python -m runner.run \
   --dataset data/v0.1
 ```
 
-The repository includes adapters for OpenAI-compatible APIs, llama.cpp server deployments, DeepSeek, Gemini-compatible endpoints, and Anthropic Claude.
+Run only one category file:
 
-See [`docs/RUNNER.md`](docs/RUNNER.md) for configuration details.
+```bash
+python -m runner.run \
+  --model llama-local \
+  --dataset data/v0.1/character.jsonl
+```
+
+### 8. Inspect the result
+
+Without `--output`, results are saved automatically to:
+
+```text
+results/tmp/<run_id>.jsonl
+```
+
+The exact path is also printed at the end of the run.
+
+Calculate statistics with:
+
+```bash
+python scripts/stats.py --results results/tmp/<run_id>.jsonl
+```
+
+To choose the output path yourself:
+
+```bash
+python -m runner.run \
+  --model my-openai-run \
+  --output results/my-run.jsonl
+```
+
+### 9. Submit a public score
+
+Read [`results/README.md`](results/README.md) before submitting a leaderboard result.
+
+A result submission should include at least:
+
+- exact INM version or commit;
+- exact model ID/version;
+- provider/backend;
+- quantization when relevant;
+- temperature/reasoning/inference settings;
+- system-prompt hash;
+- evaluation date;
+- item-isolation method;
+- raw result JSONL.
+
+A dedicated result-PR template is available at `.github/PULL_REQUEST_TEMPLATE/benchmark_result.md`.
+
+For provider-specific configuration, all CLI options, and troubleshooting, see [`docs/RUNNER.md`](docs/RUNNER.md).
 
 ## Official evaluation protocol
 
@@ -245,6 +433,7 @@ INM/
 ├── docs/
 ├── prompts/
 ├── providers/
+├── results/
 ├── runner/
 ├── schema/
 ├── scripts/
@@ -257,6 +446,7 @@ Key documentation:
 - [`docs/RUNNER.md`](docs/RUNNER.md) — runner and provider configuration
 - [`docs/STATS.md`](docs/STATS.md) — uncertainty and sample-size notes
 - [`docs/AUTHORING_TEMPLATE.md`](docs/AUTHORING_TEMPLATE.md) — item-authoring guidance
+- [`results/README.md`](results/README.md) — score submission and leaderboard policy
 
 ## Contributing
 
