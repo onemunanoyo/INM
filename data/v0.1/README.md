@@ -11,8 +11,8 @@ Current item counts:
 - `character.jsonl`: 72
 - `structure.jsonl`: 46
 - `fake_quote.jsonl`: 0
-- `quote_completion.jsonl`: 10
-- **total: 128**
+- `quote_completion.jsonl`: 28
+- **total: 146**
 
 `fake_quote.jsonl` remains empty because fake-quote collision checking is not
 yet complete. Human approval alone is not sufficient for promotion of a fake
