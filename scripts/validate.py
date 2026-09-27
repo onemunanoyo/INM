@@ -32,6 +32,8 @@ SUPPORTED_NORMALIZERS = {
     "strip_punctuation",
 }
 
+SOURCE_REFERENCE_FIELDS = ("source_ids", "fake_source_ids")
+
 
 def load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as f:
@@ -78,7 +80,9 @@ def load_sources(errors: list[str]) -> set[str]:
             continue
 
         source_id = entry.get("id")
-        if not isinstance(source_id, str) or not re.fullmatch(r"src_[A-Za-z0-9_-]+", source_id):
+        if not isinstance(source_id, str) or not re.fullmatch(
+            r"src_[A-Za-z0-9_-]+", source_id
+        ):
             errors.append(f"sources.json entry {index}: invalid or missing id")
             continue
 
@@ -105,11 +109,29 @@ def iter_jsonl(path: Path, errors: list[str]):
         errors.append(f"cannot read {path.relative_to(ROOT)}: {exc}")
 
 
+def validate_source_references(
+    item: dict[str, Any],
+    *,
+    where: str,
+    known_source_ids: set[str],
+    errors: list[str],
+) -> None:
+    for field in SOURCE_REFERENCE_FIELDS:
+        refs = item.get(field)
+        if refs is None:
+            continue
+        if not isinstance(refs, list):
+            continue  # JSON Schema reports the type error.
+        for source_id in refs:
+            if isinstance(source_id, str) and source_id not in known_source_ids:
+                errors.append(f"{where}: unknown {field} reference {source_id!r}")
+
+
 def validate_item_rules(
     item: dict[str, Any],
     path: Path,
     line_no: int,
-    source_ids: set[str],
+    known_source_ids: set[str],
     seen_ids: dict[str, str],
     seen_display_ids: dict[str, str],
     errors: list[str],
@@ -119,7 +141,9 @@ def validate_item_rules(
     stable_id = item.get("id")
     if isinstance(stable_id, str):
         if stable_id in seen_ids:
-            errors.append(f"{where}: duplicate id {stable_id}; first seen at {seen_ids[stable_id]}")
+            errors.append(
+                f"{where}: duplicate id {stable_id}; first seen at {seen_ids[stable_id]}"
+            )
         else:
             seen_ids[stable_id] = where
 
@@ -140,7 +164,8 @@ def validate_item_rules(
             expected = f"{section}-{group}-({number})"
             if display_id != expected:
                 errors.append(
-                    f"{where}: display_id {display_id!r} does not match fields; expected {expected!r}"
+                    f"{where}: display_id {display_id!r} does not match fields; "
+                    f"expected {expected!r}"
                 )
 
     expected_category = CATEGORY_BY_FILE.get(path.name)
@@ -151,11 +176,12 @@ def validate_item_rules(
             f"(expected {expected_category!r})"
         )
 
-    refs = item.get("source_ids", [])
-    if isinstance(refs, list):
-        for source_id in refs:
-            if isinstance(source_id, str) and source_id not in source_ids:
-                errors.append(f"{where}: unknown source_id {source_id!r}")
+    validate_source_references(
+        item,
+        where=where,
+        known_source_ids=known_source_ids,
+        errors=errors,
+    )
 
     choices = item.get("choices")
     if isinstance(choices, list) and len(choices) != len(set(choices)):
@@ -181,7 +207,8 @@ def validate_item_rules(
             else:
                 if normalized_answer not in normalized_accepted:
                     errors.append(
-                        f"{where}: canonical answer is not represented by accepted_answers after normalization"
+                        f"{where}: canonical answer is not represented by "
+                        "accepted_answers after normalization"
                     )
 
 
@@ -200,12 +227,12 @@ def main() -> int:
         print(f"ERROR: invalid schema: {exc}", file=sys.stderr)
         return 1
 
-    source_ids = load_sources(errors)
+    known_source_ids = load_sources(errors)
     seen_ids: dict[str, str] = {}
     seen_display_ids: dict[str, str] = {}
     item_count = 0
 
-    for filename, expected_category in CATEGORY_BY_FILE.items():
+    for filename in CATEGORY_BY_FILE:
         path = DATA_DIR / filename
         if not path.exists():
             errors.append(f"missing dataset file: {path.relative_to(ROOT)}")
@@ -229,7 +256,7 @@ def main() -> int:
                 item=item,
                 path=path,
                 line_no=line_no,
-                source_ids=source_ids,
+                known_source_ids=known_source_ids,
                 seen_ids=seen_ids,
                 seen_display_ids=seen_display_ids,
                 errors=errors,
@@ -243,7 +270,7 @@ def main() -> int:
 
     print(
         f"INM validation passed: {item_count} item(s), "
-        f"{len(source_ids)} source(s), schema Draft 2020-12."
+        f"{len(known_source_ids)} source(s), schema Draft 2020-12."
     )
     return 0
 
