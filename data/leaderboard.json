@@ -59,7 +59,9 @@
       "date": "2026-09-27",
       "run_id": "20260927T061853Z_ollama-local_fe076f9f",
       "notes": "Current 195-item working v0.1 set including 24 Fake Quote items; 0 item errors, 0 format failures, isolated evaluation, web/RAG/tools disabled. Archived when system_v0.2 became the standard reasoning-aware prompt.",
-      "prompt_version": "system_v0.1"
+      "prompt_version": "system_v0.1",
+      "reasoning": null,
+      "reasoning_detail": "not recorded for historical run"
     },
     {
       "id": "gemma4-e4b-it-unsloth-q4km-temp06-195-20260927",
@@ -109,7 +111,9 @@
       "date": "2026-09-27",
       "run_id": "20260927T064320Z_ollama-local_6afaaadb",
       "notes": "Current 195-item working v0.1 set; 0 item errors, 2 format failures, isolated evaluation, web/RAG/tools disabled. Archived when system_v0.2 became the standard reasoning-aware prompt.",
-      "prompt_version": "system_v0.1"
+      "prompt_version": "system_v0.1",
+      "reasoning": null,
+      "reasoning_detail": "not recorded for historical run"
     },
     {
       "id": "gemma4-e2b-hauhaucs-q6kp-temp06-20260927",
@@ -159,7 +163,9 @@
       "date": "2026-09-27",
       "run_id": "20260927T053604Z_ollama-local_fae79399",
       "notes": "Pre-Batch04 working v0.1 run; retained as development history.",
-      "prompt_version": "system_v0.1"
+      "prompt_version": "system_v0.1",
+      "reasoning": null,
+      "reasoning_detail": "not recorded for historical run"
     },
     {
       "id": "gemma4-e2b-hauhaucs-q6kp-temp0-legacy-20260927",
@@ -209,8 +215,14 @@
       "date": "2026-09-27",
       "run_id": "20260927T051313Z_ollama-local_4ee79ea9",
       "notes": "Legacy runner forced temperature=0; pre-Batch04 171-item working set; retained only for development history.",
-      "prompt_version": "system_v0.1"
+      "prompt_version": "system_v0.1",
+      "reasoning": null,
+      "reasoning_detail": "not recorded for historical run"
     }
   ],
-  "current_prompt": "prompts/system_v0.2.txt"
+  "current_prompt": "prompts/system_v0.2.txt",
+  "reasoning_reporting": {
+    "field": "on/off",
+    "detail": "optional free-form provider/model-specific setting; no shared effort enum"
+  }
 }

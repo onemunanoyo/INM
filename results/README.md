@@ -24,7 +24,7 @@ Official / Isolated 条件を満たし、必要な再現情報とraw resultが�
 - Web browsingを無効化する
 - RAG / external knowledge baseを無効化する
 - Tools / MCP / function calling等を無効化する
-- 使用したsystem promptと主要な推論設定を記録する
+- 使用したsystem prompt、Reasoning (`on` / `off`)、sampling等の主要な推論設定を記録する
 
 同一でitem-independentなsystem prefixのcache reuseは許可します。item-specific tokenを含む状態を次のitemへ再利用してはいけません。
 
@@ -80,7 +80,8 @@ PR本文またはsummaryには最低限、以下を記録してください。
 - evaluation date
 - temperature / top-p / seed
 - context length
-- reasoning / thinking setting（該当する場合）
+- Reasoning (`on` / `off`)
+- Reasoning detail（任意・自由記述。provider/model固有の強度、budget、名称等）
 - system prompt path / hash
 - item-isolation method
 - Web / RAG / toolsが無効であること
@@ -89,6 +90,8 @@ PR本文またはsummaryには最低限、以下を記録してください。
 - INM Overall
 - correct / total / n
 - errors, retries, exclusions
+
+Reasoning detailは共通enumではありません。`xhigh`、`max`、`reasoning_effort=high`、`thinking_budget=32768` など、実際のprovider/model設定をそのまま記録してください。on/offしかないruntimeでは空欄で構いません。
 
 ## Raw results
 

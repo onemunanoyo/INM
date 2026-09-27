@@ -74,9 +74,17 @@ OLLAMA_BASE_URL=http://127.0.0.1:15000/v1
 
 INM does **not** set `temperature` for `ollama-local` by default. Ollama/model defaults are used unless you explicitly add a `temperature` value to `configs/models.yaml`. This avoids silently replacing model-family-specific recommended sampling behavior with a benchmark-wide `temperature: 0`. Any explicit sampling override should be reported with the benchmark result.
 
+### Reasoning
+
+INM records a common `Reasoning: on/off` state for comparison. Ollama/model-specific controls are not normalized to a shared effort scale. If the model exposes an additional level, budget, or named mode, record the exact value in free-form `reasoning_detail` and preserve the actual request configuration.
+
+Examples of valid details include `max`, `xhigh`, `thinking_budget=32768`, or `provider/model default`. Models that expose only an on/off setting need no extra detail.
+
+`reasoning` / `reasoning_detail` in `configs/models.yaml` are reporting metadata; they do not themselves toggle an Ollama feature.
+
 ### Output-token limits
 
-INM does **not** set `max_tokens` for `ollama-local` by default. This is intentional. Thinking/reasoning models may spend part of the output budget on reasoning before emitting the final short benchmark answer, so a low cap such as `128` can truncate the response before the answer appears.
+INM does **not** set `max_tokens` for `ollama-local` by default. This is intentional. Reasoning-capable models may spend part of the output budget on internal reasoning before emitting the final short benchmark answer, so a low cap such as `128` can truncate the response before the answer appears.
 
 If you created `configs/models.yaml` from an older INM revision, remove this line from the `ollama-local` entry:
 

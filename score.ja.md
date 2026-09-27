@@ -42,7 +42,7 @@ python scripts/render_scoreboard.py
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | Batch04前、171問 | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
 
-最後のrunは旧runnerが `temperature: 0` を強制していたため、モデルの代表性能としても無効化した結果です。最初の2runは現行195問datasetですが、reasoning-awareなv0.2より前のpromptを使っています。
+最後のrunは旧runnerが `temperature: 0` を強制していたため、モデルの代表性能としても無効化した結果です。最初の2runは現行195問datasetですが、Reasoning-instructionなv0.2より前のpromptを使っています。
 
 </details>
 
@@ -61,7 +61,7 @@ Contributorから提出された結果は、少なくとも以下を満たす場
 - item-level raw resultまたは同等に監査可能な証拠がある
 - 非公開のmanual correctionやitem exclusionがない
 
-条件を満たす結果が1件以上入った段階で、Official表を表示し、原則として **INM Overall** の降順で順位付けします。同じモデルでもreasoning、sampling、量子化、backendが実質的に異なる場合は別行として扱います。
+条件を満たす結果が1件以上入った段階で、Official表を表示し、原則として **INM Overall** の降順で順位付けします。同じモデルでもReasoning (`on` / `off`)、任意のReasoning detail、sampling、量子化、backendが実質的に異なる場合は別行として扱います。
 
 結果提出は [`results/README.md`](results/README.md) の手順に従ってください。このスコアボードは表示用であり、提出・検証ルールはそちらを正式仕様とします。
 

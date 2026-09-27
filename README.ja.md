@@ -189,7 +189,6 @@ llama-server \
 ```dotenv
 LLAMA_CPP_BASE_URL=http://127.0.0.1:8080/v1
 LLAMA_CPP_MODEL_ID=inm-local
-LLAMA_CPP_API_KEY=
 ```
 
 たとえばllama-serverをport 5000で起動した場合は、次の1行だけ変えます。
@@ -198,7 +197,7 @@ LLAMA_CPP_API_KEY=
 LLAMA_CPP_BASE_URL=http://127.0.0.1:5000/v1
 ```
 
-`LLAMA_CPP_MODEL_ID` は `--alias` と同じ値にしてください。`--alias` を使わない場合は、llama.cppの `GET /v1/models` が返すmodel idを設定します。通常のローカルllama.cppでAPIキーが不要なら `LLAMA_CPP_API_KEY` は空のままで構いません。
+`LLAMA_CPP_MODEL_ID` は `--alias` と同じ値にしてください。`--alias` を使わない場合は、llama.cppの `GET /v1/models` が返すmodel idを設定します。通常のローカルllama.cppではAPIキー設定は不要です。OpenAI SDK側が非空値を要求する場合はINM adapterが内部placeholderを使用しますが、これは認証ではありません。
 
 重要なのは、**serverを先に起動すること**、`.env` のendpointがそのserverを指していること、model idが一致していることです。
 
@@ -314,7 +313,9 @@ python -m runner.run \
 - 正確なmodel ID / version
 - provider / backend
 - 量子化（該当する場合）
-- temperature / reasoning等の推論設定
+- sampling等の推論設定
+- **Reasoning: `on` / `off`**
+- provider固有の強度・budget等がある場合は任意の **Reasoning detail**
 - system prompt hash
 - 評価日
 - item isolation方法
@@ -341,6 +342,12 @@ tools_enabled = false
 ```
 
 詳細は [`docs/EVALUATION_PROTOCOL.md`](docs/EVALUATION_PROTOCOL.md) を参照してください。
+
+### Reasoningの記録
+
+provider間で共通化する項目は **Reasoning: `on` / `off`** だけです。`xhigh`、`max`、`reasoning_effort=high`、数値のthinking budgetなど、provider/model固有の名称や強度をINM側で共通enumへ押し込みません。必要な場合は任意の **Reasoning detail** にそのまま記録し、実際のrequest設定はraw resultにも残します。
+
+`Reasoning: on` はモデルの保存知識量が増えたことを意味しません。その評価設定でReasoningを有効・許可していたことだけを表します。
 
 ## 採点
 

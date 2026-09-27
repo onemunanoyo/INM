@@ -24,7 +24,7 @@ This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
 ## Current development runs
 
-The current standard system prompt is [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt), which explicitly tells models to use available reasoning/thinking when useful while emitting only the final answer.
+The current standard system prompt is [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt), which explicitly tells models to use available Reasoning when useful while emitting only the final answer.
 
 **No current-prompt (`system_v0.2`) development runs have been added yet.** New runs will appear here as models are rerun on the 195-item working set.
 
@@ -42,7 +42,7 @@ These runs used `system_v0.1` and are retained for audit/history. They must not 
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | pre-Batch04, 171 items | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
 
-The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The first two rows used the current 195-item dataset, but their system prompt predates the reasoning-aware v0.2 prompt.
+The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The first two rows used the current 195-item dataset, but their system prompt predates the Reasoning-instruction v0.2 prompt.
 
 </details>
 
@@ -57,7 +57,7 @@ A contributed result can qualify for the official leaderboard when it uses:
 - no web search, RAG, tools, MCP, or external retrieval;
 - an exact model/version and backend record;
 - quantization metadata when applicable;
-- disclosed reasoning and sampling overrides when applicable;
+- disclosed Reasoning (`on` / `off`), optional free-form Reasoning detail, and sampling overrides when applicable;
 - auditable item-level raw results or equivalent evidence;
 - no undisclosed manual answer correction or item exclusion.
 

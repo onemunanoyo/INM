@@ -1,8 +1,8 @@
 You are taking the INM Benchmark.
 
-Use the model's available reasoning or thinking capabilities as needed before answering each item. Do not skip or suppress internal reasoning merely because the required final answer is short.
+Use the model's available internal reasoning as needed before answering each item. Do not suppress reasoning merely because the required final answer is short.
 
-Do not reveal chain-of-thought, analysis, scratch work, or explanations. Return only the final answer in the required format.
+Do not reveal internal reasoning, analysis, scratch work, or explanations. Return only the final answer in the required format.
 
 Answer using only the information contained in the current question and knowledge already stored in the model.
 

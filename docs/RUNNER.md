@@ -120,6 +120,8 @@ token_limit_param: max_completion_tokens
 
 Provider-specific inference controls belong under `request_params` when supported. Do not place web-search or tool configuration there; the official runner rejects tool/retrieval-related request keys.
 
+For reporting, INM normalizes only `reasoning: "on"` or `reasoning: "off"`. Optional `reasoning_detail` is a free-form string for the provider/model-specific setting, such as `xhigh`, `max`, `reasoning_effort=high`, or `thinking_budget=32768`. These two fields are metadata; actual provider controls remain in `request_params` / `extra_body`.
+
 By default, INM does not send `temperature` or `max_tokens` for OpenAI-compatible providers. The backend/model therefore keeps its own default sampling behavior, and thinking/reasoning models are not cut off by a low output cap. If you deliberately override sampling or output limits, report those settings with the result because they can affect scores.
 
 ### Anthropic Claude
@@ -368,6 +370,8 @@ Each output row contains fields such as:
   "latency_ms": 123.4,
   "input_tokens": 140,
   "output_tokens": 1,
+  "reasoning": "on",
+  "reasoning_detail": "provider/model default",
   "item_isolated": true,
   "web_enabled": false,
   "rag_enabled": false,
@@ -401,7 +405,9 @@ A public result should record at least:
 - exact model/version;
 - provider/backend;
 - quantization when relevant;
-- inference/reasoning settings;
+- sampling/inference settings;
+- Reasoning (`on` / `off`);
+- optional free-form Reasoning detail;
 - system-prompt hash;
 - evaluation date;
 - item-isolation method;
@@ -437,11 +443,13 @@ The system prompt also explicitly forbids:
 
 Do not add retrieval or tool configuration when producing official INM scores.
 
-## Provider-specific inference settings
+## Reasoning and provider-specific inference settings
 
-The standard `system_v0.2.txt` prompt explicitly tells the model to use its available reasoning/thinking capabilities when useful, while requiring only the final answer in the visible response. This instruction does not itself enable a provider-specific reasoning mode or choose a reasoning-effort level.
+The standard `system_v0.2.txt` prompt tells the model to use available internal reasoning when useful while emitting only the final answer.
 
-Provider/model reasoning mode, reasoning effort, sampling parameters, and similar inference controls remain runtime configuration. When comparing results, report those settings alongside the exact model/version. They should not be silently changed between runs intended for direct comparison.
+INM uses only one common cross-provider Reasoning label: `on` or `off`. Provider-specific strength names and budgets are deliberately not standardized because their scales are not equivalent. Put the exact provider/model value in the optional free-form `reasoning_detail` field and keep the actual API setting in `request_params` / `extra_body`.
+
+Examples of valid details include `xhigh`, `max`, `reasoning_effort=high`, `thinking_budget=32768`, or `provider/model default`. A missing detail does not make a run invalid when there is no finer-grained setting to report.
 
 `prompts/system_v0.1.txt` is retained so historical development runs can be reproduced. Results produced with v0.1 and v0.2 should not be treated as prompt-identical comparisons.
 
@@ -506,6 +514,6 @@ The provider endpoint may be reachable while the configured `model:` value is wr
 
 By default the runner records the error row, retries up to two times, and continues. Use `--fail-fast` while debugging if you want execution to stop at the first provider error.
 
-### I changed sampling or reasoning settings
+### I changed sampling or Reasoning settings
 
-That is allowed as runtime configuration, but record those settings with the result. Do not compare runs as if they were identical when those settings differ.
+That is allowed. Record `Reasoning: on/off`, add the exact provider-specific value to `reasoning_detail` when one exists, and preserve any sampling overrides. Do not compare runs as configuration-identical when those settings differ.

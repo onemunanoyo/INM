@@ -34,11 +34,12 @@
 | Seed | |
 | Context length | |
 | Max output tokens | |
-| Reasoning / thinking setting | |
+| Reasoning (`on` / `off`) | |
+| Reasoning detail (optional, free-form) | |
 | System prompt path | |
 | System prompt hash | |
 
-その他の重要な推論設定があれば記載してください。
+Reasoning detailには `xhigh` / `max` / `reasoning_effort=high` / 数値budgetなど、provider/model固有の値をそのまま記載できます。共通enumへ変換する必要はありません。その他の重要な推論設定があれば併記してください。
 
 ## 4. Evaluation protocol
 

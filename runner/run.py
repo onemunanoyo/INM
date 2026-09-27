@@ -192,6 +192,8 @@ def main(argv: Iterable[str] | None = None) -> int:
                 "base_url": model_config.get("base_url"),
                 "temperature": model_config.get("temperature"),
                 "max_tokens": model_config.get("max_tokens"),
+                "reasoning": model_config.get("reasoning"),
+                "reasoning_detail": model_config.get("reasoning_detail"),
                 "token_limit_param": model_config.get("token_limit_param", "max_tokens"),
                 "request_params": model_config.get("request_params") or {},
                 "extra_body": model_config.get("extra_body") or {},

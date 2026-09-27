@@ -184,10 +184,9 @@ models:
     provider: openai_compatible
     model: YOUR_LLAMA_CPP_MODEL_ID
     base_url: http://127.0.0.1:8080/v1
-    api_key_env: LLAMA_CPP_API_KEY
 ```
 
-A normal local llama.cpp server often does not require a real API key, so `LLAMA_CPP_API_KEY` may remain empty.
+A normal local llama.cpp server does not require a real API key. The INM adapter supplies a client-side placeholder when the OpenAI SDK requires a non-empty value; this is not authentication.
 
 The important requirements are that the server is already running and that `model:` matches an ID accepted by that endpoint.
 
@@ -303,7 +302,9 @@ A result submission should include at least:
 - exact model ID/version;
 - provider/backend;
 - quantization when relevant;
-- temperature/reasoning/inference settings;
+- sampling/inference settings;
+- **Reasoning: `on` / `off`**;
+- optional free-form **Reasoning detail** for provider-specific levels or budgets;
 - system-prompt hash;
 - evaluation date;
 - item-isolation method;
@@ -330,6 +331,12 @@ tools_enabled = false
 ```
 
 See [`docs/EVALUATION_PROTOCOL.md`](docs/EVALUATION_PROTOCOL.md).
+
+### Reasoning reporting
+
+For cross-provider comparison, INM normalizes only **Reasoning: `on` / `off`**. Provider-specific labels such as `xhigh`, `max`, `reasoning_effort=high`, or a numeric thinking budget are not forced into a shared scale. Record those values verbatim in the optional **Reasoning detail** field and preserve the actual request configuration in the raw result.
+
+`Reasoning: on` does not imply that a model has more stored knowledge; it only records that reasoning was enabled/allowed for that evaluation configuration.
 
 ## Scoring
 

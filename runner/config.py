@@ -39,6 +39,24 @@ def load_model_config(config_path: Path, model_id: str) -> dict[str, Any]:
     _apply_env_override(config, field="base_url", env_field="base_url_env")
     _apply_env_override(config, field="model", env_field="model_env")
 
+    # INM normalizes only the top-level Reasoning state for reporting.
+    # Provider-specific levels/budgets remain free-form metadata and the actual
+    # provider controls stay in request_params / extra_body. PyYAML may parse
+    # unquoted on/off as booleans, so accept those and normalize them.
+    reasoning = config.get("reasoning")
+    if reasoning is not None:
+        if isinstance(reasoning, bool):
+            reasoning = "on" if reasoning else "off"
+        elif isinstance(reasoning, str):
+            reasoning = reasoning.strip().lower()
+        if reasoning not in {"on", "off"}:
+            raise ValueError(f"Model config {model_id!r} reasoning must be 'on' or 'off'")
+        config["reasoning"] = reasoning
+
+    reasoning_detail = config.get("reasoning_detail")
+    if reasoning_detail is not None and not isinstance(reasoning_detail, str):
+        raise ValueError(f"Model config {model_id!r} reasoning_detail must be a string")
+
     if "provider" not in config or "model" not in config:
         raise ValueError(f"Model config {model_id!r} requires provider and model")
     return config

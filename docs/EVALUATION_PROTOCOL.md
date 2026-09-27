@@ -172,15 +172,40 @@ The current standard prompt is `prompts/system_v0.2.txt`. It explicitly allows/e
 
 ---
 
-## 7. Reasoning / Thinking Behavior
+## 7. Reasoning
 
-The standard INM system prompt (`prompts/system_v0.2.txt`) tells the model to use its available reasoning or thinking capabilities when useful before answering. A short final-answer format MUST NOT be interpreted as an instruction to suppress internal reasoning.
+INM uses one common cross-provider Reasoning field:
 
-The visible response still contains only the required final answer. Hidden reasoning is acceptable. If a backend exposes reasoning text separately, that reasoning remains item-specific state and MUST be discarded before the next item.
+```text
+Reasoning: on
+Reasoning: off
+```
 
-Provider/model controls such as reasoning mode, thinking budget, reasoning effort, or equivalent inference-time computation remain runtime settings. The system prompt does not force a backend feature that is disabled by the evaluator or unsupported by the model.
+`on` means the evaluation configuration enables or intentionally allows the model/backend's Reasoning behavior. `off` means the evaluator intentionally uses a direct/non-Reasoning configuration. The standard `prompts/system_v0.2.txt` instruction permits available internal reasoning while still requiring only the final answer in the visible response.
 
-Runs with materially different reasoning settings MUST report those settings and SHOULD NOT be treated as configuration-identical comparisons.
+Provider/model-specific strength names, budgets, and scales MUST NOT be forced into a benchmark-wide enum because they are not equivalent across systems. When such a setting exists, record it verbatim as an optional free-form **Reasoning detail**, for example:
+
+```text
+Reasoning: on
+Reasoning detail: xhigh
+
+Reasoning: on
+Reasoning detail: max
+
+Reasoning: on
+Reasoning detail: reasoning_effort=high
+
+Reasoning: on
+Reasoning detail: thinking_budget=32768
+```
+
+If a model/runtime has only an on/off switch, no additional detail is required. If the effective detail is simply a provider/model default, it may be recorded as such. Actual provider request parameters should remain in the raw run metadata.
+
+Reasoning is an inference configuration, not a claim that the model contains more stored knowledge. Runs with different Reasoning states or materially different provider-specific Reasoning settings should be reported as different configurations.
+
+If a backend exposes reasoning text separately, that content remains item-specific state and MUST be discarded before the next item. The public result does not need to include private reasoning traces.
+
+---
 
 ---
 
@@ -265,7 +290,8 @@ top_p
 seed (if available)
 context_length
 system_prompt / instruction template
-reasoning_mode
+reasoning: on/off
+reasoning_detail (optional, free-form)
 evaluation_date
 item_isolation_method
 prefix_cache_reused: yes/no
