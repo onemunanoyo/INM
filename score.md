@@ -22,32 +22,31 @@ python scripts/render_scoreboard.py
 
 This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
-## Development / exploratory runs
+## Current development run
 
-These rows are useful while developing INM, but **do not count as official leaderboard entries**. Reasons include an unfrozen dataset, legacy runner settings, missing raw-result publication, or another protocol mismatch.
+Only results on the current working dataset are shown in the main comparison table. Older dataset revisions and invalidated runner configurations are kept below as historical records rather than mixed into the current comparison.
 
-| Model | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Dataset | Date |
+| Model | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Dataset | Date |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
 | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | working v0.1, 195 items | 2026-09-27 |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | pre-Batch04, 171 items | 2026-09-27 |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` legacy forced config | pre-Batch04, 171 items | 2026-09-27 |
 
-\* `INM Macro` is the unweighted mean of category accuracies that contain scored items in that run. The 195-item run includes all four current categories; the older 171-item runs contain no Fake Quote items and therefore average only their three non-empty categories.
+The visual cards show this 195-item run (`20260927T061853Z_ollama-local_fe076f9f`). It completed all 195 isolated items with no recorded item errors or format failures, with web, RAG, and tools disabled.
 
-### Current displayed development run
+Across the 167 four-choice items, the model scored **30.5% (51/167)** against a 25% random-choice expectation. The exact one-sided binomial tail for at least 51/167 under p=0.25 is approximately **0.061**, so this development result should not by itself be interpreted as strong evidence of stable INM knowledge.
 
-The visual cards now show the **195-item** `temperature: 0.6` run (`20260927T061853Z_ollama-local_fe076f9f`). It completed all 195 isolated items with no recorded item errors or format failures, with web, RAG, and tools disabled. There was no output-token cap.
+<details>
+<summary><strong>Historical development runs</strong></summary>
 
-Its overall score is **52/195 = 26.7%**. By category:
+These runs are retained for audit/history only. They used the 171-item pre-Batch04 working set and are not directly comparable to the current 195-item set.
 
-- Character / Work: **24.1% (19/79)**
-- Structure: **37.5% (24/64)**
-- Fake Quote: **33.3% (8/24)**
-- Quote Completion: **3.6% (1/28)**
+| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Sampling | Dataset | Run ID |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | pre-Batch04, 171 items | `20260927T053604Z_ollama-local_fae79399` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `20260927T051313Z_ollama-local_4ee79ea9` |
 
-Across the 167 four-choice items, the model scored **30.5% (51/167)** against a 25% random-choice expectation. This is above chance descriptively, but still close enough that this single development run should not be treated as strong evidence of stable INM knowledge. The exact one-sided binomial tail for at least 51/167 under p=0.25 is approximately **0.061**.
+The legacy `temperature: 0` run is additionally invalidated as a representative model result because that runner version forced a sampling override that INM no longer applies by default.
 
-The older 171-item runs are retained only as development history and are not directly comparable to the current 195-item working set.
+</details>
 
 ## Official / Isolated Leaderboard
 
@@ -95,4 +94,4 @@ docs/assets/scoreboard_categories.svg
 docs/assets/scoreboard_categories_ja.svg
 ```
 
-Keep full reproducibility metadata and raw item-level results in `results/`; `data/leaderboard.json` is only the compact presentation source.
+Keep full reproducibility metadata and raw item-level results in `results/`; `data/leaderboard.json` is only the compact presentation source. Historical entries remain in the JSON with `archived: true` and `show_in_chart: false`.
