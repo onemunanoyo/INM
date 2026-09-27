@@ -1,6 +1,16 @@
 # Batch04 — Attested Fake Quote Review
 
-This batch replaces the original Batch03 Fake Quote draft set for active review.
+This batch replaced the original Batch03 Fake Quote draft set.
+
+## Status
+
+**Review complete: 24 ACCEPT / 0 REVISE / 0 REJECT.**
+
+All 24 items passed the source-work collision gate and were promoted to:
+
+- `data/candidates/quotes/fake_detection_aburanendo.jsonl`
+
+Detailed decisions and collision-check notes are recorded in [`DECISIONS.md`](DECISIONS.md).
 
 ## Purpose
 
@@ -10,8 +20,9 @@ This makes the negative choice superficially meme-like rather than merely a norm
 
 ## Files
 
-- `fake_detection_aburanendo.jsonl` — 24 unreviewed draft items
-- `01_fake_detection_aburanendo.md` — human review sheet
+- `fake_detection_aburanendo.jsonl` — original 24-item review draft
+- `01_fake_detection_aburanendo.md` — original human review sheet
+- `DECISIONS.md` — final review/promotion decision record
 
 ## Construction
 
@@ -36,18 +47,18 @@ Correct-answer positions are balanced exactly:
 - C: 6
 - D: 6
 
+The answer order itself is intentionally non-periodic rather than A/B/C/D rotation.
+
 ## Promotion gate
 
-All 24 items remain under `_review/`.
-
-Human review alone is **not** sufficient for promotion. Before an item becomes a candidate/gold item, the fake expression must still be checked against preferred true-quote references and wider search/variant forms so that an attested fake-meme expression is not accidentally also an established source quote.
-
-Required state before promotion:
+The promotion gate for this batch was:
 
 ```text
 human review: ACCEPT
 fake provenance: verified
-true/fake collision check: passed
+true/fake source-work collision check: passed
 ```
 
-The original Batch03 F set is retained only for audit history and is superseded for active review.
+All 24 items satisfied the gate on 2026-09-27.
+
+The original Batch03 F set remains only for audit history and is superseded.
