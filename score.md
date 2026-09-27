@@ -1,10 +1,26 @@
 # INM Scoreboard
 
-A compact leaderboard for comparing model performance on INM.
+A compact visual leaderboard for comparing model performance on INM.
 
 English | [日本語](score.ja.md)
 
 > **Status:** INM v0.1 is still under authoring and review. Official rankings should only use a frozen benchmark release and an auditable `Official / Isolated` run. Submission requirements live in [`results/README.md`](results/README.md).
+
+## Visual scoreboard
+
+![INM Overall](docs/assets/scoreboard_overall.svg)
+
+![INM category scores](docs/assets/scoreboard_categories.svg)
+
+The dashed line on the Overall card is the approximate random-answer baseline for the current working set: 143 four-choice items at 25% chance plus 28 free-text completion items, giving about **20.9% overall**. It is a development reference, not a universal baseline for future INM versions.
+
+The cards are generated from [`data/leaderboard.json`](data/leaderboard.json):
+
+```bash
+python scripts/render_scoreboard.py
+```
+
+This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
 ## Official / Isolated leaderboard
 
@@ -14,44 +30,22 @@ Rows are ranked primarily by **INM Overall**. When the same model is evaluated w
 |---:|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
 | — | _No accepted official results yet_ | | | | | | | | | | | | | |
 
-## Vertical comparison matrix
-
-This view places **metrics on the vertical axis and models across columns**. It becomes more useful as more models are added because strengths and weaknesses can be compared row by row.
-
-| Metric ↓ / Model → | Gemma-4-E2B-Uncensored-HauhauCS-Aggressive |
-|---|---:|
-| Track | Exploratory / invalidated settings |
-| **INM Overall** | **24.6%** |
-| INM Macro* | 19.9% |
-| Character / Work | 25.3% `███░░░░░░░` |
-| Structure | 34.4% `███░░░░░░░` |
-| Fake Quote | — |
-| Quote Completion | 0.0% `░░░░░░░░░░` |
-| Four-choice only | 29.4% (42/143) |
-| Correct / n | 42/171 |
-| Backend | Ollama |
-| Quantization | Q6_K_P |
-| Sampling | `temperature: 0` (legacy config) |
-| Output cap | none |
-| Date | 2026-09-27 |
-
-> The mini-bars are only a coarse 10-step visual aid. The percentage values are the authoritative comparison values.
-
 ## Development / exploratory runs
 
-These rows are useful while developing INM, but **do not count as official leaderboard entries**. Reasons can include an unfrozen dataset, legacy runner settings, missing raw-result publication, or another protocol mismatch.
+These rows are useful while developing INM, but **do not count as official leaderboard entries**. Reasons include an unfrozen dataset, legacy runner settings, missing raw-result publication, or another protocol mismatch.
 
-| Model | Family / Creator | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Backend | Quantization | Sampling | Track | Date |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | Gemma / HauhauCS | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 42/171 | Ollama | Q6_K_P | `temperature: 0` (legacy config), no output cap | Exploratory / invalidated settings | 2026-09-27 |
+| Model | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Track | Date |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | Development / Exploratory | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` legacy forced config, no output cap | Exploratory / invalidated settings | 2026-09-27 |
 
-\* `INM Macro` is the unweighted mean of category accuracies that contain scored items in that run. The current working v0.1 dataset has no promoted Fake Quote items yet, so the exploratory run above averages three non-empty categories.
+\* `INM Macro` is the unweighted mean of category accuracies that contain scored items in that run. The current working v0.1 dataset has no promoted Fake Quote items yet, so these runs average the three non-empty categories.
 
-### Why the current Gemma run is not ranked
+### Current displayed development run
 
-The run used an older INM configuration that forced `temperature: 0`. INM now leaves `temperature` unspecified by default so the backend/model can use its own decoding defaults. The run also used the still-changing v0.1 working dataset rather than a frozen release.
+The visual cards currently show the newer `temperature: 0.6` run. It used 171 isolated items with no output-token cap and completed with no recorded item errors. Its overall score is **37/171 = 21.6%**. The four-choice subset is **37/143 = 25.9%**, extremely close to the 25% random-choice expectation, and Quote Completion is **0/28**.
 
-For context, the run contained 143 four-choice items and 28 Quote Completion items. Its four-choice accuracy was **29.4% (42/143)**, close to the **25% random-choice baseline**, while Quote Completion was **0/28**. It should therefore be treated as a development datapoint rather than evidence of a stable model ranking.
+The older `temperature: 0` run is retained in the table only as development history. INM no longer forces temperature by default; backend/model defaults are preferred unless the evaluator explicitly records an override.
 
 ## Score columns
 
@@ -78,24 +72,21 @@ A row belongs in the official table only when all of the following are available
 
 The scoreboard is a presentation layer. [`results/README.md`](results/README.md) remains the normative submission and verification policy.
 
-## Suggested result row
+## Scoreboard data workflow
 
-When adding a model, prefer a compact display row and keep the full reproducibility metadata in its result file or summary:
+Add or update an entry in [`data/leaderboard.json`](data/leaderboard.json), then run:
 
-```text
-Model: exact public model name / tag
-INM version: vX.Y + commit SHA
-Overall: xx.x%
-Macro: xx.x%
-Character / Work: xx.x%
-Structure: xx.x%
-Fake Quote: xx.x%
-Quote Completion: xx.x%
-Backend: Ollama / llama.cpp / API provider
-Quantization: Q4_K_M / Q6_K / FP16 / n/a
-Sampling: provider default, or explicit overrides
-Reasoning: mode / effort / thinking setting
-Result: results/<backend>/<model>/<run>.jsonl
+```bash
+python scripts/render_scoreboard.py
 ```
 
-The layout intentionally emphasizes one headline score plus comparable secondary metrics, similar to modern model-comparison leaderboards, while keeping INM-specific category scores and reproducibility information visible.
+Generated files:
+
+```text
+docs/assets/scoreboard_overall.svg
+docs/assets/scoreboard_overall_ja.svg
+docs/assets/scoreboard_categories.svg
+docs/assets/scoreboard_categories_ja.svg
+```
+
+Keep full reproducibility metadata and raw item-level results in `results/`; `data/leaderboard.json` is only the compact presentation source.
