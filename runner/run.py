@@ -117,7 +117,7 @@ def parse_args(argv: Iterable[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--prompt",
         type=Path,
-        default=Path("prompts/system_v0.1.txt"),
+        default=Path("prompts/system_v0.2.txt"),
         help="Official system prompt file",
     )
     parser.add_argument("--output", type=Path, default=None)
