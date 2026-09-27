@@ -166,32 +166,50 @@ Then set the exact Gemini model ID in `configs/models.yaml`.
 
 ### Local llama.cpp
 
-The INM runner does not launch llama.cpp.
+The INM runner does not launch llama.cpp and does not scan for an available port. Start `llama-server` separately.
 
-Start your llama.cpp server separately using your model and preferred server settings. The important requirement is that an OpenAI-compatible Chat Completions endpoint is available.
+A simple reproducible setup is:
 
-The example INM configuration expects:
-
-```text
-http://127.0.0.1:8080/v1
+```bash
+llama-server \
+  -m /path/to/model.gguf \
+  --host 127.0.0.1 \
+  --port 8080 \
+  --alias inm-local
 ```
 
-Configure the entry:
+The example model config keeps `http://127.0.0.1:8080/v1` and `inm-local` as fallback values, but both can be overridden from `.env` without editing YAML:
+
+```dotenv
+LLAMA_CPP_BASE_URL=http://127.0.0.1:8080/v1
+LLAMA_CPP_MODEL_ID=inm-local
+LLAMA_CPP_API_KEY=
+```
+
+For example, when the server listens on port 5000:
+
+```dotenv
+LLAMA_CPP_BASE_URL=http://127.0.0.1:5000/v1
+```
+
+The corresponding YAML uses environment-variable override names:
 
 ```yaml
 models:
   llama-local:
     provider: openai_compatible
-    model: YOUR_LLAMA_CPP_MODEL_ID
+    model: inm-local
+    model_env: LLAMA_CPP_MODEL_ID
     base_url: http://127.0.0.1:8080/v1
+    base_url_env: LLAMA_CPP_BASE_URL
     api_key_env: LLAMA_CPP_API_KEY
     temperature: 0
     max_tokens: 128
 ```
 
-Most local llama.cpp servers do not require a real API key. The INM adapter uses a placeholder automatically when the referenced environment variable is empty.
+Most local llama.cpp servers do not require a real API key. The INM adapter uses a placeholder automatically when the referenced environment variable is empty. `LLAMA_CPP_MODEL_ID` should match the server API model id; using `--alias inm-local` is the easiest way to make that stable. If you do not use `--alias`, inspect `GET /v1/models` and put the returned id in `.env`.
 
-Before running the benchmark, make sure the server is already running and that the model ID in `configs/models.yaml` matches what your server accepts.
+Before running the benchmark, make sure the server is already running and that the resolved endpoint/model id match it.
 
 ## 4. Validate the benchmark data
 

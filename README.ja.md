@@ -147,30 +147,35 @@ python -m runner.run --model my-openai-run --limit 5
 
 #### llama.cpp / ローカルモデルの場合
 
-INM Runnerとは別にllama.cpp serverを起動しておきます。
+INM Runnerとは別にllama.cpp serverを起動しておきます。Runner自身はserverを起動せず、空いているportの自動探索も行いません。
 
-デフォルト例は次のendpointを想定しています。
+最も簡単なのは、llama.cpp側のAPI aliasを固定して起動する方法です。
 
-```text
-http://127.0.0.1:8080/v1
+```bash
+llama-server \
+  -m /path/to/model.gguf \
+  --host 127.0.0.1 \
+  --port 8080 \
+  --alias inm-local
 ```
 
-`configs/models.yaml` の例:
+`configs/models.example.yaml` では `127.0.0.1:8080` と `inm-local` をfallback値にしています。通常は `models.yaml` を書き換えず、`.env` だけで接続先を変更できます。
 
-```yaml
-models:
-  llama-local:
-    provider: openai_compatible
-    model: YOUR_LLAMA_CPP_MODEL_ID
-    base_url: http://127.0.0.1:8080/v1
-    api_key_env: LLAMA_CPP_API_KEY
-    temperature: 0
-    max_tokens: 128
+```dotenv
+LLAMA_CPP_BASE_URL=http://127.0.0.1:8080/v1
+LLAMA_CPP_MODEL_ID=inm-local
+LLAMA_CPP_API_KEY=
 ```
 
-通常のローカルllama.cppでAPIキーが不要なら、`.env` の `LLAMA_CPP_API_KEY` は空のままで構いません。
+たとえばllama-serverをport 5000で起動した場合は、次の1行だけ変えます。
 
-重要なのは、**serverが先に起動していること**と、`model:` がそのserverで受け付けられるIDになっていることです。
+```dotenv
+LLAMA_CPP_BASE_URL=http://127.0.0.1:5000/v1
+```
+
+`LLAMA_CPP_MODEL_ID` は `--alias` と同じ値にしてください。`--alias` を使わない場合は、llama.cppの `GET /v1/models` が返すmodel idを設定します。通常のローカルllama.cppでAPIキーが不要なら `LLAMA_CPP_API_KEY` は空のままで構いません。
+
+重要なのは、**serverを先に起動すること**、`.env` のendpointがそのserverを指していること、model idが一致していることです。
 
 ### 4. データセットを検証する
 
