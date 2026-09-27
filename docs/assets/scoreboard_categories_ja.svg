@@ -2,7 +2,7 @@
 <rect x="1" y="1" width="678" height="428" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
 <rect x="24" y="28" width="16" height="16" fill="#7C3AED"/>
 <text x="50.0" y="43.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="23" font-weight="600" fill="#111827" text-anchor="start">カテゴリ別スコア</text>
-<text x="24.0" y="74.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#6B7280" text-anchor="start">最新の表示対象run · 高いほど良い</text>
+<text x="24.0" y="74.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#6B7280" text-anchor="start">195問run · 高いほど良い</text>
 <rect x="576" y="20" width="80" height="28" rx="14" fill="#86198F"/>
 <text x="616.0" y="39.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Updated</text>
 <text x="656.0" y="74.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="400" fill="#6B7280" text-anchor="end">2026-09-27</text>
@@ -19,14 +19,14 @@
 <rect x="95.8" y="182.7" width="74.0" height="119.3" rx="5" fill="#7C3AED"/>
 <text x="132.8" y="204.7" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">24.1</text>
 <text x="132.8" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">人物・作品</text>
-<rect x="245.2" y="162.9" width="74.0" height="139.1" rx="5" fill="#2563EB"/>
-<text x="282.2" y="184.9" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">28.1</text>
+<rect x="245.2" y="116.4" width="74.0" height="185.6" rx="5" fill="#2563EB"/>
+<text x="282.2" y="138.4" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">37.5</text>
 <text x="282.2" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">構造</text>
-<rect x="394.8" y="284.0" width="74.0" height="18" rx="5" fill="#E5E7EB"/>
-<text x="431.8" y="296.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#6B7280" text-anchor="middle">N/A</text>
+<rect x="394.8" y="137.2" width="74.0" height="164.8" rx="5" fill="#0F766E"/>
+<text x="431.8" y="159.2" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">33.3</text>
 <text x="431.8" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Fake Quote</text>
-<rect x="544.2" y="300.0" width="74.0" height="2.0" rx="5" fill="#EA580C"/>
-<text x="581.2" y="293.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">0.0</text>
+<rect x="544.2" y="284.2" width="74.0" height="17.8" rx="5" fill="#EA580C"/>
+<text x="581.2" y="277.2" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">3.6</text>
 <text x="581.2" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">語録穴埋め</text>
 <text x="340.0" y="382.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="600" fill="#111827" text-anchor="middle">Gemma-4 E2B Aggressive</text>
 <text x="340.0" y="399.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="middle">temperature=0.6; max_tokens unset</text>
