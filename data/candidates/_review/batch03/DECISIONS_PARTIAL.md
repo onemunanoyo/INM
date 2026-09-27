@@ -1,6 +1,6 @@
 # Batch03 — Partial Review Decisions
 
-Reviewed so far: Sections A, B, C, G, and H.
+Reviewed so far: Sections A, B, C, D, E, G, and H.
 
 ## A. Entity Association
 
@@ -38,13 +38,67 @@ Exception-based review was used: unmarked items are treated as accepted because 
 
 Revision queue:
 
-- `b03_comp_011` — original draft `「多少は____？」` is not the intended canonical form. Reviewer notes the source form as `ま、多少わね？`; revise to a prompt such as `「ま、多少____？」` or `「ま、____わね？」`, then re-review before promotion.
+- `b03_comp_011` — original draft `「多少は____？」` is not the intended canonical form. Reviewer notes the source form as `ま、多少わね？`; revise and re-review before promotion.
 
 Rejected:
 
 - `b03_comp_013` — `「____です」` is too short and context-poor.
 
-The 18 accepted items were promoted to `data/candidates/quotes/completion.jsonl` with the standard completion normalizers (`trim`, `normalize_width`, `strip_quotes`, `strip_punctuation`).
+The 18 accepted items were promoted to `data/candidates/quotes/completion.jsonl` with the standard completion normalizers.
+
+## D. Context / Structure
+
+- Human-reviewed: 20
+- ACCEPT: 18
+- REVISE: 0
+- REJECT: 2
+
+Rejected:
+
+- `b03_ctx_015` — benchmark-internal canonicalization policy is not an appropriate culture-knowledge item and reviewer notes insufficient rigor.
+- `b03_ctx_020` — source-site-specific `Wikiに示されている表記揺れ` formulation is not appropriate benchmark content.
+
+The 18 accepted items were promoted to `data/candidates/structure/context.jsonl`.
+
+During promotion, source-site-specific wording on otherwise accepted factual items was neutralized without changing the tested fact or distractor set (for example, `Wikiに記載` -> direct scene/culture wording). Correct-answer positions were redistributed to reduce positional leakage: A=5, B=5, C=4, D=4.
+
+## E. Terminology / Derived Culture
+
+- Human-reviewed: 20
+- ACCEPT: 7
+- REVISE: 4
+- REJECT: 9
+
+Accepted:
+
+- `b03_term_001`
+- `b03_term_003`
+- `b03_term_004`
+- `b03_term_005`
+- `b03_term_006`
+- `b03_term_007`
+- `b03_term_008`
+
+Revision queue:
+
+- `b03_term_009` — unmarked individually, but the section-wide reviewer note rejects `Wikiで〜に分類` framing; rewrite as a direct community-origin question.
+- `b03_term_010` — rewrite as `コミュニティ由来の造語はどれか` rather than testing Wiki classification. The sheet contains both 修正 and 却下 marks, but the memo explicitly supplies a viable rewrite, so this is retained as REVISE rather than promoted or permanently rejected.
+- `b03_term_011` — rewrite as a direct community-origin question.
+- `b03_term_012` — rewrite as a direct community-origin question.
+
+Rejected:
+
+- `b03_term_002` — too niche / insufficiently popular.
+- `b03_term_013`
+- `b03_term_014`
+- `b03_term_015`
+- `b03_term_016`
+- `b03_term_017`
+- `b03_term_018`
+- `b03_term_019`
+- `b03_term_020`
+
+The 7 accepted items were promoted to `data/candidates/entities/terminology.jsonl`. Their original drafts all placed the correct answer at A, so choices were reordered while preserving content. Final correct-answer distribution: A=2, B=2, C=2, D=1.
 
 ## G. Work / Character / Scene
 
@@ -78,18 +132,16 @@ Newly approved from G/H: 40.
 
 Newly approved from C: 18.
 
-**Current human-approved total: 146.**
+Newly approved from D/E: 25.
 
-Remaining unreviewed Batch03 sections:
+**Current human-approved total: 171.**
 
-- D. Context / Structure — 20
-- E. Terminology — 20
+Remaining unreviewed Batch03 section:
+
 - F. Fake Detection — 15
 
-Total remaining to review: 55.
-
-To reach 200 human-approved items from 146, 54 additional accepts are required.
+To reach 200 human-approved items from 171, 29 additional accepts are required. Batch03 F alone therefore cannot bring the raw human-approved count to 200; additional reviewed items will be needed after F.
 
 ## Review-fatigue adjustment
 
-For the remaining Batch03 sections, prefer exception-based review: treat the sheet as a scan for bad, ambiguous, duplicate, or overly niche items, and explicitly mark only REVISE / REJECT where practical. Final promotion still requires a recorded human review decision; this is only a lighter review workflow, not automatic acceptance.
+For remaining review, prefer exception-based review: scan for bad, ambiguous, duplicate, source-site-specific, or overly niche items and explicitly mark only REVISE / REJECT where practical. Final promotion still requires a recorded human review decision.
