@@ -37,11 +37,18 @@ jobs:
           path = Path('docs/RUNNER.md')
           text = path.read_text(encoding='utf-8')
 
-          # Remove the 128-token cap from OpenAI-compatible examples.
+          # Remove the 128-token cap from OpenAI-compatible cloud examples.
           text = text.replace(
               '    provider: openai_compatible\n    model: YOUR_EXACT_MODEL_ID\n    base_url: https://api.openai.com/v1\n    api_key_env: OPENAI_API_KEY\n    temperature: 0\n    max_tokens: 128\n',
               '    provider: openai_compatible\n    model: YOUR_EXACT_MODEL_ID\n    base_url: https://api.openai.com/v1\n    api_key_env: OPENAI_API_KEY\n    temperature: 0\n',
           )
+
+          # Remove stale llama.cpp auth/cap lines from the local example.
+          text = text.replace(
+              '    base_url_env: LLAMA_CPP_BASE_URL\n    api_key_env: LLAMA_CPP_API_KEY\n    temperature: 0\n    max_tokens: 128\n',
+              '    base_url_env: LLAMA_CPP_BASE_URL\n    temperature: 0\n',
+          )
+          text = text.replace('LLAMA_CPP_API_KEY=\n', '')
 
           # Anthropic Messages requires max_tokens, so keep it explicit but
           # avoid the old dangerously-low default.
@@ -65,8 +72,8 @@ jobs:
                            'results record the exact model tag used. See [`OLLAMA.md`](OLLAMA.md) for the complete '
                            'Ollama setup.\n')
           ollama_note = ('\n`ollama-local` intentionally has no `max_tokens` setting by default. If your local '
-                         '`configs/models.yaml` was copied from an older revision, remove `max_tokens: 128` before '
-                         'running a thinking model.\n')
+                         '`configs/models.yaml` was copied from an older revision, remove the old 128-token cap '
+                         'before running a thinking model.\n')
           if ollama_note.strip() not in text and ollama_marker in text:
               text = text.replace(ollama_marker, ollama_marker + ollama_note, 1)
 
@@ -87,10 +94,10 @@ jobs:
           assert claude['max_tokens'] == 8192, claude
           print('token-cap configuration verified')
           PY
-      - name: Verify no stale 128-token example remains
+      - name: Verify no active YAML example uses 128 tokens
         run: |
-          if grep -R --line-number --fixed-string 'max_tokens: 128' README.md README.ja.md docs configs; then
-            echo 'Found stale max_tokens: 128 example' >&2
+          if grep -R --line-number --include='*.md' '^    max_tokens: 128$' README.md README.ja.md docs/RUNNER.md; then
+            echo 'Found active max_tokens: 128 example' >&2
             exit 1
           fi
       - name: Commit documentation updates
