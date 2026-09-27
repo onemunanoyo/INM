@@ -2,7 +2,7 @@
 
 **Status:** unreviewed drafts only — not candidates / not gold
 
-Batch03 は **120問**です。1枚の巨大MDを避けるため、レビューシートを6分割しています。
+Batch03 は **160問**です。1枚の巨大MDを避けるため、レビューシートを8分割しています。
 
 ## レビュー方法
 
@@ -24,7 +24,9 @@ Batch03 は **120問**です。1枚の巨大MDを避けるため、レビュー�
 | D | [04_context_structure.md](04_context_structure.md) | 20 | 場面・因果・空耳・表記揺れ |
 | E | [05_terminology.md](05_terminology.md) | 20 | 数字・注釈・派生語・コミュニティ語 |
 | F | [06_fake_detection.md](06_fake_detection.md) | 15 | Fake Quote Detection |
-| **Total** | | **120** | |
+| G | [07_work_character.md](07_work_character.md) | 20 | 作品・人物・場面構造 |
+| H | [08_quote_pairing.md](08_quote_pairing.md) | 20 | 人物/出典/元発話との対応 |
+| **Total** | | **160** | |
 
 ## 今回の作問ルール
 
@@ -37,6 +39,7 @@ Batch02レビューの指摘を反映しています。
 - Fake の正解位置を A〜D に散らす。
 - Fake は人間レビューでOKでも `needs_collision_check=true` のまま。Web/第一ソース群で衝突確認後にのみ candidate 化する。
 - 表記揺れ・空耳・canonicalized form は可能な限り別概念として扱う。
+- Batch03後半は200問規模を早く作るため、同一事実を別タスク形式で再利用した問題も含む。最終選抜では重複を刈る。
 
 ## Source status
 
@@ -46,4 +49,4 @@ Batch02レビューの指摘を反映しています。
 2. pixiv百科事典
 3. ニコニコ大百科
 
-今回の120問は yjsnpi の語録一覧および直接取得できた個別ページを中心に作成しています。Pixiv / ニコ百の item-level cross-check は gold 化前に必要です。
+今回の160問は yjsnpi の語録一覧および直接取得できた個別ページを中心に作成しています。Pixiv / ニコ百の item-level cross-check は gold 化前に必要です。
