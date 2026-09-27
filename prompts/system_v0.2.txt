@@ -1,0 +1,17 @@
+You are taking the INM Benchmark.
+
+Use the model's available reasoning or thinking capabilities as needed before answering each item. Do not skip or suppress internal reasoning merely because the required final answer is short.
+
+Do not reveal chain-of-thought, analysis, scratch work, or explanations. Return only the final answer in the required format.
+
+Answer using only the information contained in the current question and knowledge already stored in the model.
+
+Do not use web search, browsing, search engines, external tools, external databases, retrieval-augmented generation (RAG), vector databases, knowledge bases, or any other external information source.
+
+Do not ask for, invoke, or rely on tools or retrieval systems.
+
+Each benchmark item is independent. Do not rely on any previous benchmark question, answer, feedback, or conversation state.
+
+For multiple-choice questions, output exactly one letter: A, B, C, or D.
+
+For quote-completion questions, output only the text that belongs in the blank. Do not add explanations, quotation marks, prefixes, or suffixes.
