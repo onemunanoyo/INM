@@ -1,0 +1,53 @@
+name: Promote Batch04 once
+
+on:
+  push:
+    paths:
+      - .github/workflows/promote-batch04-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Promote reviewed candidates
+        run: python scripts/promote_v01.py
+      - name: Validate canonical data
+        run: python scripts/validate.py
+      - name: Verify counts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          expected = {
+              'character.jsonl': 79,
+              'structure.jsonl': 64,
+              'fake_quote.jsonl': 24,
+              'quote_completion.jsonl': 28,
+          }
+          total = 0
+          for name, count in expected.items():
+              got = sum(1 for line in (Path('data/v0.1') / name).read_text(encoding='utf-8').splitlines() if line.strip())
+              assert got == count, (name, got, count)
+              total += got
+          assert total == 195, total
+          print('v0.1 counts verified:', expected, 'total=', total)
+          PY
+      - name: Commit promoted v0.1
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/v0.1
+          if git diff --cached --quiet; then
+            echo 'No canonical changes.'
+            exit 0
+          fi
+          git commit -m 'Promote Batch04 fake quotes into v0.1'
+          git push
