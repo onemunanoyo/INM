@@ -33,14 +33,17 @@ python scripts/render_scoreboard.py
 <details>
 <summary><strong>過去のDevelopment run</strong></summary>
 
-以下はすべて `system_v0.1` を使ったrunです。監査・開発履歴として残しますが、`system_v0.2` の結果と直接混ぜて比較しません。
+以下は `system_v0.2` より前のpromptで取得したrunです。監査・開発履歴として残しますが、現行 `system_v0.2` の結果と直接混ぜて比較しません。Reasoning欄が `未記録` のrunでは、当時のraw metadataからReasoning状態を確定できません。
 
-| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Sampling | Dataset | Prompt | Run ID |
-|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |
-| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | Batch04前、171問 | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
+| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Reasoning | Sampling | Dataset | Prompt | Run ID |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
+| gemma-4-12b-it-GGUF | 27.2% | 25.3% | 30.4% | 29.7% | 37.5% | 3.6% | 53/195 | `on` (legacy label) | `temperature: 0.6` | working v0.1、195問 | `system_v0.1-thinking-on` (custom) | `20260927T095811Z_ollama-local_68cc9586` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `未記録` | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |
+| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `未記録` | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `未記録` | `temperature: 0.6` | Batch04前、171問 | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `未記録` | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
+
+Reasoning `on` の12B runはrun名・prompt pathから状態を記録していますが、provider固有の強度・budgetはraw metadataに保存されていません。
 
 最後のrunは旧runnerが `temperature: 0` を強制していたため、モデルの代表性能としても無効化した結果です。最初の2runは現行195問datasetですが、Reasoning-instructionなv0.2より前のpromptを使っています。
 

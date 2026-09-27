@@ -33,14 +33,17 @@ The visual cards are therefore intentionally empty for the current prompt revisi
 <details>
 <summary><strong>Historical development runs</strong></summary>
 
-These runs used `system_v0.1` and are retained for audit/history. They must not be mixed directly with `system_v0.2` results.
+These runs predate the current `system_v0.2` prompt and are retained for audit/history. They must not be mixed directly with current-prompt results. `not recorded` means the historical raw metadata does not establish the Reasoning state.
 
-| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Sampling | Dataset | Prompt | Run ID |
-|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |
-| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | pre-Batch04, 171 items | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
+| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Reasoning | Sampling | Dataset | Prompt | Run ID |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
+| gemma-4-12b-it-GGUF | 27.2% | 25.3% | 30.4% | 29.7% | 37.5% | 3.6% | 53/195 | `on` (legacy label) | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1-thinking-on` (custom) | `20260927T095811Z_ollama-local_68cc9586` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `not recorded` | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |
+| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `not recorded` | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `not recorded` | `temperature: 0.6` | pre-Batch04, 171 items | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `not recorded` | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
+
+The 12B Reasoning `on` row records that state from the run/prompt label; the exact provider-specific level or budget was not serialized in the legacy raw metadata.
 
 The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The first two rows used the current 195-item dataset, but their system prompt predates the Reasoning-instruction v0.2 prompt.
 
