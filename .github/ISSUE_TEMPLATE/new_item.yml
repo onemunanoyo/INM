@@ -1,0 +1,90 @@
+name: "新規問題の提案 / New benchmark item"
+description: "INMに追加する新しい問題候補を提案"
+title: "[New item] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提案ありがとうございます。INMでは、未レビューの問題をそのまま正式採用せず、出典確認・曖昧性確認・人間レビューを経て採否を決めます。
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: "カテゴリ / Category"
+      options:
+        - "Character / Work Knowledge"
+        - "Structure"
+        - "Fake Quote Detection"
+        - "Quote Completion"
+        - "未定・その他 / Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: "問題文 / Question"
+      description: "そのままレビューできる形で記載してください。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: choices
+    attributes:
+      label: "選択肢 / Choices"
+      description: "四択の場合はA〜Dを記載してください。穴埋め問題の場合は不要です。"
+      placeholder: |
+        A. ...
+        B. ...
+        C. ...
+        D. ...
+
+  - type: input
+    id: answer
+    attributes:
+      label: "想定正解 / Expected answer"
+      placeholder: "例: B / 24 / しょうがない"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: "難易度案 / Proposed difficulty"
+      options:
+        - easy
+        - medium
+        - hard
+        - unsure
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: "根拠・出典 / Sources"
+      description: "URL、作品・章、該当箇所など。出典が確認できない問題は原則として正式採用しません。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: ambiguity
+    attributes:
+      label: "曖昧性・表記揺れ / Ambiguity and variants"
+      description: "別解、表記揺れ、聞き取り差、注釈の有無、canonicalized formなどがあれば記載してください。"
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: "この問題を入れる理由 / Rationale"
+      description: "既存問題と異なる知識を測れる点や、INMにとって有用な理由を記載してください。"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "確認 / Checklist"
+      options:
+        - label: "既存問題と実質的な重複になっていないか確認しました。"
+          required: true
+        - label: "実在人物の特定・詮索を目的とする問題ではありません。"
+          required: true
