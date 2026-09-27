@@ -145,6 +145,31 @@ Then run:
 python -m runner.run --model my-openai-run --limit 5
 ```
 
+#### Ollama / local model
+
+Ollama exposes an OpenAI-compatible API at `http://127.0.0.1:11434/v1`, so INM can use it through the `ollama-local` config without a separate provider or API key.
+
+Start or verify the model using the same tag you want to benchmark:
+
+```bash
+ollama run <model-tag>
+```
+
+If the Ollama service is not already running, start `ollama serve` separately first. Then set:
+
+```dotenv
+OLLAMA_BASE_URL=http://127.0.0.1:11434/v1
+OLLAMA_MODEL_ID=<model-tag>
+```
+
+Smoke test:
+
+```bash
+python -m runner.run --model ollama-local --limit 5
+```
+
+See [`docs/OLLAMA.md`](docs/OLLAMA.md) for details.
+
 #### llama.cpp / local model
 
 Start your llama.cpp server separately. The example INM configuration expects an OpenAI-compatible endpoint at:

@@ -164,6 +164,31 @@ GEMINI_API_KEY=YOUR_KEY_HERE
 
 Then set the exact Gemini model ID in `configs/models.yaml`.
 
+### Local Ollama
+
+Ollama provides an OpenAI-compatible endpoint at `http://127.0.0.1:11434/v1`, so INM uses the existing `openai_compatible` adapter. No Ollama API key is required.
+
+Start or verify the model with the exact model tag you intend to benchmark:
+
+```bash
+ollama run <model-tag>
+```
+
+If the Ollama service is not already running on your platform, start it separately with `ollama serve`. Configure INM in `.env`:
+
+```dotenv
+OLLAMA_BASE_URL=http://127.0.0.1:11434/v1
+OLLAMA_MODEL_ID=<model-tag>
+```
+
+Then run:
+
+```bash
+python -m runner.run --model ollama-local --limit 5
+```
+
+`OLLAMA_MODEL_ID` is intentionally explicit rather than auto-detected so benchmark results record the exact model tag used. See [`OLLAMA.md`](OLLAMA.md) for the complete Ollama setup.
+
 ### Local llama.cpp
 
 The INM runner does not launch llama.cpp and does not scan for an available port. Start `llama-server` separately.

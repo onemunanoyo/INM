@@ -145,6 +145,33 @@ OPENAI_API_KEY=YOUR_KEY_HERE
 python -m runner.run --model my-openai-run --limit 5
 ```
 
+#### Ollama / ローカルモデルの場合
+
+OllamaはOpenAI互換APIを `http://127.0.0.1:11434/v1` で公開するため、INMでは `ollama-local` 設定をそのまま使えます。API keyは不要です。
+
+まず、ベンチマークしたいmodel tagでOllamaを起動・確認します。
+
+```bash
+ollama run <model-tag>
+```
+
+Linux等でOllama serviceが動いていない場合は、別terminalで先に `ollama serve` を起動してください。
+
+`.env` には次を設定します。
+
+```dotenv
+OLLAMA_BASE_URL=http://127.0.0.1:11434/v1
+OLLAMA_MODEL_ID=<model-tag>
+```
+
+その後、5問だけ試します。
+
+```bash
+python -m runner.run --model ollama-local --limit 5
+```
+
+詳しくは [`docs/OLLAMA.md`](docs/OLLAMA.md) を参照してください。
+
 #### llama.cpp / ローカルモデルの場合
 
 INM Runnerとは別にllama.cpp serverを起動しておきます。Runner自身はserverを起動せず、空いているportの自動探索も行いません。
