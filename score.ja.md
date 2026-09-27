@@ -12,7 +12,7 @@ INMで評価したモデルを、総合スコアとカテゴリ別スコアで�
 
 ![INM カテゴリ別スコア](docs/assets/scoreboard_categories_ja.svg)
 
-総合カードの破線は、現在グラフに表示している **Batch04昇格前の171問run** に対する概算ランダム基準です。4択143問を25%でランダム回答し、free-textのQuote Completion 28問を偶然正解0%とみなすと、全体では約 **20.9%** になります。現在のcanonical working setはFake Quote 24問を追加した195問なので、この破線は現在の195問setそのものの基準ではありません。
+総合カードの破線は、現在の **195問working set** に対する概算ランダム基準です。4択167問を25%でランダム回答し、free-textのQuote Completion 28問を偶然正解0%とみなすと、全体では約 **21.4%** になります。これは開発中v0.1用の参考線であり、今後のINM versionすべてに共通する基準ではありません。
 
 カードの元データは [`data/leaderboard.json`](data/leaderboard.json) です。
 
@@ -26,22 +26,28 @@ python scripts/render_scoreboard.py
 
 以下は開発中の参考結果です。**正式Leaderboardの順位には含めません。** 未固定dataset、旧runner設定、raw result未公開、その他protocol mismatchがある結果をここに置きます。
 
-| モデル | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Track | 日付 |
+| モデル | **INM Overall** | INM Macro* | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Dataset | 日付 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | Development / Exploratory | 2026-09-27 |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` 強制の旧設定、output capなし | Exploratory / invalidated settings | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | working v0.1、195問 | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **21.6%** | 17.4% | 24.1% (19/79) | 28.1% (18/64) | — | 0.0% (0/28) | 25.9% (37/143) | 37/171 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | Batch04前、171問 | 2026-09-27 |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **24.6%** | 19.9% | 25.3% (20/79) | 34.4% (22/64) | — | 0.0% (0/28) | 29.4% (42/143) | 42/171 | Ollama | Q6_K_P | `temperature: 0` 強制の旧設定 | Batch04前、171問 | 2026-09-27 |
 
-\* `INM Macro` は、そのrun内で実際に得点対象itemが存在するカテゴリのaccuracyを単純平均した値です。上記2runはいずれもBatch04 Fake Quote昇格前の171問setで実施されているため、Fake Quoteは未出題で、3つの非空カテゴリだけを平均しています。
+\* `INM Macro` は、そのrun内で得点対象itemが存在するカテゴリのaccuracyを単純平均した値です。195問runは現在の4カテゴリすべてを含みます。旧171問runはFake Quote未収録のため、3つの非空カテゴリだけを平均しています。
 
 ### 現在グラフに表示している開発run
 
-グラフは新しい `temperature: 0.6` runを表示しています。このrunは **Batch04昇格前の171問working set** をitem isolation条件で実行し、output-token capはなく、記録上のitem errorは0件です。総合は **37/171 = 21.6%** でした。
+グラフは **195問** の `temperature: 0.6` run (`20260927T061853Z_ollama-local_fe076f9f`) を表示しています。195問すべてをitem isolation条件で完走し、記録上のitem errorとformat errorはともに0件、Web / RAG / toolsは無効、output-token capはありません。
 
-4択部分だけでは **37/143 = 25.9%** で、ランダム回答の期待値25%に極めて近く、Quote Completionは **0/28** です。そのため、現時点では「このモデルがINM知識を明確に保持している」と読むより、chance level付近の開発結果として扱う方が妥当です。
+総合は **52/195 = 26.7%** でした。カテゴリ別では、
 
-Batch04のFake Quote 24問を昇格したため、現在のcanonical working setは **195問** です。したがって、この171問runは次に195問setで再実行するまで過去の開発結果として扱います。
+- Character / Work: **24.1% (19/79)**
+- Structure: **37.5% (24/64)**
+- Fake Quote: **33.3% (8/24)**
+- Quote Completion: **3.6% (1/28)**
 
-旧 `temperature: 0` runは開発履歴として表に残しています。現在のINMはtemperatureをデフォルトでは強制せず、明示overrideしない限りbackend / model側の既定samplingを使います。
+4択167問だけでは **30.5% (51/167)** で、ランダム回答の期待値25%を上回っています。ただし、この1runだけで安定したINM知識があると結論づけるほど強い差ではありません。p=0.25のランダム回答を仮定したとき、51/167以上になる片側二項確率は約 **0.061** です。
+
+旧171問runは開発履歴として残していますが、現在の195問working setとは直接比較しない方が安全です。
 
 ## Official / Isolated Leaderboard
 
