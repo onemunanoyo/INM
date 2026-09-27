@@ -7,8 +7,15 @@
 # provider supports them. Retrieval/tool-related keys are blocked by the
 # official runner.
 #
+# IMPORTANT: INM does not impose max_tokens on OpenAI-compatible providers by
+# default. Reasoning/thinking models may spend output budget on hidden/internal
+# reasoning before producing the short benchmark answer, so a low cap such as
+# 128 can truncate the answer entirely. Add max_tokens only when you explicitly
+# want a cap, and report that cap with the benchmark result.
+#
 # Some OpenAI-compatible models expect max_completion_tokens instead of
-# max_tokens. Set `token_limit_param: max_completion_tokens` for those models.
+# max_tokens. If you explicitly set a cap for such a model, also set
+# `token_limit_param: max_completion_tokens`.
 
 models:
   llama-local:
@@ -18,7 +25,8 @@ models:
     base_url: http://127.0.0.1:8080/v1
     base_url_env: LLAMA_CPP_BASE_URL
     temperature: 0
-    max_tokens: 128
+    # No max_tokens by default; let the server/model stop naturally.
+    # max_tokens: 4096
     # request_params:
     #   top_p: 1
 
@@ -29,7 +37,9 @@ models:
     base_url: http://127.0.0.1:11434/v1
     base_url_env: OLLAMA_BASE_URL
     temperature: 0
-    max_tokens: 128
+    # No max_tokens by default. This is important for thinking/reasoning
+    # models whose reasoning tokens may consume the output budget first.
+    # max_tokens: 4096
     # Ollama's local API does not require an API key. The OpenAI Python SDK
     # still requires a non-empty client-side value, so the INM adapter supplies
     # an internal placeholder automatically when api_key_env is absent.
@@ -40,7 +50,8 @@ models:
     base_url: https://api.openai.com/v1
     api_key_env: OPENAI_API_KEY
     temperature: 0
-    max_tokens: 128
+    # Optional explicit cap only when desired:
+    # max_tokens: 4096
     # token_limit_param: max_completion_tokens
     # request_params:
     #   reasoning_effort: medium
@@ -51,7 +62,7 @@ models:
     base_url: https://api.deepseek.com
     api_key_env: DEEPSEEK_API_KEY
     temperature: 0
-    max_tokens: 128
+    # max_tokens: 4096
 
   gemini:
     provider: openai_compatible
@@ -59,13 +70,15 @@ models:
     base_url: https://generativelanguage.googleapis.com/v1beta/openai/
     api_key_env: GEMINI_API_KEY
     temperature: 0
-    max_tokens: 128
+    # max_tokens: 4096
 
   claude:
     provider: anthropic
     model: YOUR_CLAUDE_MODEL_ID
     api_key_env: ANTHROPIC_API_KEY
     temperature: 0
-    max_tokens: 128
+    # Anthropic Messages requires an explicit max_tokens value. Keep this high
+    # enough that reasoning does not consume the budget before the final answer.
+    max_tokens: 8192
     # request_params may contain Anthropic inference controls supported by
     # the installed SDK/model, but may not contain tools or MCP settings.
