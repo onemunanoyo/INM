@@ -24,30 +24,25 @@ This regenerates the English and Japanese SVG cards under `docs/assets/`.
 
 ## Current development runs
 
-Only results on the current working dataset are shown in the main comparison table. Older dataset revisions and invalidated runner configurations are kept below as historical records rather than mixed into the current comparison.
+The current standard system prompt is [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt), which explicitly tells models to use available reasoning/thinking when useful while emitting only the final answer.
 
-| Model | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | Four-choice | Correct / n | Backend | Quantization | Sampling | Format | Date |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---:|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`, no output cap | 195/195 | 2026-09-27 |
-| gemma-4-E4B-it-GGUF | **22.6%** | 19.4% | 26.6% (21/79) | 26.6% (17/64) | 20.8% (5/24) | 3.6% (1/28) | 25.7% (43/167) | 44/195 | Ollama | Q4_K_M | `temperature: 0.6`, no output cap | 193/195 | 2026-09-27 |
+**No current-prompt (`system_v0.2`) development runs have been added yet.** New runs will appear here as models are rerun on the 195-item working set.
 
-Both runs use the current 195-item working set with per-item isolation and web / RAG / tools disabled.
-
-For the four-choice subset, the E2B Aggressive run scored **30.5% (51/167)**; the exact one-sided binomial tail under random p=0.25 is approximately **0.061**. The E4B-it run scored **25.7% (43/167)**, with a corresponding tail probability of approximately **0.441**. These are development results, not evidence of a stable model ranking.
-
-The E4B-it run had two format failures: one empty response and one refusal-style response. Both were scored incorrect under the normal evaluator.
+The visual cards are therefore intentionally empty for the current prompt revision. Previous results are retained below for audit/history.
 
 <details>
 <summary><strong>Historical development runs</strong></summary>
 
-These runs are retained for audit/history only. They used the 171-item pre-Batch04 working set and are not directly comparable to the current 195-item set.
+These runs used `system_v0.1` and are retained for audit/history. They must not be mixed directly with `system_v0.2` results.
 
-| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Sampling | Dataset | Run ID |
-|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | pre-Batch04, 171 items | `20260927T053604Z_ollama-local_fae79399` |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `20260927T051313Z_ollama-local_4ee79ea9` |
+| Model | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | Correct / n | Sampling | Dataset | Prompt | Run ID |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |
+| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `temperature: 0.6` | working v0.1, 195 items | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | pre-Batch04, 171 items | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` legacy forced config | pre-Batch04, 171 items | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
 
-The legacy `temperature: 0` run is additionally invalidated as a representative model result because that runner version forced a sampling override that INM no longer applies by default.
+The last row is additionally invalidated as a representative model result because the old runner forced `temperature: 0`. The first two rows used the current 195-item dataset, but their system prompt predates the reasoning-aware v0.2 prompt.
 
 </details>
 

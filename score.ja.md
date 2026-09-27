@@ -24,30 +24,25 @@ python scripts/render_scoreboard.py
 
 ## 現行Development run
 
-メイン比較表には、**現在のworking datasetで実行した結果だけ**を表示します。古いdataset revisionや無効化したrunner設定の結果は、現在の結果と混ぜず、下の履歴欄に監査用として残します。
+現在の標準System promptは [`prompts/system_v0.2.txt`](prompts/system_v0.2.txt) です。必要に応じて利用可能なreasoning / thinkingを使い、visible outputには最終回答だけを出すよう明示しています。
 
-| モデル | **INM Overall** | INM Macro | Character / Work | Structure | Fake Quote | Quote Completion | 4択のみ | 正解 / n | Backend | 量子化 | Sampling | Format | 日付 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---:|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | **26.7%** | 24.6% | 24.1% (19/79) | 37.5% (24/64) | 33.3% (8/24) | 3.6% (1/28) | 30.5% (51/167) | 52/195 | Ollama | Q6_K_P | `temperature: 0.6`、output capなし | 195/195 | 2026-09-27 |
-| gemma-4-E4B-it-GGUF | **22.6%** | 19.4% | 26.6% (21/79) | 26.6% (17/64) | 20.8% (5/24) | 3.6% (1/28) | 25.7% (43/167) | 44/195 | Ollama | Q4_K_M | `temperature: 0.6`、output capなし | 193/195 | 2026-09-27 |
+**現時点では `system_v0.2` で取得したDevelopment runはまだありません。** 195問working setで各modelを再実行した結果から、ここへ追加します。
 
-どちらも現行195問working setをitem isolation条件で実行し、Web / RAG / toolsは無効です。
-
-4択部分では、E2B Aggressiveが **30.5% (51/167)** で、p=0.25を仮定した片側二項確率は約 **0.061** です。E4B-itは **25.7% (43/167)** で、同じ条件の片側二項確率は約 **0.441** です。どちらも開発結果であり、この時点で安定したモデル順位を確定するものではありません。
-
-E4B-it runではformat非準拠が2件あり、1件は空出力、もう1件は回答拒否形式でした。いずれも通常の評価ルールどおり不正解として集計しています。
+そのため、ビジュアルカードも現行prompt revisionについてはいったん空表示です。旧結果は下の履歴欄に保持しています。
 
 <details>
 <summary><strong>過去のDevelopment run</strong></summary>
 
-以下は監査・開発履歴として保持しています。いずれもBatch04昇格前の171問working setで実行したため、現在の195問setとは直接比較しません。
+以下はすべて `system_v0.1` を使ったrunです。監査・開発履歴として残しますが、`system_v0.2` の結果と直接混ぜて比較しません。
 
-| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Sampling | Dataset | Run ID |
-|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | Batch04前、171問 | `20260927T053604Z_ollama-local_fae79399` |
-| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `20260927T051313Z_ollama-local_4ee79ea9` |
+| モデル | Overall | Macro | Character / Work | Structure | Fake Quote | Quote Completion | 正解 / n | Sampling | Dataset | Prompt | Run ID |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 26.7% | 24.6% | 24.1% | 37.5% | 33.3% | 3.6% | 52/195 | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T061853Z_ollama-local_fe076f9f` |
+| gemma-4-E4B-it-GGUF | 22.6% | 19.4% | 26.6% | 26.6% | 20.8% | 3.6% | 44/195 | `temperature: 0.6` | working v0.1、195問 | `system_v0.1` | `20260927T064320Z_ollama-local_6afaaadb` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 21.6% | 17.4% | 24.1% | 28.1% | — | 0.0% | 37/171 | `temperature: 0.6` | Batch04前、171問 | `system_v0.1` | `20260927T053604Z_ollama-local_fae79399` |
+| Gemma-4-E2B-Uncensored-HauhauCS-Aggressive | 24.6% | 19.9% | 25.3% | 34.4% | — | 0.0% | 42/171 | `temperature: 0` 強制の旧設定 | Batch04前、171問 | `system_v0.1` | `20260927T051313Z_ollama-local_4ee79ea9` |
 
-旧 `temperature: 0` runは、当時のrunnerが現在は廃止したsampling overrideを強制していたため、モデルの代表性能としては無効化した結果です。
+最後のrunは旧runnerが `temperature: 0` を強制していたため、モデルの代表性能としても無効化した結果です。最初の2runは現行195問datasetですが、reasoning-awareなv0.2より前のpromptを使っています。
 
 </details>
 
