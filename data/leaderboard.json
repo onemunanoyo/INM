@@ -19,12 +19,32 @@
       "overall": 26.7,
       "macro": 24.6,
       "categories": {
-        "character_work": {"score": 24.1, "correct": 19, "n": 79},
-        "structure": {"score": 37.5, "correct": 24, "n": 64},
-        "fake_quote": {"score": 33.3, "correct": 8, "n": 24},
-        "quote_completion": {"score": 3.6, "correct": 1, "n": 28}
+        "character_work": {
+          "score": 24.1,
+          "correct": 19,
+          "n": 79
+        },
+        "structure": {
+          "score": 37.5,
+          "correct": 24,
+          "n": 64
+        },
+        "fake_quote": {
+          "score": 33.3,
+          "correct": 8,
+          "n": 24
+        },
+        "quote_completion": {
+          "score": 3.6,
+          "correct": 1,
+          "n": 28
+        }
       },
-      "four_choice": {"score": 30.5, "correct": 51, "n": 167},
+      "four_choice": {
+        "score": 30.5,
+        "correct": 51,
+        "n": 167
+      },
       "correct": 52,
       "n": 195,
       "dataset_revision": "working v0.1 current canonical set (195 items)",
@@ -41,6 +61,55 @@
       "notes": "Current 195-item working v0.1 set including 24 Fake Quote items; 0 item errors, 0 format failures, isolated evaluation, web/RAG/tools disabled."
     },
     {
+      "id": "gemma4-e4b-it-unsloth-q4km-temp06-195-20260927",
+      "model": "hf.co/unsloth/gemma-4-E4B-it-GGUF:Q4_K_M",
+      "chart_label": "Gemma-4 E4B it",
+      "family_creator": "Gemma / Unsloth",
+      "overall": 22.6,
+      "macro": 19.4,
+      "categories": {
+        "character_work": {
+          "score": 26.6,
+          "correct": 21,
+          "n": 79
+        },
+        "structure": {
+          "score": 26.6,
+          "correct": 17,
+          "n": 64
+        },
+        "fake_quote": {
+          "score": 20.8,
+          "correct": 5,
+          "n": 24
+        },
+        "quote_completion": {
+          "score": 3.6,
+          "correct": 1,
+          "n": 28
+        }
+      },
+      "four_choice": {
+        "score": 25.7,
+        "correct": 43,
+        "n": 167
+      },
+      "correct": 44,
+      "n": 195,
+      "dataset_revision": "working v0.1 current canonical set (195 items)",
+      "backend": "Ollama",
+      "quantization": "Q4_K_M",
+      "sampling": "temperature=0.6; max_tokens unset",
+      "track": "Development / Exploratory",
+      "official": false,
+      "current": true,
+      "archived": false,
+      "show_in_chart": true,
+      "date": "2026-09-27",
+      "run_id": "20260927T064320Z_ollama-local_6afaaadb",
+      "notes": "Current 195-item working v0.1 set; 0 item errors, 2 format failures, isolated evaluation, web/RAG/tools disabled."
+    },
+    {
       "id": "gemma4-e2b-hauhaucs-q6kp-temp06-20260927",
       "model": "hf.co/HauhauCS/Gemma-4-E2B-Uncensored-HauhauCS-Aggressive:Q6_K_P",
       "chart_label": "Gemma-4 E2B Aggressive (171-item run)",
@@ -48,12 +117,32 @@
       "overall": 21.6,
       "macro": 17.4,
       "categories": {
-        "character_work": {"score": 24.1, "correct": 19, "n": 79},
-        "structure": {"score": 28.1, "correct": 18, "n": 64},
-        "fake_quote": {"score": null, "correct": 0, "n": 0},
-        "quote_completion": {"score": 0.0, "correct": 0, "n": 28}
+        "character_work": {
+          "score": 24.1,
+          "correct": 19,
+          "n": 79
+        },
+        "structure": {
+          "score": 28.1,
+          "correct": 18,
+          "n": 64
+        },
+        "fake_quote": {
+          "score": null,
+          "correct": 0,
+          "n": 0
+        },
+        "quote_completion": {
+          "score": 0.0,
+          "correct": 0,
+          "n": 28
+        }
       },
-      "four_choice": {"score": 25.9, "correct": 37, "n": 143},
+      "four_choice": {
+        "score": 25.9,
+        "correct": 37,
+        "n": 143
+      },
       "correct": 37,
       "n": 171,
       "dataset_revision": "working v0.1 pre-Batch04 (171 items)",
@@ -77,12 +166,32 @@
       "overall": 24.6,
       "macro": 19.9,
       "categories": {
-        "character_work": {"score": 25.3, "correct": 20, "n": 79},
-        "structure": {"score": 34.4, "correct": 22, "n": 64},
-        "fake_quote": {"score": null, "correct": 0, "n": 0},
-        "quote_completion": {"score": 0.0, "correct": 0, "n": 28}
+        "character_work": {
+          "score": 25.3,
+          "correct": 20,
+          "n": 79
+        },
+        "structure": {
+          "score": 34.4,
+          "correct": 22,
+          "n": 64
+        },
+        "fake_quote": {
+          "score": null,
+          "correct": 0,
+          "n": 0
+        },
+        "quote_completion": {
+          "score": 0.0,
+          "correct": 0,
+          "n": 28
+        }
       },
-      "four_choice": {"score": 29.4, "correct": 42, "n": 143},
+      "four_choice": {
+        "score": 29.4,
+        "correct": 42,
+        "n": 143
+      },
       "correct": 42,
       "n": 171,
       "dataset_revision": "working v0.1 pre-Batch04 (171 items)",
