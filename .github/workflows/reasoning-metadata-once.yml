@@ -16,13 +16,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
       - name: Fix temporary migration marker
         run: sed -i 's/詳しくは \[`docs\/EVALUATION_PROTOCOL.md`\]/詳細は [`docs\/EVALUATION_PROTOCOL.md`]/' scripts/_reasoning_metadata_migration.py
       - name: Apply Reasoning terminology and metadata changes
         run: python scripts/_reasoning_metadata_migration.py
       - name: Validate Python syntax
-        run: |
-          python -m py_compile runner/config.py runner/run.py
+        run: python -m py_compile runner/config.py runner/run.py
       - name: Validate benchmark data
         run: python scripts/validate.py
       - name: Check diff
