@@ -1,33 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" role="img" aria-label="Category Scores">
-<rect x="1" y="1" width="678" height="428" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="455" viewBox="0 0 760 455" role="img" aria-label="Category Scores">
+<rect x="1" y="1" width="758" height="453" rx="14" fill="#FFFFFF" stroke="#D1D5DB"/>
 <rect x="24" y="28" width="16" height="16" fill="#7C3AED"/>
 <text x="50.0" y="43.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="23" font-weight="600" fill="#111827" text-anchor="start">Category Scores</text>
-<text x="24.0" y="74.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#6B7280" text-anchor="start">195-item run · Higher is better</text>
-<rect x="576" y="20" width="80" height="28" rx="14" fill="#86198F"/>
-<text x="616.0" y="39.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Updated</text>
-<text x="656.0" y="74.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="400" fill="#6B7280" text-anchor="end">2026-09-27</text>
-<line x1="58" y1="302.0" x2="656" y2="302.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
-<text x="50.0" y="306.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">0</text>
-<line x1="58" y1="252.5" x2="656" y2="252.5" stroke="#D1D5DB" stroke-dasharray="2 5"/>
-<text x="50.0" y="256.5" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">10</text>
-<line x1="58" y1="203.0" x2="656" y2="203.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
-<text x="50.0" y="207.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">20</text>
-<line x1="58" y1="153.5" x2="656" y2="153.5" stroke="#D1D5DB" stroke-dasharray="2 5"/>
-<text x="50.0" y="157.5" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">30</text>
-<line x1="58" y1="104.0" x2="656" y2="104.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
+<text x="24.0" y="74.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="12" font-weight="400" fill="#6B7280" text-anchor="start">Current 195-item runs · Higher is better</text>
+<rect x="656" y="20" width="80" height="28" rx="14" fill="#86198F"/>
+<text x="696.0" y="39.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Updated</text>
+<text x="736.0" y="74.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="400" fill="#6B7280" text-anchor="end">2026-09-27</text>
+<line x1="58" y1="300.0" x2="736" y2="300.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
+<text x="50.0" y="304.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">0</text>
+<line x1="58" y1="251.0" x2="736" y2="251.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
+<text x="50.0" y="255.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">10</text>
+<line x1="58" y1="202.0" x2="736" y2="202.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
+<text x="50.0" y="206.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">20</text>
+<line x1="58" y1="153.0" x2="736" y2="153.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
+<text x="50.0" y="157.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">30</text>
+<line x1="58" y1="104.0" x2="736" y2="104.0" stroke="#D1D5DB" stroke-dasharray="2 5"/>
 <text x="50.0" y="108.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="end">40</text>
-<rect x="95.8" y="182.7" width="74.0" height="119.3" rx="5" fill="#7C3AED"/>
-<text x="132.8" y="204.7" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">24.1</text>
-<text x="132.8" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Character / Work</text>
-<rect x="245.2" y="116.4" width="74.0" height="185.6" rx="5" fill="#2563EB"/>
-<text x="282.2" y="138.4" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">37.5</text>
-<text x="282.2" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Structure</text>
-<rect x="394.8" y="137.2" width="74.0" height="164.8" rx="5" fill="#0F766E"/>
-<text x="431.8" y="159.2" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">33.3</text>
-<text x="431.8" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Fake Quote</text>
-<rect x="544.2" y="284.2" width="74.0" height="17.8" rx="5" fill="#EA580C"/>
-<text x="581.2" y="277.2" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">3.6</text>
-<text x="581.2" y="324.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Quote Completion</text>
-<text x="340.0" y="382.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="11" font-weight="600" fill="#111827" text-anchor="middle">Gemma-4 E2B Aggressive</text>
-<text x="340.0" y="399.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="middle">temperature=0.6; max_tokens unset</text>
+<rect x="83.8" y="181.9" width="46.0" height="118.1" rx="4" fill="#7C3AED"/>
+<text x="106.8" y="199.9" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">24.1</text>
+<rect x="135.8" y="169.7" width="46.0" height="130.3" rx="4" fill="#2563EB"/>
+<text x="158.8" y="187.7" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">26.6</text>
+<text x="142.8" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Character / Work</text>
+<rect x="253.2" y="116.2" width="46.0" height="183.8" rx="4" fill="#7C3AED"/>
+<text x="276.2" y="134.2" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">37.5</text>
+<rect x="305.2" y="169.7" width="46.0" height="130.3" rx="4" fill="#2563EB"/>
+<text x="328.2" y="187.7" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">26.6</text>
+<text x="312.2" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Structure</text>
+<rect x="422.8" y="136.8" width="46.0" height="163.2" rx="4" fill="#7C3AED"/>
+<text x="445.8" y="154.8" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">33.3</text>
+<rect x="474.8" y="198.1" width="46.0" height="101.9" rx="4" fill="#2563EB"/>
+<text x="497.8" y="216.1" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">20.8</text>
+<text x="481.8" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Fake Quote</text>
+<rect x="592.2" y="282.4" width="46.0" height="17.6" rx="4" fill="#7C3AED"/>
+<text x="615.2" y="276.4" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#111827" text-anchor="middle">3.6</text>
+<rect x="644.2" y="282.4" width="46.0" height="17.6" rx="4" fill="#2563EB"/>
+<text x="667.2" y="276.4" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" fill="#111827" text-anchor="middle">3.6</text>
+<text x="651.2" y="322.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#111827" text-anchor="middle">Quote Completion</text>
+<rect x="120.0" y="362.0" width="11" height="11" rx="2" fill="#7C3AED"/>
+<text x="137.0" y="372.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="600" fill="#111827" text-anchor="start">Gemma-4 E2B Aggressive</text>
+<text x="137.0" y="388.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="9" font-weight="400" fill="#6B7280" text-anchor="start">Q6_K_P</text>
+<rect x="380.0" y="362.0" width="11" height="11" rx="2" fill="#2563EB"/>
+<text x="397.0" y="372.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="600" fill="#111827" text-anchor="start">Gemma-4 E4B it</text>
+<text x="397.0" y="388.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="9" font-weight="400" fill="#6B7280" text-anchor="start">Q4_K_M</text>
+<text x="24.0" y="433.0" font-family="Inter,Noto Sans JP,Hiragino Sans,Yu Gothic,Meiryo,Segoe UI,Arial,sans-serif" font-size="10" font-weight="400" fill="#6B7280" text-anchor="start">Colors identify models; compare the same color across categories.</text>
 </svg>
