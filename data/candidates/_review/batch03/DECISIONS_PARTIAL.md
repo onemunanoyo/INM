@@ -1,6 +1,6 @@
 # Batch03 — Partial Review Decisions
 
-Reviewed so far: Sections A, B, G, and H.
+Reviewed so far: Sections A, B, C, G, and H.
 
 ## A. Entity Association
 
@@ -26,6 +26,25 @@ The 23 accepted items were promoted to `data/candidates/entities/association.jso
 Reviewer global note: answer positions were biased toward A/B. Before promotion, the options were reordered to distribute correct-answer positions more evenly while preserving the same facts and distractor set.
 
 Speaker items were promoted to `data/candidates/quotes/speaker.jsonl`; source items were promoted to `data/candidates/quotes/source.jsonl`.
+
+## C. Quote Completion
+
+- Human-reviewed: 20
+- ACCEPT: 18
+- REVISE: 1
+- REJECT: 1
+
+Exception-based review was used: unmarked items are treated as accepted because the reviewer explicitly stated that the section had been reviewed and marked only exceptions.
+
+Revision queue:
+
+- `b03_comp_011` — original draft `「多少は____？」` is not the intended canonical form. Reviewer notes the source form as `ま、多少わね？`; revise to a prompt such as `「ま、多少____？」` or `「ま、____わね？」`, then re-review before promotion.
+
+Rejected:
+
+- `b03_comp_013` — `「____です」` is too short and context-poor.
+
+The 18 accepted items were promoted to `data/candidates/quotes/completion.jsonl` with the standard completion normalizers (`trim`, `normalize_width`, `strip_quotes`, `strip_punctuation`).
 
 ## G. Work / Character / Scene
 
@@ -57,7 +76,19 @@ Newly approved from A/B: 43.
 
 Newly approved from G/H: 40.
 
-**Current human-approved total: 128.**
+Newly approved from C: 18.
+
+**Current human-approved total: 146.**
+
+Remaining unreviewed Batch03 sections:
+
+- D. Context / Structure — 20
+- E. Terminology — 20
+- F. Fake Detection — 15
+
+Total remaining to review: 55.
+
+To reach 200 human-approved items from 146, 54 additional accepts are required.
 
 ## Review-fatigue adjustment
 
