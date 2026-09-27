@@ -34,5 +34,14 @@
     "retrieval_status": "pending",
     "retrieved_at": null,
     "notes": "Preferred authoring reference. Direct retrieval was unavailable in the current environment; item-level cross-check is pending."
+  },
+  {
+    "id": "src_hayao0819_nise_inmu_gist",
+    "type": "reference",
+    "title": "ニセ淫夢語録まとめ",
+    "url": "https://gist.github.com/Hayao0819/ab5ff3c742dbd2152bcc64f704258322",
+    "retrieval_status": "retrieved",
+    "retrieved_at": "2026-09-27",
+    "notes": "Fake-side provenance reference for attested 'ニセ淫夢語録'. It documents expressions that exist as fake-meme material and links to source videos; it is not evidence that those expressions are quotations from the underlying 淫夢 works."
   }
 ]
