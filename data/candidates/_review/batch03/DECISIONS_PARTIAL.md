@@ -100,6 +100,20 @@ Rejected:
 
 The 7 accepted items were promoted to `data/candidates/entities/terminology.jsonl`. Their original drafts all placed the correct answer at A, so choices were reordered while preserving content. Final correct-answer distribution: A=2, B=2, C=2, D=1.
 
+## F. Fake Quote Detection
+
+- Original Batch03 draft: 15 unreviewed items
+- Status: **SUPERSEDED / do not review**
+
+The original Batch03 fake set relied mainly on ordinary synthetic sentences as the negative choice. This was judged too easy for the intended benchmark difficulty, so those items will not be promoted.
+
+The raw draft is retained at `data/candidates/_review/batch03/fake_detection.jsonl` for audit history. The active successor is Batch04:
+
+- `data/candidates/_review/batch04/01_fake_detection_aburanendo.md`
+- `data/candidates/_review/batch04/fake_detection_aburanendo.jsonl`
+
+Batch04 uses attested 油粘土マン「ニセ淫夢語録」expressions as negatives. These items require both human review and a true/fake collision check before promotion.
+
 ## G. Work / Character / Scene
 
 - Human-reviewed: 20
@@ -136,11 +150,9 @@ Newly approved from D/E: 25.
 
 **Current human-approved total: 171.**
 
-Remaining unreviewed Batch03 section:
+There is no remaining active Batch03 review section. Batch03 F is superseded rather than pending.
 
-- F. Fake Detection — 15
-
-To reach 200 human-approved items from 171, 29 additional accepts are required. Batch03 F alone therefore cannot bring the raw human-approved count to 200; additional reviewed items will be needed after F.
+To reach 200 human-approved items from 171, 29 additional accepts are required. Batch04 currently contains 24 new Fake Quote drafts, so even if all 24 pass, at least 5 additional accepted items will still be needed to reach 200.
 
 ## Review-fatigue adjustment
 
