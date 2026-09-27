@@ -71,28 +71,170 @@ INM では、コミュニティ上の呼称、通称、TDN式表記などを **�
 
 ## クイックスタート
 
-### 1. 依存関係をインストール
+以下は、リポジトリを取得してから **数問のテスト実行 → 全件実行 → 結果確認** までの最短手順です。
+
+> ローカルLLMを使う場合、INM Runner自身はモデルやllama.cpp serverを起動しません。OpenAI-compatible endpointを別途起動しておく必要があります。
+
+### 0. 必要なもの
+
+- Python 3.10以降を推奨
+- Git
+- 次のどちらか
+  - OpenAI-compatibleなローカル推論サーバー
+  - 対応クラウドAPIのAPIキー
+
+### 1. リポジトリを取得し、仮想環境を作る
 
 ```bash
+git clone https://github.com/onemunanoyo/INM.git
+cd INM
+
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. モデル設定を作成
+Windows PowerShellでは仮想環境の有効化は次です。
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+### 2. ローカル設定ファイルを作る
 
 ```bash
 cp .env.example .env
 cp configs/models.example.yaml configs/models.yaml
 ```
 
-APIキーは `.env` に保存し、Gitへコミットしないでください。
+Windows PowerShell:
 
-### 3. データセットを検証
+```powershell
+Copy-Item .env.example .env
+Copy-Item configs/models.example.yaml configs/models.yaml
+```
+
+`.env` と `configs/models.yaml` はローカル設定用です。APIキーをGitへコミットしないでください。
+
+### 3. 使うモデルを設定する
+
+`--model` に渡す値は、実際のモデル名そのものではなく、`configs/models.yaml` の `models:` 以下のキーです。
+
+例えばクラウドAPIを `my-openai-run` という名前で使う場合:
+
+```yaml
+models:
+  my-openai-run:
+    provider: openai_compatible
+    model: YOUR_EXACT_MODEL_ID
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    temperature: 0
+    max_tokens: 128
+```
+
+`.env` には対応するキーを設定します。
+
+```dotenv
+OPENAI_API_KEY=YOUR_KEY_HERE
+```
+
+実行時は次のようにします。
+
+```bash
+python -m runner.run --model my-openai-run --limit 5
+```
+
+#### llama.cpp / ローカルモデルの場合
+
+INM Runnerとは別にllama.cpp serverを起動しておきます。
+
+デフォルト例は次のendpointを想定しています。
+
+```text
+http://127.0.0.1:8080/v1
+```
+
+`configs/models.yaml` の例:
+
+```yaml
+models:
+  llama-local:
+    provider: openai_compatible
+    model: YOUR_LLAMA_CPP_MODEL_ID
+    base_url: http://127.0.0.1:8080/v1
+    api_key_env: LLAMA_CPP_API_KEY
+    temperature: 0
+    max_tokens: 128
+```
+
+通常のローカルllama.cppでAPIキーが不要なら、`.env` の `LLAMA_CPP_API_KEY` は空のままで構いません。
+
+重要なのは、**serverが先に起動していること**と、`model:` がそのserverで受け付けられるIDになっていることです。
+
+### 4. データセットを検証する
 
 ```bash
 python scripts/validate.py
 ```
 
-### 4. 評価を実行
+正式スコアを公開する前には、検証エラーを解消してください。
+
+現在のv0.1は作問中なので、candidateや`_review`は固定リリースと同一ではありません。
+
+### 5. APIを呼ばずに表示だけ確認する
+
+```bash
+python -m runner.run \
+  --model llama-local \
+  --dry-run \
+  --limit 3
+```
+
+`--dry-run` は問題文を描画するだけで、モデルへのリクエストは行いません。
+
+### 6. まず5問だけ試す
+
+クラウドAPI:
+
+```bash
+python -m runner.run \
+  --model my-openai-run \
+  --limit 5
+```
+
+ローカル:
+
+```bash
+python -m runner.run \
+  --model llama-local \
+  --limit 5
+```
+
+各問について `OK / MISS / ERROR` が表示され、最後に次のような集計が出ます。
+
+```text
+run_id: ...
+items: 5
+scored: 5
+correct: 3
+accuracy: 60.00%
+format_compliance: 100.00%
+errors: 0
+output: results/tmp/<run_id>.jsonl
+```
+
+ここで `ERROR` が出る場合は、全件を回す前にAPIキー、`base_url`、`model:` を確認してください。
+
+### 7. 全件を実行する
+
+デフォルトでは `data/v0.1` を評価します。
+
+```bash
+python -m runner.run --model llama-local
+```
+
+明示する場合:
 
 ```bash
 python -m runner.run \
@@ -100,9 +242,57 @@ python -m runner.run \
   --dataset data/v0.1
 ```
 
-Runner は OpenAI-compatible API、llama.cpp server、DeepSeek、Gemini互換エンドポイント、Anthropic Claude に対応する構成です。
+1カテゴリだけ実行することもできます。
 
-詳細は [`docs/RUNNER.md`](docs/RUNNER.md) を参照してください。
+```bash
+python -m runner.run \
+  --model llama-local \
+  --dataset data/v0.1/character.jsonl
+```
+
+### 8. 結果を見る
+
+`--output` を指定しない場合、結果JSONLは自動的に次へ保存されます。
+
+```text
+results/tmp/<run_id>.jsonl
+```
+
+保存先は実行終了時にも表示されます。
+
+統計を確認する場合:
+
+```bash
+python scripts/stats.py --results results/tmp/<run_id>.jsonl
+```
+
+任意の保存先にしたい場合:
+
+```bash
+python -m runner.run \
+  --model my-openai-run \
+  --output results/my-run.jsonl
+```
+
+### 9. 成績を公開・提出する
+
+公開Leaderboardへ成績を提出する場合は、先に [`results/README.md`](results/README.md) を読んでください。
+
+成績PRでは、少なくとも次を記録します。
+
+- 使用したINM version / commit
+- 正確なmodel ID / version
+- provider / backend
+- 量子化（該当する場合）
+- temperature / reasoning等の推論設定
+- system prompt hash
+- 評価日
+- item isolation方法
+- raw result JSONL
+
+成績提出専用PRテンプレートは `.github/PULL_REQUEST_TEMPLATE/benchmark_result.md` にあります。
+
+より詳しいprovider別設定、CLIオプション、トラブルシューティングは [`docs/RUNNER.md`](docs/RUNNER.md) を参照してください。
 
 ## 公式評価プロトコル
 
@@ -253,6 +443,7 @@ INM/
 ├── docs/
 ├── prompts/
 ├── providers/
+├── results/
 ├── runner/
 ├── schema/
 ├── scripts/
@@ -265,6 +456,7 @@ INM/
 - [`docs/RUNNER.md`](docs/RUNNER.md) — Runnerとprovider設定
 - [`docs/STATS.md`](docs/STATS.md) — 問題数と統計的不確実性
 - [`docs/AUTHORING_TEMPLATE.md`](docs/AUTHORING_TEMPLATE.md) — 作問ガイド
+- [`results/README.md`](results/README.md) — 成績提出とLeaderboard
 
 ## コントリビューション
 
