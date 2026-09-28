@@ -109,9 +109,9 @@ def render_overall(data: dict, *, ja: bool = False) -> str:
     working_n = data.get("current_working_set", {}).get("n")
     title = "INM 総合スコア" if ja else "INM Overall"
     subtitle = (
-        f"INM総合正答率 · 高いほど良い · working v0.1 (n={working_n})"
+        f"INM総合正答率 · 高いほど良い · working v0.1 · {working_n}問"
         if ja else
-        f"INM benchmark overall accuracy · Higher is better · working v0.1 (n={working_n})"
+        f"INM benchmark overall accuracy · Higher is better · working v0.1 · {working_n} items"
     )
     parts = card_shell(width, height, title, subtitle, data["updated"])
 
